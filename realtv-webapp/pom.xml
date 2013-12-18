@@ -24,6 +24,9 @@
 		<!-- JBoss AS plugin for deployment -->
 		<version.jboss.as.maven.plugin>7.1.1.Final</version.jboss.as.maven.plugin>
 
+		<!-- Logback version -->
+		<logback.version>1.0.1</logback.version>
+
 	</properties>
 
 	<dependencyManagement>
@@ -309,6 +312,19 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>15.0</version>
+		</dependency>
+
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 
 		<!-- selenium -->
