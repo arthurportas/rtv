@@ -4,8 +4,12 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,13 +27,19 @@ import com.realtv.repo.AnswerDao;
 @TransactionConfiguration(defaultRollback = true)
 public class AnswerDaoTest extends BaseEntityTest{
 	@Autowired
+	@InjectMocks
 	private AnswerDao answerDao;
+	
+	@Mock
+	private Answer mockedAnswer;
 
+		
 	@Test
 	public void testFindById() {
-		Answer answer = answerDao.findById(1l);
-		Assert.assertEquals("Herman Jose", answer.getAnswer());
-		return;
+		/*Answer answer = answerDao.findById(1l);
+		Assert.assertEquals("Herman Jose", answer.getAnswer());*/
+		this.mockedAnswer = answerDao.findById(1l);
+		Assert.assertEquals("Herman Jose", this.mockedAnswer.getAnswer());
 	}
 
 	@Test
