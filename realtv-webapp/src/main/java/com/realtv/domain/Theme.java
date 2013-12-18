@@ -14,10 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@SuppressWarnings("unused")
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "answer"))
-public class Answer implements Serializable {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "theme"))
+public class Theme implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
@@ -29,17 +28,17 @@ public class Answer implements Serializable {
 	@Size(min = 1, max = 255)
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")
-	private String answer;
+	private String theme;
 
 	@NotNull
 	@Size(min = 1, max = 255)
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")
-	private String correctAnswer;
+	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "questionId")
-	private Question question;
+	private Question question;*/
 
 	/*==========================GETTERS/SETTERS=======================*/
 	
@@ -51,45 +50,46 @@ public class Answer implements Serializable {
 		this.id = id;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public String getTheme() {
+		return theme;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
-	public String getCorrectAnswer() {
-		return correctAnswer;
+	public String getName() {
+		return name;
 	}
 
-	public void setCorrectAnswer(String correctAnswer) {
-		this.correctAnswer = correctAnswer;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	/*
 	public Question getQuestion() {
 		return question;
 	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
-	}
+	}*/
 	
 	/*==========================CONSTRUCTOR=======================*/
 
-	public Answer() {
+	public Theme() {
 
 	}
 	/*====================HASHCODE,EQUALS,TOSTRING=================*/
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
+	 * Uses Guava to assist in providing hash code of this theme instance.
 	 * 
 	 * @return My hash code.
 	 */
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.answer,
-				this.correctAnswer);
+		return com.google.common.base.Objects.hashCode(this.theme,
+				this.name);
 	}
 
 	/**
@@ -109,16 +109,16 @@ public class Answer implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Answer other = (Answer) obj;
+		final Theme other = (Theme) obj;
 
-		return com.google.common.base.Objects.equal(this.answer,
-				other.answer)
+		return com.google.common.base.Objects.equal(this.theme,
+				other.theme)
 				&& com.google.common.base.Objects.equal(
-						this.correctAnswer,other.answer);
+						this.name,other.name);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
+	 * Method using Guava to provide String representation of this theme
 	 * instance.
 	 * 
 	 * @return My String representation.
@@ -126,7 +126,7 @@ public class Answer implements Serializable {
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.answer).addValue(this.correctAnswer)
+				.addValue(this.theme).addValue(this.name)
 				.toString();
 	}
 }

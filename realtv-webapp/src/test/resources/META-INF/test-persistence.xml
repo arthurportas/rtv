@@ -6,6 +6,7 @@
 		<class>com.realtv.domain.Member</class>
 		<class>com.realtv.domain.Question</class>
 		<class>com.realtv.domain.Answer</class>
+		<class>com.realtv.domain.Theme</class>
         <properties>
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         	<property name="hibernate.show_sql" value="true" />

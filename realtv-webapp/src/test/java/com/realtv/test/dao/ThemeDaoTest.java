@@ -1,7 +1,5 @@
 package com.realtv.test.dao;
 
-import java.util.List;
-
 import junit.framework.Assert;
 
 import org.junit.Ignore;
@@ -16,72 +14,46 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.testing.EqualsTester;
-import com.realtv.domain.Answer;
-import com.realtv.repo.AnswerDao;
+import com.realtv.domain.Theme;
+import com.realtv.repo.ThemeDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml",
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class AnswerDaoTest extends BaseEntityTest{
+public class ThemeDaoTest extends BaseEntityTest{
+	
 	@Autowired
 	@InjectMocks
-	private AnswerDao answerDao;
+	private ThemeDao themeDao;
 	
 	@Mock
-	private Answer mockedAnswer;
+	private Theme mockedTheme;
 
 		
 	@Test
+	@Ignore(" not yet implemented")
 	public void testFindById() {
-		/*Answer answer = answerDao.findById(1l);
-		Assert.assertEquals("Herman Jose", answer.getAnswer());*/
-		this.mockedAnswer = answerDao.findById(1l);
-		Assert.assertEquals("Herman Jose", this.mockedAnswer.getAnswer());
+
 	}
 
 	@Test
+	@Ignore(" not yet implemented")
 	public void testFindByAnswer() {
-		this.mockedAnswer = answerDao.findByAnswer("Herman Jose");
 
-		Assert.assertEquals("Herman Jose", this.mockedAnswer.getAnswer());
-		return;
 	}
 
 	@Test
+	@Ignore(" not yet implemented")
 	public void testRegister() {
-		Answer answer = new Answer();
-		answer.setAnswer("Sport Lisboa Benfica");
-		answer.setCorrectAnswer("Sport Lisboa Benfica");
 
-		answerDao.register(answer);
-		Long id = answer.getId();
-		Assert.assertNotNull(id);
-
-		Assert.assertEquals(61, answerDao.findAllOrderedByName().size());
-		Answer newAnswer = answerDao.findById(id);
-
-		Assert.assertEquals("Sport Lisboa Benfica", newAnswer.getAnswer());
-
-		return;
 	}
 
 	@Test
-	@Ignore("needs fix")
+	@Ignore(" not yet implemented")
 	public void testFindAllOrderedByName() {
-		Answer answer = new Answer();
-		answer.setAnswer("Sport Leiria Boavista");
-		answer.setCorrectAnswer("Sport Lisboa Benfica");
 
-		answerDao.register(answer);
-
-		List<Answer> answers = answerDao.findAllOrderedByName();
-		Assert.assertEquals(61, answers.size());
-		Answer newAnswer = answers.get(0);
-
-		Assert.assertEquals("Cristiano Ronaldo", newAnswer.getAnswer());
-		return;
 	}
 
 	/* (non-Javadoc)
