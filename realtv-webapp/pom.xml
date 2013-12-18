@@ -26,7 +26,15 @@
 
 		<!-- Logback version -->
 		<logback.version>1.0.1</logback.version>
-
+		
+		<!-- Freemarker version -->
+		<freemarker.version>2.3.20</freemarker.version>
+	
+		<!-- Guava version -->
+		<guava.version>15.0</guava.version>
+		
+		<!-- Selenium version -->
+		<selenium.version>2.26.0</selenium.version>
 	</properties>
 
 	<dependencyManagement>
@@ -304,16 +312,23 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.20</version>
+			<version>${freemarker.version}</version>
 		</dependency>
 
 		<!-- guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>15.0</version>
+			<version>${guava.version}</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-testlib</artifactId>
+			<version>${guava.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<!-- logback -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -331,7 +346,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.26.0</version>
+			<version>${selenium.version}</version>
 		</dependency>
 	</dependencies>
 

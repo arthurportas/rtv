@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.testing.EqualsTester;
 import com.realtv.domain.Answer;
 import com.realtv.repo.AnswerDao;
 
@@ -90,7 +91,7 @@ public class AnswerDaoTest extends BaseEntityTest{
 	@Override
 	@Test
 	public void testEquals() {
-		// TODO Auto-generated method stub
+		new EqualsTester().addEqualityGroup("2", "2").testEquals();
 		
 	}
 
