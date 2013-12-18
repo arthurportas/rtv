@@ -44,9 +44,9 @@ public class AnswerDaoTest extends BaseEntityTest{
 
 	@Test
 	public void testFindByAnswer() {
-		Answer answer = answerDao.findByAnswer("Herman Jose");
+		this.mockedAnswer = answerDao.findByAnswer("Herman Jose");
 
-		Assert.assertEquals("Herman Jose", answer.getAnswer());
+		Assert.assertEquals("Herman Jose", this.mockedAnswer.getAnswer());
 		return;
 	}
 
