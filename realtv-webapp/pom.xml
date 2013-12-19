@@ -41,7 +41,9 @@
 		
 		<!-- Mockito version -->
 		<mockito.version>1.9.5</mockito.version>
-		
+
+		<!-- ActiveMQ version -->
+		<activemq.version>5.8.0</activemq.version>
 	</properties>
 
 	<dependencyManagement>
@@ -361,6 +363,14 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${selenium.version}</version>
 		</dependency>
+		
+		<!-- activemq -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

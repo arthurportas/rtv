@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd
+   						http://www.springframework.org/schema/jdbc 
+   						http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+    					http://www.springframework.org/schema/jms 
+ 					 	http://www.springframework.org/schema/jms/spring-jms.xsd
+ 					 	http://activemq.apache.org/schema/core 
+ 					 	http://activemq.apache.org/schema/core/activemq-core.xsd">
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
-		<property name="persistenceXmlLocation" value="classpath*:META-INF/test-persistence.xml"/>
-		<property name="dataSource" ref="dataSource"/>
+		<property name="persistenceXmlLocation" value="classpath*:META-INF/test-persistence.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sharedEntityManager"
+		class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL">
+			<value>tcp://localhost:61616</value>
+		</property>
 	</bean>
 	
-	<bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-	   <property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
 
-	<jdbc:embedded-database id="dataSource" type="H2"/>
+
+
+	<jdbc:embedded-database id="dataSource" type="H2" />
 
 </beans>
