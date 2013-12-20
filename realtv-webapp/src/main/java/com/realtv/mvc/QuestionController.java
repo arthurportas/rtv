@@ -14,16 +14,16 @@ import com.realtv.domain.Question;
 import com.realtv.repo.QuestionDao;
 
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(value="/question")
 public class QuestionController
-{
+{/*
     @Autowired
     private QuestionDao questionDao;
 
     @RequestMapping(method=RequestMethod.GET)
     public String displaySortedQuestions(Model model)
     {
-        model.addAttribute("newQuestion", new Question());
+        /*model.addAttribute("newQuestion", new Question());
         model.addAttribute("questions", questionDao.findAllOrderedByName());
         return "index";
     }
@@ -39,5 +39,5 @@ public class QuestionController
             model.addAttribute("questions", questionDao.findAllOrderedByName());
             return "index";
         }
-    }
+    }*/
 }

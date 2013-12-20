@@ -14,8 +14,8 @@ import com.realtv.repo.AnswerDao;
 
 @Controller
 @RequestMapping("/rest/answers")
-public class AnswerRestController
-{
+public class AnswerRestController{
+	/*
     @Autowired
     private AnswerDao answerDao;
 
@@ -29,5 +29,5 @@ public class AnswerRestController
     public @ResponseBody Answer lookupMemberById(@PathVariable("id") Long id)
     {
         return answerDao.findById(id);
-    }
+    }*/
 }

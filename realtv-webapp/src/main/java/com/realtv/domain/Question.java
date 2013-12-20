@@ -84,6 +84,7 @@ public class Question implements Serializable {
 	 * Uses Guava to assist in providing hash code of this employee instance.
 	 * 
 	 * @return My hash code.
+	 */
 	 
 	@Override
 	public int hashCode() {
@@ -98,8 +99,9 @@ public class Question implements Serializable {
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
 	 *         {@code false} if provided object is not considered equal to me.
+	 */
 	 
-/*	@Override
+	@Override
 	public boolean equals(Object obj) {
 
 		if (obj == null) {
@@ -116,17 +118,18 @@ public class Question implements Serializable {
 						ImmutableList.copyOf(this.answers),
 						(ImmutableList.copyOf(other.answers)));
 	}
-*/
+
 	/**
 	 * Method using Guava to provide String representation of this employee
 	 * instance.
 	 * 
 	 * @return My String representation.
+	 */
 	 
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
 				.addValue(this.question).addValue(this.answers)
 				.toString();
-	}*/
+	}
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(value="/")/*homepage*/
 public class MemberController
 {
     @Autowired

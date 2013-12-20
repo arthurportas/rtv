@@ -85,6 +85,7 @@ public class Answer implements Serializable {
 	 * Uses Guava to assist in providing hash code of this answer instance.
 	 * 
 	 * @return My hash code.
+	 */
 	 
 	@Override
 	public int hashCode() {
@@ -99,6 +100,7 @@ public class Answer implements Serializable {
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
 	 *         {@code false} if provided object is not considered equal to me.
+	 */
 	 
 	@Override
 	public boolean equals(Object obj) {
@@ -122,11 +124,12 @@ public class Answer implements Serializable {
 	 * instance.
 	 * 
 	 * @return My String representation.
+	 */
 	 
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
 				.addValue(this.answer).addValue(this.correctAnswer)
 				.toString();
-	}*/
+	}
 }

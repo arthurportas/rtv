@@ -16,7 +16,7 @@ import com.realtv.repo.QuestionDao;
 @RequestMapping("/rest/questions")
 public class QuestionRestController
 {
-    @Autowired
+   /* @Autowired
     private QuestionDao questionDao;
 
     @RequestMapping(method=RequestMethod.GET, produces="application/json")
@@ -29,5 +29,5 @@ public class QuestionRestController
     public @ResponseBody Question lookupMemberById(@PathVariable("id") Long id)
     {
         return questionDao.findById(id);
-    }
+    }*/
 }

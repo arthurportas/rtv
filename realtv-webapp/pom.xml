@@ -31,7 +31,7 @@
 		<freemarker.version>2.3.20</freemarker.version>
 	
 		<!-- Guava version -->
-		<guava.version>15.0</guava.version>
+		<guava.version>12.0</guava.version>
 		
 		<!-- Selenium version -->
 		<selenium.version>2.26.0</selenium.version>
@@ -44,6 +44,9 @@
 
 		<!-- ActiveMQ version -->
 		<activemq.version>5.8.0</activemq.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.javadoc.reporting.version>2.7</maven.javadoc.reporting.version>
 	</properties>
 
 	<dependencyManagement>

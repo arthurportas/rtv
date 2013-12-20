@@ -36,7 +36,23 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL"> <value>tcp://localhost:61616</value></property>	
+	</bean>
 
+	<bean id="cachingConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<property name="defaultDestination" ref="syncTestQueue" />
+	</bean>
+
+	<bean id="syncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="test.sync.queue" />
+	</bean>
 
 	<jdbc:embedded-database id="dataSource" type="H2" />
 
