@@ -1,6 +1,8 @@
 package com.realtv.mvc;
 
- import javax.validation.Valid;
+ import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.realtv.domain.Answer;
 import com.realtv.repo.AnswerDao;
 
@@ -20,9 +23,11 @@ public class AnswerController{
 	private static final String JSON_ANSWER = "json";
 	private static final String XML_ANSWER = "xml";
 	
+	
     @Autowired
     private AnswerDao answerDao;
 
+    /*===========================================GET==================================*/
     /**
      * View return all answers ordered by ASC - HTML
      * */
@@ -35,12 +40,14 @@ public class AnswerController{
     /**
      * View return all answers ordered by ASC - JSON
      * */
-    @RequestMapping(value="/answer/" + JSON_ANSWER, method=RequestMethod.GET)
-    public @ResponseBody String displaySortedAnswersJSON(Model model){
-       
-        model.addAttribute("answers", answerDao.findAllOrderedByName());
-        return "{'hello':'world'}"; 
+    @RequestMapping(value="/answer." + JSON_ANSWER, method=RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Answer> displaySortedAnswersAsJson(Model model){       
+       return answerDao.findAllOrderedByName();
     }
+    
+    
+    
+    
     
     @RequestMapping(method=RequestMethod.POST)
     public String registerNewAnswer(@Valid @ModelAttribute("newAnswer") Answer newAnswer, BindingResult result, Model model){

@@ -44,6 +44,10 @@
 
 		<!-- ActiveMQ version -->
 		<activemq.version>5.8.0</activemq.version>
+		
+		<!-- Gson version -->
+		<gson.version>2.2.4</gson.version>
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.javadoc.reporting.version>2.7</maven.javadoc.reporting.version>
@@ -101,13 +105,12 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${version.spring}</version>
-			</dependency>
-			
+			</dependency>			
 			<dependency>
-<groupId>org.springframework</groupId>
-<artifactId>spring-jms</artifactId>
-<version>${version.spring}</version>
-</dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${version.spring}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
@@ -297,6 +300,12 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson.version}</version>
 		</dependency>
 
 		<!-- Add cglib for the MemberDaoTest -->
