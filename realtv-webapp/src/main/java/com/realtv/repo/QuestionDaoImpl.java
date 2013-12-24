@@ -20,8 +20,7 @@ import com.realtv.domain.Question;
 @Repository
 @Transactional
 public class QuestionDaoImpl implements QuestionDao {
-	
-	
+
 	@Autowired
 	private EntityManager em;
 
@@ -46,7 +45,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		criteria.select(q).where(builder.equal(q.get("question"), question));
 		return em.createQuery(criteria).getSingleResult();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -113,22 +112,31 @@ public class QuestionDaoImpl implements QuestionDao {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.realtv.repo.QuestionDao#findByQuestionNamedQuery(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.repo.QuestionDao#findByQuestionNamedQuery(java.lang.String)
 	 */
 	@Override
 	public Question findByQuestionNamedQuery(String question) {
-		Query q = em.createNamedQuery(Question.FIND_BY_QUESTION).setParameter("question", "Quem foi o 1 Rei de Portugal?");
+		Query q = em.createNamedQuery(Question.FIND_BY_QUESTION).setParameter(
+				"question", "Quem foi o 1 Rei de Portugal?");
 		return (Question) q.getSingleResult();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.realtv.repo.QuestionDao#findAnswersByQuestionNamedQuery(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.repo.QuestionDao#findAnswersByQuestionNamedQuery(java.lang
+	 * .String)
 	 */
 	@Override
 	public List<Answer> findAnswersByQuestionNamedQuery(String question) {
-		
-		Query query = em.createNamedQuery(Question.FIND_ANSWERS_BY_QUESTION).setParameter("question", "Quem foi o 1 Rei de Portugal?");
+
+		Query query = em.createNamedQuery(Question.FIND_ANSWERS_BY_QUESTION)
+				.setParameter("question", "Quem foi o 1 Rei de Portugal?");
 		Question q = (Question) query.getSingleResult();
 		return q.getAnswers();
 	}

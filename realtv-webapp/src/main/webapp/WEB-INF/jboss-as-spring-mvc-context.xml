@@ -2,17 +2,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/mvc 
-						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
 						http://www.springframework.org/schema/jee
-						http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+						http://www.springframework.org/schema/jee/spring-jee.xsd">
 
+	<!-- Enabling Spring beans auto-discovery -->
 	<context:component-scan base-package="com.realtv.mvc" />
-
+	<context:component-scan base-package="com.realtv.repo" />
+	<context:component-scan base-package="com.realtv.domain" />
+	<context:component-scan base-package="com.realtv.services" />
+	
+	<!-- Enabling Spring MVC configuration through annotations -->
 	<mvc:annotation-driven />
+	
+	<!-- Enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<!-- freemarker config -->
 	<bean id="freemarkerConfig"

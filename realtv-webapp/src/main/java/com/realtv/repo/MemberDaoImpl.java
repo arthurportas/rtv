@@ -14,49 +14,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class MemberDaoImpl implements MemberDao
-{
-    @Autowired
-    private EntityManager em;
+public class MemberDaoImpl implements MemberDao {
+	@Autowired
+	private EntityManager em;
 
-    public Member findById(Long id)
-    {
-        return em.find(Member.class, id);
-    }
+	public Member findById(Long id) {
+		return em.find(Member.class, id);
+	}
 
-    public Member findByEmail(String email)
-    {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Member> criteria = builder.createQuery(Member.class);
-        Root<Member> member = criteria.from(Member.class);
+	public Member findByEmail(String email) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Member> criteria = builder.createQuery(Member.class);
+		Root<Member> member = criteria.from(Member.class);
+		criteria.select(member)
+				.where(builder.equal(member.get("email"), email));
+		return em.createQuery(criteria).getSingleResult();
+	}
 
-        /*
-         * Swap criteria statements if you would like to try out type-safe criteria queries, a new
-         * feature in JPA 2.0 criteria.select(member).orderBy(cb.asc(member.get(Member_.name)));
-         */
+	public List<Member> findAllOrderedByName() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Member> criteria = cb.createQuery(Member.class);
+		Root<Member> member = criteria.from(Member.class);
+		criteria.select(member).orderBy(cb.asc(member.get("name")));
+		return em.createQuery(criteria).getResultList();
+	}
 
-        criteria.select(member).where(builder.equal(member.get("email"), email));
-        return em.createQuery(criteria).getSingleResult();
-    }
-
-    public List<Member> findAllOrderedByName()
-    {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Member> criteria = cb.createQuery(Member.class);
-        Root<Member> member = criteria.from(Member.class);
-
-        /*
-         * Swap criteria statements if you would like to try out type-safe criteria queries, a new
-         * feature in JPA 2.0 criteria.select(member).orderBy(cb.asc(member.get(Member_.name)));
-         */
-
-        criteria.select(member).orderBy(cb.asc(member.get("name")));
-        return em.createQuery(criteria).getResultList();
-    }
-
-    public void register(Member member)
-    {
-        em.persist(member);
-        return;
-    }
+	public void register(Member member) {
+		em.persist(member);
+		return;
+	}
 }

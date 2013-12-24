@@ -15,17 +15,21 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.ImmutableList;
 
-@SuppressWarnings("unused")
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "question"))
 @NamedQueries({
 		@NamedQuery(name = "Question.FIND_ALL", query = "select q from Question q"),
 		@NamedQuery(name = "Question.FIND_BY_QUESTION", query = "select q from Question q where q.question = :question"),
-		@NamedQuery(name = "Question.FIND_ANSWERS_BY_QUESTION", query = "select q from Question q where q.question = :question"), })
-public class Question implements Serializable {
+		@NamedQuery(name = "Question.FIND_ANSWERS_BY_QUESTION", query = "select q from Question q where q.question = :question") 
+		})
+@XmlRootElement(name="question")
+public class Question extends BaseEntity implements Serializable {
 
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
@@ -52,7 +56,8 @@ public class Question implements Serializable {
 	public Long getId() {
 		return id;
 	}
-
+	
+	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -61,6 +66,7 @@ public class Question implements Serializable {
 		return question;
 	}
 
+	@XmlElement
 	public void setQuestion(String question) {
 		this.question = question;
 	}
@@ -69,6 +75,7 @@ public class Question implements Serializable {
 		return answers;
 	}
 
+	@XmlElement
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
@@ -81,7 +88,7 @@ public class Question implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this employee instance.
+	 * Uses Guava to assist in providing hash code of this question instance.
 	 * 
 	 * @return My hash code.
 	 */
@@ -120,7 +127,7 @@ public class Question implements Serializable {
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this employee
+	 * Method using Guava to provide String representation of this question
 	 * instance.
 	 * 
 	 * @return My String representation.

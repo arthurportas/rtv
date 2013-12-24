@@ -8,11 +8,11 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Getting Started with Spring on JBoss</name>
+	<name>RealTV</name>
 
 	<properties>
 		<!-- Spring version -->
-		<version.spring>3.1.1.RELEASE</version.spring>
+		<version.spring>3.1.2.RELEASE</version.spring>
 
 		<!-- Spring Third Party dependencies -->
 		<version.aopalliance>1.0</version.aopalliance>
@@ -26,31 +26,28 @@
 
 		<!-- Logback version -->
 		<logback.version>1.0.1</logback.version>
-		
+
 		<!-- Freemarker version -->
 		<freemarker.version>2.3.20</freemarker.version>
-	
+
 		<!-- Guava version -->
 		<guava.version>12.0</guava.version>
-		
+
 		<!-- Selenium version -->
 		<selenium.version>2.26.0</selenium.version>
-		
+
 		<!-- Junit version -->
 		<junit.version>4.8.2</junit.version>
-		
+
 		<!-- Mockito version -->
 		<mockito.version>1.9.5</mockito.version>
 
 		<!-- ActiveMQ version -->
 		<activemq.version>5.8.0</activemq.version>
-		
-		<!-- Gson version -->
-		<gson.version>2.2.4</gson.version>
-		
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.javadoc.reporting.version>2.7</maven.javadoc.reporting.version>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.javadoc.reporting.version>2.7</maven.javadoc.reporting.version>
 	</properties>
 
 	<dependencyManagement>
@@ -105,7 +102,7 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${version.spring}</version>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jms</artifactId>
@@ -217,11 +214,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 		</dependency>
- <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jms</artifactId>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
 
-    </dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-asm</artifactId>
@@ -294,18 +291,12 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
 		</dependency>
 
 		<!-- Add cglib for the MemberDaoTest -->
@@ -325,19 +316,20 @@
 		</dependency>
 
 		<!-- Add JSON dependency, specified in jboss-deployment-structure.xml -->
-		<dependency>
+		 <dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.3</version>
-			<scope>provided</scope>
+			<!--  <scope>provided</scope>-->
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.3</version>
-			<scope>provided</scope>
-		</dependency>
+			<!--<scope>provided</scope>-->
+		</dependency> 
+
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -359,14 +351,14 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-testlib</artifactId>
 			<version>${guava.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- logback -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -386,7 +378,7 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${selenium.version}</version>
 		</dependency>
-		
+
 		<!-- activemq -->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
@@ -394,7 +386,7 @@
 			<version>${activemq.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -447,4 +439,9 @@
 			</build>
 		</profile>
 	</profiles>
+	<scm>
+		<developerConnection>Arthur Portas</developerConnection>
+		<tag>RealTV</tag>
+		<url>https://github.com/arthurportas/rtv</url>
+	</scm>
 </project>

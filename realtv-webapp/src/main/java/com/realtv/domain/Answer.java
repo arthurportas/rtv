@@ -8,18 +8,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("unused")
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "answer"))
-public class Answer implements Serializable {
+@NamedQueries({
+	@NamedQuery(name = "Answer.FIND_ALL", query = "select a from Answer a")
+	})
+@XmlRootElement(name="aswer")
+
+public class Answer extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Answer.FIND_ALL";
 
 	@Id
 	@GeneratedValue
@@ -47,6 +58,7 @@ public class Answer implements Serializable {
 		return id;
 	}
 
+	@XmlElement	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -54,7 +66,8 @@ public class Answer implements Serializable {
 	public String getAnswer() {
 		return answer;
 	}
-
+	
+	@XmlElement	
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
@@ -62,7 +75,7 @@ public class Answer implements Serializable {
 	public String getCorrectAnswer() {
 		return correctAnswer;
 	}
-
+	@XmlElement
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
 	}
@@ -70,7 +83,7 @@ public class Answer implements Serializable {
 	public Question getQuestion() {
 		return question;
 	}
-
+	@XmlElement	
 	public void setQuestion(Question question) {
 		this.question = question;
 	}

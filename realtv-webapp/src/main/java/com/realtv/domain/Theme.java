@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "theme"))
-public class Theme implements Serializable {
+public class Theme extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
@@ -81,5 +81,32 @@ public class Theme implements Serializable {
 
 	}
 	/*====================HASHCODE,EQUALS,TOSTRING=================*/
+
+	/* (non-Javadoc)
+	 * @see com.realtv.domain.BaseEntity#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.realtv.domain.BaseEntity#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.realtv.domain.BaseEntity#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
