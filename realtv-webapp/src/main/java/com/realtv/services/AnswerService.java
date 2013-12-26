@@ -14,11 +14,11 @@ import com.realtv.domain.Answer;
 public interface AnswerService {
 	public Answer create(Answer answer);
 
-	public void delete(Integer id);
+	public void delete(Long id);
 
 	public Answer update(Answer answer);
 
-	public Answer find(Integer id);
+	public Answer find(Long id);
 
 	public List<Answer> getAll();
 
