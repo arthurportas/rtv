@@ -22,23 +22,23 @@ import com.realtv.services.AnswerService;
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class AnswerServiceTestImpl implements AnswerServiceTest{
-	
+public class AnswerServiceTestImpl implements AnswerServiceTest {
+
 	@Autowired
 	private AnswerService answerService;
-	
+
 	private Answer mockedAnswer;
 
 	@Before
-    public void setup() {
+	public void setup() {
 		mockedAnswer = new Answer();
 		mockedAnswer.setAnswer("answer");
 		mockedAnswer.setCorrectAnswer("correctAnswer");
-    }
-	
+	}
+
 	@Test
 	@Override
-	public void findAllAnswersNamedQuery(){
+	public void findAllAnswersNamedQuery() {
 		List<Answer> answers = answerService.findAllNamedQuery();
 		Assert.assertNotNull("answers should not be null", answers);
 		Assert.assertEquals(60, answers.size());
@@ -47,55 +47,71 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	@Test
 	@Override
 	public void create() {
-		Assert.assertNotNull("answer should not be null", answerService.create(mockedAnswer));
+		Assert.assertNotNull("answer should not be null",
+				answerService.create(mockedAnswer));
+	}
+
+	@Test
+	@Override
+	public void delete() {
+
+		final Answer answer = answerService.create(mockedAnswer);
+		Assert.assertNotNull("answer should not be null", answer);
+		Assert.assertNotNull("answer should not be null", answer.getId());
+		// It should be found
+		Assert.assertNotNull("answer should not be null",
+				answerService.find(answer.getId()));
+
+		answerService.delete(answer.getId());
+		// It should not be found
+		Assert.assertNull("answer should be null",
+				answerService.find(answer.getId()));
+
+	}
+
+	@Test
+	@Override
+	public void update() {
+		Answer answer = answerService.create(mockedAnswer);
+		Assert.assertNotNull("answer should not be null", answer);
+		Assert.assertNotNull("answer should not be null", answer.getId());
+		answer.setAnswer("answer updated");
+
+		answerService.update(answer);
+		final Answer answerUpdated = answerService.find(answer.getId());
+		Assert.assertNotNull("answer should not be null", answerUpdated);
+		Assert.assertNotNull("answer should not be null", answerUpdated.getId());
+		Assert.assertEquals(answer.getId(), answerUpdated.getId());
+		Assert.assertTrue(answerUpdated.getAnswer().equals("answer updated"));
+	}
+
+	@Test
+	@Override
+	public void find() {
+		final Answer answer = answerService.create(mockedAnswer);
+		Assert.assertNotNull("answer should not be null", answer);
+		Assert.assertNotNull("answer should not be null", answer.getId());
+		// It should be found
+		Assert.assertNotNull("answer should not be null",
+				answerService.find(answer.getId()));
+	}
+
+	@Test
+	@Override
+	public void getAll() {
+		Assert.assertTrue(answerService.getAll().size() > 0);
+	}
+
+	@Test
+	@Override
+	public void findAllNamedQuery() {
+		Assert.assertTrue(answerService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Ignore
 	@Override
-	public void delete(Integer id) {
-		
-		
+	public void count() {
+		Assert.assertTrue(answerService.getAll().size() >= 60);
 	}
-
-	@Test
-	@Ignore
-	@Override
-	public Answer update(Answer answer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Test
-	@Ignore
-	@Override
-	public Answer find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Test
-	@Ignore
-	@Override
-	public List<Answer> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Test
-	@Ignore
-	@Override
-	public List<Answer> findAllNamedQuery() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Test
-	@Ignore
-	@Override
-	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

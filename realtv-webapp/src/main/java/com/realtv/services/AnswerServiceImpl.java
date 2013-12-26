@@ -40,7 +40,7 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		answerDao.delete(id);
 	}
 
@@ -62,7 +62,7 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Answer find(Integer id) {
+	public Answer find(Long id) {
 		return answerDao.find(id);
 	}
 

@@ -1,11 +1,5 @@
-/**
- * 
- */
 package com.realtv.test.services;
 
-import java.util.List;
-
-import com.realtv.domain.Answer;
 
 /**
  * @author Arthur Portas
@@ -15,14 +9,15 @@ public interface AnswerServiceTest {
 	
 	public void create();
 	public void findAllAnswersNamedQuery();
-	public void delete(Integer id);
-	public Answer update(Answer answer);
-
-	public Answer find(Integer id);
-
-	public List<Answer> getAll();
-
-	public List<Answer> findAllNamedQuery();
 	
-	public Long count();
+	public void delete();
+	public void update();
+
+	public void find();
+
+	public void getAll();
+
+	public void findAllNamedQuery();
+	
+	public void count();
 }
