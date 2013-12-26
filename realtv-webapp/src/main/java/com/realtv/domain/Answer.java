@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "answer"))
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "Answer.FIND_ALL", query = "select a from Answer a")
 	})
 @XmlRootElement(name="aswer")
-
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Answer extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
@@ -33,7 +35,7 @@ public class Answer extends BaseEntity implements Serializable {
 	public static final String FIND_ALL = "Answer.FIND_ALL";
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@NotNull

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -17,6 +18,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 import com.google.common.collect.ImmutableList;
 
@@ -29,6 +32,7 @@ import com.google.common.collect.ImmutableList;
 		@NamedQuery(name = "Question.FIND_ANSWERS_BY_QUESTION", query = "select q from Question q where q.question = :question") 
 		})
 @XmlRootElement(name="question")
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Question extends BaseEntity implements Serializable {
 
 	/** Default value included to remove warning. Remove or modify at will. **/
@@ -39,7 +43,7 @@ public class Question extends BaseEntity implements Serializable {
 	public static final String FIND_ANSWERS_BY_QUESTION = "Question.FIND_ANSWERS_BY_QUESTION";
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@NotNull

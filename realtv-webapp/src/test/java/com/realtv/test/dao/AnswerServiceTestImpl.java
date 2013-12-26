@@ -49,11 +49,11 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	public void create() {
 		Assert.assertNotNull("answer should not be null", answerService.create(mockedAnswer));
 	}
-
+/*
 	@Test
 	@Ignore
 	@Override
-	public void delete(Integer id) {
+	public void delete() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -61,7 +61,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	@Test
 	@Ignore
 	@Override
-	public Answer update(Answer answer) {
+	public Answer update() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -69,7 +69,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	@Test
 	@Ignore
 	@Override
-	public Answer find(Integer id) {
+	public Answer find() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,5 +97,5 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+*/	
 }

@@ -15,14 +15,14 @@ public interface AnswerServiceTest {
 	
 	public void create();
 	public void findAllAnswersNamedQuery();
-	public void delete(Integer id);
-	public Answer update(Answer answer);
+	/*public void delete();
+	public Answer update();
 
-	public Answer find(Integer id);
+	public Answer find();
 
 	public List<Answer> getAll();
 
 	public List<Answer> findAllNamedQuery();
 	
-	public Long count();
+	public Long count();*/
 }
