@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.realtv.test.dao;
+package com.realtv.test.services;
 
 import java.util.List;
 
@@ -15,14 +15,14 @@ public interface AnswerServiceTest {
 	
 	public void create();
 	public void findAllAnswersNamedQuery();
-	/*public void delete();
-	public Answer update();
+	public void delete(Integer id);
+	public Answer update(Answer answer);
 
-	public Answer find();
+	public Answer find(Integer id);
 
 	public List<Answer> getAll();
 
 	public List<Answer> findAllNamedQuery();
 	
-	public Long count();*/
+	public Long count();
 }

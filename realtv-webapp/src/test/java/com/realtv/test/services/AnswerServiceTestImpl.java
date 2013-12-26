@@ -1,4 +1,4 @@
-package com.realtv.test.dao;
+package com.realtv.test.services;
 
 import java.util.List;
 
@@ -49,19 +49,19 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	public void create() {
 		Assert.assertNotNull("answer should not be null", answerService.create(mockedAnswer));
 	}
-/*
+
 	@Test
 	@Ignore
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
+	public void delete(Integer id) {
+		
 		
 	}
 
 	@Test
 	@Ignore
 	@Override
-	public Answer update() {
+	public Answer update(Answer answer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -69,7 +69,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	@Test
 	@Ignore
 	@Override
-	public Answer find() {
+	public Answer find(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,5 +97,5 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 		// TODO Auto-generated method stub
 		return null;
 	}
-*/	
+	
 }
