@@ -1,4 +1,4 @@
-package com.realtv.test.dao;
+package com.realtv.test.services;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest{
 	@Ignore
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.realtv.test.dao;
+package com.realtv.test.services;
 
 import java.util.List;
 
