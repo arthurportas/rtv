@@ -6,7 +6,7 @@ package com.realtv.test.services;
  * @author Arthur Portas
  * @date 24/12/2013
  */
-public interface AnswerServiceTest {
+public interface QuestionServiceTest {
 	
 	/*CRUD*/
 	public void create();
@@ -16,6 +16,9 @@ public interface AnswerServiceTest {
 	public void getAll();
 	public void count();
 	/*DAO*/
-	public void findAllAnswersNamedQuery();
-	public void findAllNamedQuery();
+	public void findAllOrderedByName();
+	public void findAnswersByQuestionNamedQuery();
+	public void findQuestionNamedQuery();
+	public void registerAnswers();
+	
 }

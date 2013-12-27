@@ -12,6 +12,7 @@ import com.realtv.domain.Answer;
  * @date 24/12/2013
  */
 public interface AnswerService {
+	
 	public Answer create(Answer answer);
 
 	public void delete(Long id);
@@ -22,7 +23,7 @@ public interface AnswerService {
 
 	public List<Answer> getAll();
 
-	public List<Answer> findAllNamedQuery();
-	
 	public Long count();
+
+	public List<Answer> findAllNamedQuery();
 }

@@ -1,11 +1,11 @@
 package com.realtv.test.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.domain.Answer;
+import com.realtv.domain.Question;
 import com.realtv.services.AnswerService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,12 +29,21 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	private AnswerService answerService;
 
 	private Answer mockedAnswer;
+	private Question mockedQuestion;
+	private ArrayList<Answer> answers;
 
 	@Before
 	public void setup() {
 		mockedAnswer = new Answer();
 		mockedAnswer.setAnswer("answer");
 		mockedAnswer.setCorrectAnswer("correctAnswer");
+
+		answers = new ArrayList<Answer>();
+		answers.add(mockedAnswer);
+
+		mockedQuestion = new Question();
+		mockedQuestion.setQuestion("question");
+		mockedQuestion.setAnswers(answers);
 	}
 
 	@Test
@@ -109,9 +119,9 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	}
 
 	@Test
-	@Ignore
 	@Override
 	public void count() {
 		Assert.assertTrue(answerService.getAll().size() >= 60);
 	}
+
 }

@@ -1,12 +1,31 @@
-package com.realtv.repo;
+/**
+ * 
+ */
+package com.realtv.services;
 
 import java.util.List;
 
 import com.realtv.domain.Answer;
 import com.realtv.domain.Question;
 
-public interface QuestionDao extends GenericDao<Question>{
+/**
+ * @author Arthur Portas
+ * @date 24/12/2013
+ */
+public interface QuestionService {
+	
+	public Question create(Question question);
 
+	public void delete(Long id);
+
+	public Question update(Question question);
+
+	public Question find(Long id);
+
+	public List<Question> getAll();
+	
+	public Long count();
+	
 	/**
 	 * @param question - question literal to search for
 	 * @return {@link Question}
@@ -31,5 +50,4 @@ public interface QuestionDao extends GenericDao<Question>{
 	 * @param answers
 	 * */
 	public void registerAnswers(Question question, List<Answer> answers);
-	
 }
