@@ -52,7 +52,7 @@ public class Question extends BaseEntity implements Serializable {
 	// "must contain only letters and spaces")
 	private String question;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+	@OneToMany(mappedBy = "question")
 	private List<Answer> answers;
 
 	/* ==========================GETTERS/SETTERS======================= */
@@ -142,5 +142,14 @@ public class Question extends BaseEntity implements Serializable {
 		return com.google.common.base.Objects.toStringHelper(this)
 				.addValue(this.question).addValue(this.answers)
 				.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.realtv.domain.BaseEntity#toJson()
+	 */
+	@Override
+	public String toJson() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

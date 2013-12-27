@@ -10,16 +10,20 @@ package com.realtv.domain;
 public abstract class BaseEntity {
 
 	/**
-	 * Test HashCode
+	 * HashCode
 	 * */
 	public abstract int hashCode();
 	/**
-	 * Test Equals
+	 * Equals
 	 * */
 	public abstract boolean equals(Object obj);
 	/**
-	 * Test ToString
+	 * ToString
 	 * */
 	public abstract String toString();
+	/**
+	 * ToJson
+	 * */
+	public abstract String toJson();
 	
 }

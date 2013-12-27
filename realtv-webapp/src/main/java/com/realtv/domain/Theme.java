@@ -116,4 +116,13 @@ public class Theme extends BaseEntity implements Serializable {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.realtv.domain.BaseEntity#toJson()
+	 */
+	@Override
+	public String toJson() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

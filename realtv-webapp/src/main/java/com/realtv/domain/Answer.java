@@ -1,9 +1,9 @@
 package com.realtv.domain;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,24 +14,27 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.AnnotationIntrospector;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "answer"))
-@NamedQueries({
-	@NamedQuery(name = "Answer.FIND_ALL", query = "select a from Answer a")
-	})
-@XmlRootElement(name="aswer")
+@NamedQueries({ @NamedQuery(name = "Answer.FIND_ALL", query = "select a from Answer a") })
+@XmlRootElement(name = "aswer")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Answer extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String FIND_ALL = "Answer.FIND_ALL";
 
 	@Id
@@ -50,17 +53,17 @@ public class Answer extends BaseEntity implements Serializable {
 	// "must contain only letters and spaces")
 	private String correctAnswer;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "questionId")
 	private Question question;
 
-	/*==========================GETTERS/SETTERS=======================*/
-	
+	/* ==========================GETTERS/SETTERS======================= */
+
 	public Long getId() {
 		return id;
 	}
 
-	@XmlElement	
+	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -68,8 +71,8 @@ public class Answer extends BaseEntity implements Serializable {
 	public String getAnswer() {
 		return answer;
 	}
-	
-	@XmlElement	
+
+	@XmlElement
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
@@ -77,6 +80,7 @@ public class Answer extends BaseEntity implements Serializable {
 	public String getCorrectAnswer() {
 		return correctAnswer;
 	}
+
 	@XmlElement
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
@@ -85,23 +89,25 @@ public class Answer extends BaseEntity implements Serializable {
 	public Question getQuestion() {
 		return question;
 	}
-	@XmlElement	
+
+	@XmlElement
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-	
-	/*==========================CONSTRUCTOR=======================*/
+
+	/* ==========================CONSTRUCTOR======================= */
 
 	public Answer() {
 
 	}
-	/*====================HASHCODE,EQUALS,TOSTRING=================*/
+
+	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
 	 * Uses Guava to assist in providing hash code of this answer instance.
 	 * 
 	 * @return My hash code.
 	 */
-	 
+
 	@Override
 	public int hashCode() {
 		return com.google.common.base.Objects.hashCode(this.answer,
@@ -116,7 +122,7 @@ public class Answer extends BaseEntity implements Serializable {
 	 * @return {@code true} if provided object is considered equal to me or
 	 *         {@code false} if provided object is not considered equal to me.
 	 */
-	 
+
 	@Override
 	public boolean equals(Object obj) {
 
@@ -128,10 +134,9 @@ public class Answer extends BaseEntity implements Serializable {
 		}
 		final Answer other = (Answer) obj;
 
-		return com.google.common.base.Objects.equal(this.answer,
-				other.answer)
-				&& com.google.common.base.Objects.equal(
-						this.correctAnswer,other.answer);
+		return com.google.common.base.Objects.equal(this.answer, other.answer)
+				&& com.google.common.base.Objects.equal(this.correctAnswer,
+						other.answer);
 	}
 
 	/**
@@ -140,11 +145,38 @@ public class Answer extends BaseEntity implements Serializable {
 	 * 
 	 * @return My String representation.
 	 */
-	 
+
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.answer).addValue(this.correctAnswer)
-				.toString();
+				.addValue(this.answer).addValue(this.correctAnswer).toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#toJson()
+	 */
+	@Override
+	public String toJson() {
+		/*needs refactor*/
+		ObjectMapper mapper = new ObjectMapper();
+		AnnotationIntrospector introspector = new JacksonAnnotationIntrospector();
+		mapper.setAnnotationIntrospector(introspector);
+		String result = null;
+		try {
+			result = mapper.writeValueAsString(this);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(result);
+		return result;
 	}
 }
