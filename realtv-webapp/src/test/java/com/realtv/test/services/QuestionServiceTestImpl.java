@@ -4,12 +4,15 @@
 package com.realtv.test.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,14 +34,19 @@ import com.realtv.services.QuestionService;
 @TransactionConfiguration(defaultRollback = true)
 public class QuestionServiceTestImpl implements QuestionServiceTest {
 
+	private final static Logger logger = LoggerFactory
+			.getLogger(QuestionServiceTestImpl.class);
+
 	@Autowired
 	private QuestionService questionService;
 
 	private Answer mockedAnswer;
 	private Question mockedQuestion;
+	private ArrayList<Answer> answers;
 
 	@Before
 	public void setup() {
+
 		mockedAnswer = new Answer();
 		mockedAnswer.setAnswer("answer");
 		mockedAnswer.setCorrectAnswer("correctAnswer");
@@ -46,8 +54,13 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 		mockedQuestion = new Question();
 		mockedQuestion.setQuestion("question");
 
+		answers = new ArrayList<Answer>();
+
 		mockedAnswer.setQuestion(mockedQuestion);
 
+		answers.add(mockedAnswer);
+
+		mockedQuestion.setAnswers(answers);
 	}
 
 	/*
@@ -92,35 +105,25 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	@Test
 	@Override
 	public void update() {
-
-		ArrayList<Answer> answers = new ArrayList<Answer>();
-		answers.add(mockedAnswer);
-
-		mockedQuestion.setAnswers(answers);
-
+		logger.debug("==update()==");
 		Question question = questionService.create(mockedQuestion);
 		Assert.assertNotNull("question should not be null", question);
 		Assert.assertNotNull("question should not be null", question.getId());
-		Assert.assertNotNull("question should not be null",
-				question.getAnswers());
-		Assert.assertEquals(1, question.getAnswers().size());
+
+		final Question lookup = questionService.find(question.getId());
+		Assert.assertEquals(question.getId(), lookup.getId());
 
 		question.setQuestion("the question");
-
-		questionService.update(question);
-
 		final Question questionUpdated = questionService.find(question.getId());
-		Assert.assertNotNull("question should not be null", questionUpdated);
-		Assert.assertNotNull("question should not be null",
-				questionUpdated.getId());
-		Assert.assertNotNull("question should not be null",
-				questionUpdated.getAnswers());
-		Assert.assertEquals(1, questionUpdated.getAnswers().size());
 		Assert.assertEquals(question.getId(), questionUpdated.getId());
 
-		Assert.assertTrue(questionUpdated.getQuestion().equals("the question"));
+		Assert.assertNotNull("questionUpdated should not be null",
+				questionUpdated.getAnswers());
 		final Answer answer = questionUpdated.getAnswers().get(0);
 		Assert.assertTrue(answer.getAnswer().equals("answer"));
+
+		Assert.assertTrue(questionUpdated.getAnswers().get(0).getAnswer()
+				.equals("answer"));
 	}
 
 	/*
@@ -128,10 +131,17 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * 
 	 * @see com.realtv.test.services.QuestionServiceTest#find()
 	 */
+	@Test
 	@Override
 	public void find() {
-		// TODO Auto-generated method stub
 
+		logger.debug("==find()==");
+		Question question = questionService.create(mockedQuestion);
+		Assert.assertNotNull("question should not be null", question);
+		Assert.assertNotNull("question should not be null", question.getId());
+
+		final Question lookup = questionService.find(question.getId());
+		Assert.assertEquals(question.getId(), lookup.getId());
 	}
 
 	/*
@@ -139,10 +149,10 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * 
 	 * @see com.realtv.test.services.QuestionServiceTest#getAll()
 	 */
+	@Test
 	@Override
 	public void getAll() {
-		// TODO Auto-generated method stub
-
+		Assert.assertTrue(questionService.getAll().size() > 0);
 	}
 
 	/*
@@ -150,10 +160,10 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * 
 	 * @see com.realtv.test.services.QuestionServiceTest#count()
 	 */
+	@Test
 	@Override
 	public void count() {
-		// TODO Auto-generated method stub
-
+		Assert.assertTrue(questionService.getAll().size() >= 15);
 	}
 
 	/*
@@ -161,10 +171,12 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * 
 	 * @see com.realtv.test.services.QuestionServiceTest#findAllOrderedByName()
 	 */
+	@Test
 	@Override
 	public void findAllOrderedByName() {
-		// TODO Auto-generated method stub
-
+		List<Question> questions = questionService.findAllOrderedByName();
+		Assert.assertNotNull("questions should not be null", questions);
+		/* uses Criteria Builder */
 	}
 
 	/*
@@ -174,10 +186,15 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * com.realtv.test.services.QuestionServiceTest#findAnswersByQuestionNamedQuery
 	 * ()
 	 */
+	@Test
 	@Override
 	public void findAnswersByQuestionNamedQuery() {
-		// TODO Auto-generated method stub
-
+		/* get first question */
+		Question question = questionService.getAll().get(0);
+		List<Answer> answers = questionService
+				.findAnswersByQuestionNamedQuery(question.getQuestion());
+		Assert.assertNotNull("answers should not be null", answers);
+		Assert.assertEquals(answers.size(), 4);
 	}
 
 	/*
@@ -186,10 +203,14 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * @see
 	 * com.realtv.test.services.QuestionServiceTest#findQuestionNamedQuery()
 	 */
+	@Test
 	@Override
 	public void findQuestionNamedQuery() {
-		// TODO Auto-generated method stub
-
+		Question question = questionService.getAll().get(0);
+		final Question lookup = questionService.findQuestionNamedQuery(question
+				.getQuestion());
+		Assert.assertNotNull("lookup should not be null", lookup);
+		Assert.assertEquals(lookup.getId(), question.getId());
 	}
 
 	/*
@@ -197,10 +218,21 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	 * 
 	 * @see com.realtv.test.services.QuestionServiceTest#registerAnswers()
 	 */
+	@Test
 	@Override
 	public void registerAnswers() {
-		// TODO Auto-generated method stub
+		logger.debug("==registerAnswers()==");
+		Assert.assertNotNull("question should not be null",
+				questionService.create(mockedQuestion));
+		final Question question = questionService.find(mockedQuestion.getId());
 
+		Assert.assertNotNull("answers should not be null",
+				question.getAnswers());
+
+		Question question1 = questionService.getAll().get(0);
+		Assert.assertNotNull("question1 should not be null", question1);
+		System.out.println("---" + question1);
+		Question question2 = questionService.getAll().get(8);
+		Assert.assertNotNull("question2 should not be null", question2);
 	}
-
 }

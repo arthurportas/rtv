@@ -38,11 +38,15 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 		mockedAnswer.setAnswer("answer");
 		mockedAnswer.setCorrectAnswer("correctAnswer");
 
-		answers = new ArrayList<Answer>();
-		answers.add(mockedAnswer);
-
 		mockedQuestion = new Question();
 		mockedQuestion.setQuestion("question");
+		
+		answers = new ArrayList<Answer>();
+		
+		mockedAnswer.setQuestion(mockedQuestion);
+		
+		answers.add(mockedAnswer);
+		
 		mockedQuestion.setAnswers(answers);
 	}
 
