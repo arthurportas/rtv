@@ -1,51 +1,43 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.common.collect.ImmutableList;
-
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "theme"))
-@XmlRootElement(name = "theme")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "dificultyLevel"))
+@NamedQueries({
+	@NamedQuery(name = "Level.FIND_ALL", query = "select l from Level l")
+	})
+@XmlRootElement(name = "level")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Theme extends BaseEntity implements Serializable {
+public class Level extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Level.FIND_ALL";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@NotNull
-	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String theme;
+	private int dificultyLevel;
 
 	@NotNull
-	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String description;
-
-	@OneToMany(mappedBy = "theme")
-	private List<Question> questions;
-
+	private int timeAvailableToAnswer;
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -57,36 +49,26 @@ public class Theme extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getTheme() {
-		return theme;
+	public int getDificultyLevel() {
+		return dificultyLevel;
 	}
 
 	@XmlElement
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setDificultyLevel(int dificultyLevel) {
+		this.dificultyLevel = dificultyLevel;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public List<Question> getQuestions() {
-		return this.questions;
+	public int getTimeAvailableToAnswer() {
+		return timeAvailableToAnswer;
 	}
 
 	@XmlElement
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setTimeAvailableToAnswer(int timeAvailableToAnswer) {
+		this.timeAvailableToAnswer = timeAvailableToAnswer;
 	}
-
 	/* ==========================CONSTRUCTOR======================= */
 
-	public Theme() {
+	public Level() {
 
 	}
 
@@ -99,8 +81,8 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.theme, this.description,
-				this.questions);
+		return com.google.common.base.Objects.hashCode(this.dificultyLevel,
+				this.timeAvailableToAnswer);
 	}
 
 	/*
@@ -117,13 +99,12 @@ public class Theme extends BaseEntity implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Theme other = (Theme) obj;
+		final Level other = (Level) obj;
 
-		return com.google.common.base.Objects.equal(this.theme, other.theme)
-				&& com.google.common.base.Objects.equal(this.description, other.description)
-				&& com.google.common.base.Objects.equal(
-						ImmutableList.copyOf(this.questions),
-						(ImmutableList.copyOf(other.questions)));
+		return com.google.common.base.Objects.equal(this.timeAvailableToAnswer,
+				other.timeAvailableToAnswer)
+				&& com.google.common.base.Objects.equal(this.dificultyLevel,
+						other.dificultyLevel);
 	}
 
 	/*
@@ -134,8 +115,8 @@ public class Theme extends BaseEntity implements Serializable {
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.theme).addValue(this.description)
-				.addValue(this.questions).toString();
+				.addValue(this.dificultyLevel)
+				.addValue(this.timeAvailableToAnswer).toString();
 	}
 
 	/*

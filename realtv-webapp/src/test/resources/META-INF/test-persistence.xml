@@ -7,9 +7,13 @@
 		<class>com.realtv.domain.Question</class>
 		<class>com.realtv.domain.Answer</class>
 		<class>com.realtv.domain.Theme</class>
+		<class>com.realtv.domain.Level</class>
+		<class>com.realtv.domain.Show</class>
+		<class>com.realtv.domain.ShowType</class>
         <properties>
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         	<property name="hibernate.show_sql" value="true" />
+        	<property name="hibernate.format_sql" value="true" />
         </properties>
 	</persistence-unit>
 </persistence>

@@ -2,16 +2,10 @@ package com.realtv.repo;
 
 import java.util.List;
 
-import com.realtv.domain.Question;
 import com.realtv.domain.Theme;
 
-public interface ThemeDao {
+public interface ThemeDao extends GenericDao<Theme>{
 	
-	/**
-	 * 
-	 * */
-	public Theme findById(Long id);
-
 	/**
 	 * 
 	 * */
@@ -22,13 +16,4 @@ public interface ThemeDao {
 	 * */
 	public List<Theme> findAllOrderedByName();
 
-	/**
-	 * 
-	 * */
-	public void register(Theme theme);
-
-	/**
-	 * 
-	 * */
-	public Question setQuestionAssociation(Question question);
 }

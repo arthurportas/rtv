@@ -222,16 +222,9 @@ public class QuestionServiceTestImpl implements QuestionServiceTest {
 	@Override
 	public void registerAnswers() {
 		logger.debug("==registerAnswers()==");
-		Assert.assertNotNull("question should not be null",
-				questionService.create(mockedQuestion));
-		final Question question = questionService.find(mockedQuestion.getId());
-
-		Assert.assertNotNull("answers should not be null",
-				question.getAnswers());
 
 		Question question1 = questionService.getAll().get(0);
 		Assert.assertNotNull("question1 should not be null", question1);
-		System.out.println("---" + question1);
 		Question question2 = questionService.getAll().get(8);
 		Assert.assertNotNull("question2 should not be null", question2);
 	}
