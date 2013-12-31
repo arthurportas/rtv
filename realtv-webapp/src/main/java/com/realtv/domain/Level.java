@@ -1,11 +1,15 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -18,15 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "dificultyLevel"))
-@NamedQueries({
-	@NamedQuery(name = "Level.FIND_ALL", query = "select l from Level l")
-	})
+@NamedQueries({ @NamedQuery(name = "Level.FIND_ALL", query = "select l from Level l") })
 @XmlRootElement(name = "level")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Level extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String FIND_ALL = "Level.FIND_ALL";
 
 	@Id
@@ -38,6 +40,13 @@ public class Level extends BaseEntity implements Serializable {
 
 	@NotNull
 	private int timeAvailableToAnswer;
+
+	@ManyToMany
+	@JoinTable(name = "LEVEL_QUESTION", 
+				joinColumns = { @JoinColumn(name = "questionID", referencedColumnName = "id") }, 
+				inverseJoinColumns = { @JoinColumn(name = "levelId", referencedColumnName = "id") })
+	private List<Question> questions;
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -65,6 +74,15 @@ public class Level extends BaseEntity implements Serializable {
 	@XmlElement
 	public void setTimeAvailableToAnswer(int timeAvailableToAnswer) {
 		this.timeAvailableToAnswer = timeAvailableToAnswer;
+	}
+
+	public List<Question> getQuestions() {
+		return this.questions;
+	}
+	
+	@XmlElement
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 	/* ==========================CONSTRUCTOR======================= */
 

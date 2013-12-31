@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,15 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.ImmutableList;
 
-
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "question"))
 @NamedQueries({
 		@NamedQuery(name = "Question.FIND_ALL", query = "select q from Question q"),
 		@NamedQuery(name = "Question.FIND_BY_QUESTION", query = "select q from Question q where q.question = :question"),
-		@NamedQuery(name = "Question.FIND_ANSWERS_BY_QUESTION", query = "select q from Question q where q.question = :question") 
-		})
-@XmlRootElement(name="question")
+		@NamedQuery(name = "Question.FIND_ANSWERS_BY_QUESTION", query = "select q from Question q where q.question = :question") })
+@XmlRootElement(name = "question")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Question extends BaseEntity implements Serializable {
 
@@ -58,13 +57,16 @@ public class Question extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "themeId")
 	private Theme theme;
-	
+
+	@ManyToMany(mappedBy = "questions")
+	private List<Level> levels;/*refator to questionLevel and test this bi-diretional relathionship*/
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
@@ -87,7 +89,7 @@ public class Question extends BaseEntity implements Serializable {
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
-	
+
 	@XmlElement
 	public void setTheme(Theme theme) {
 		this.theme = theme;
@@ -109,11 +111,11 @@ public class Question extends BaseEntity implements Serializable {
 	 * 
 	 * @return My hash code.
 	 */
-	 
+
 	@Override
 	public int hashCode() {
 		return com.google.common.base.Objects.hashCode(this.question,
-				this.answers,this.theme);
+				this.answers, this.theme);
 	}
 
 	/**
@@ -124,7 +126,7 @@ public class Question extends BaseEntity implements Serializable {
 	 * @return {@code true} if provided object is considered equal to me or
 	 *         {@code false} if provided object is not considered equal to me.
 	 */
-	 
+
 	@Override
 	public boolean equals(Object obj) {
 
@@ -141,7 +143,8 @@ public class Question extends BaseEntity implements Serializable {
 				&& com.google.common.base.Objects.equal(
 						ImmutableList.copyOf(this.answers),
 						(ImmutableList.copyOf(other.answers)))
-						&& com.google.common.base.Objects.equal(this.theme, other.theme);
+				&& com.google.common.base.Objects
+						.equal(this.theme, other.theme);
 	}
 
 	/**
@@ -150,15 +153,17 @@ public class Question extends BaseEntity implements Serializable {
 	 * 
 	 * @return My String representation.
 	 */
-	 
+
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.question).addValue(this.answers).addValue(this.theme)
-				.toString();
+				.addValue(this.question).addValue(this.answers)
+				.addValue(this.theme).toString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.realtv.domain.BaseEntity#toJson()
 	 */
 	@Override
