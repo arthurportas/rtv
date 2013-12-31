@@ -28,7 +28,7 @@ import com.realtv.services.ShowService;
 @TransactionConfiguration(defaultRollback = true)
 public class ShowServiceTestImpl implements ShowServiceTest {
 
-	private final static Logger logger = LoggerFactory
+	private final static Logger slf4jLogger = LoggerFactory
 			.getLogger(ShowServiceTestImpl.class);
 
 	@Autowired
@@ -48,6 +48,7 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	@Test
 	@Override
 	public void create() {
+		slf4jLogger.info("==create()==");
 		Assert.assertNotNull("show should not be null",
 				showService.create(mockedShow));
 	}
@@ -55,7 +56,7 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	@Test
 	@Override
 	public void delete() {
-
+		slf4jLogger.info("==delete()==");
 		final Show show = showService.create(mockedShow);
 		Assert.assertNotNull("show should not be null", show);
 		Assert.assertNotNull("show should not be null", show.getId());
@@ -71,6 +72,7 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	@Test
 	@Override
 	public void update() {
+		slf4jLogger.info("==update()==");
 		Show show = showService.create(mockedShow);
 		Assert.assertNotNull("show should not be null", show);
 		Assert.assertNotNull("show should not be null", show.getId());
@@ -88,6 +90,7 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	@Test
 	@Override
 	public void find() {
+		slf4jLogger.info("==find()==");
 		final Show show = showService.create(mockedShow);
 		Assert.assertNotNull("show should not be null", show);
 		Assert.assertNotNull("show should not be null", show.getId());
@@ -99,28 +102,30 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	@Test
 	@Override
 	public void getAll() {
+		slf4jLogger.info("==getAll()==");
 		Assert.assertTrue(showService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void findAllNamedQuery() {
+		slf4jLogger.info("==findAllNamedQuery()==");
 		Assert.assertTrue(showService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
-		logger.debug("==count()==");
-		Assert.assertTrue(showService.getAll().size() >= 13);
+		slf4jLogger.info("==count()==");
+		Assert.assertTrue(showService.getAll().size() >= 11);
 		Assert.assertNotNull("show should not be null", mockedShow.toJson());
-		logger.debug(" mockedShow.toJson()->" + mockedShow.toJson());
+		slf4jLogger.debug(" mockedShow.toJson()->" + mockedShow.toJson());
 	}
 
 	@Test
 	@Override
 	public void insertShowNativeQuery() {
-		logger.debug("==insertShowNativeQuery()==");
+		slf4jLogger.info("==insertShowNativeQuery()==");
 		Query query = em
 				.createNativeQuery("INSERT INTO Show (id, name, beginning) "
 						+ " VALUES(?,?,?)");

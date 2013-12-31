@@ -5,6 +5,8 @@ package com.realtv.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import com.realtv.repo.ShowDao;
 @Service
 public class ShowServiceImpl implements ShowService {
 
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowServiceImpl.class);
+	
 	@Autowired
 	private ShowDao showDao;
 
@@ -30,6 +34,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = false)
 	public Show create(Show show) {
+		slf4jLogger.info("==Show create(Show show)==");
 		return showDao.create(show);
 	}
 
@@ -41,6 +46,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
+		slf4jLogger.info("==void delete(Long id)==");
 		showDao.delete(id);
 	}
 
@@ -52,6 +58,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = false)
 	public Show update(Show show) {
+		slf4jLogger.info("==Show update(Show show)==");
 		return showDao.update(show);
 	}
 
@@ -63,6 +70,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = false)
 	public Show find(Long id) {
+		slf4jLogger.info("==Show find(Long id)==");
 		return showDao.find(id);
 	}
 
@@ -74,6 +82,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Show> getAll() {
+		slf4jLogger.info("==List<Show> getAll()==");
 		return showDao.getAll();
 	}
 
@@ -85,6 +94,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = true)
 	public Long count() {
+		slf4jLogger.info("==Long count()==");
 		return showDao.count();
 	}
 
@@ -94,6 +104,7 @@ public class ShowServiceImpl implements ShowService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Show> findAllNamedQuery() {
+		slf4jLogger.info("==List<Show> findAllNamedQuery()==");
 		return showDao.findAllNamedQuery();
 	}
 }

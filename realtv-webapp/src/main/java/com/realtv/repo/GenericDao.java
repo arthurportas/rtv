@@ -16,9 +16,9 @@ public interface GenericDao<T extends Serializable> {
 
 	public T create(T t);
 
-	public void delete(Object id);
+	public void delete(long id);
 
-	public T find(Object id);
+	public T find(long id);
 
 	public List<T> getAll();
 

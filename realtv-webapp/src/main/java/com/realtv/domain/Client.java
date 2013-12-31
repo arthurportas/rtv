@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,36 +20,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.google.gson.GsonBuilder;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "answer"))
-@NamedQueries({ @NamedQuery(name = "Answer.FIND_ALL", query = "select a from Answer a") })
-@XmlRootElement(name = "aswer")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "mobileID"))
+@NamedQueries({ @NamedQuery(name = "Client.FIND_ALL", query = "select c from Client c") })
+@XmlRootElement(name = "client")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Answer extends BaseEntity implements Serializable {
+public class Client extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
-	public static final String FIND_ALL = "Answer.FIND_ALL";
+	public static final String FIND_ALL = "Client.FIND_ALL";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String answer;
+	private String clientGCMRegistrationID;
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String correctAnswer;
+	private String mobileID;/*default first gmail registered on device*/
 
-	@ManyToOne
-	@JoinColumn(name = "questionId")
-	private Question question;
+	@Size(min = 1, max = 255)
+	private String userName;
 
+	@Size(min = 1, max = 255)
+	private String password;/*SHA-1*/
+		
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -63,36 +58,45 @@ public class Answer extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public String getClientGCMRegistrationID() {
+		return clientGCMRegistrationID;
 	}
 
 	@XmlElement
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setClientGCMRegistrationID(String clientGCMRegistrationID) {
+		this.clientGCMRegistrationID = clientGCMRegistrationID;
 	}
-
-	public String getCorrectAnswer() {
-		return correctAnswer;
-	}
-
-	@XmlElement
-	public void setCorrectAnswer(String correctAnswer) {
-		this.correctAnswer = correctAnswer;
-	}
-
-	public Question getQuestion() {
-		return question;
+	
+	public String getMobileID() {
+		return mobileID;
 	}
 
 	@XmlElement
-	public void setQuestion(Question question) {
-		this.question = question;
+	public void setMobileID(String mobileID) {
+		this.mobileID = mobileID;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	@XmlElement
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	@XmlElement
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	/* ==========================CONSTRUCTOR======================= */
 
-	public Answer() {
+	public Client() {
 
 	}
 
@@ -105,8 +109,7 @@ public class Answer extends BaseEntity implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.answer,
-				this.correctAnswer);
+		return com.google.common.base.Objects.hashCode(this.mobileID);
 	}
 
 	/**
@@ -127,11 +130,9 @@ public class Answer extends BaseEntity implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Answer other = (Answer) obj;
+		final Client other = (Client) obj;
 
-		return com.google.common.base.Objects.equal(this.answer, other.answer)
-				&& com.google.common.base.Objects.equal(this.correctAnswer,
-						other.answer);
+		return com.google.common.base.Objects.equal(this.mobileID, other.mobileID);
 	}
 
 	/**
@@ -144,7 +145,7 @@ public class Answer extends BaseEntity implements Serializable {
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.answer).addValue(this.correctAnswer).toString();
+				.addValue(this.mobileID).toString();
 	}
 
 	/*

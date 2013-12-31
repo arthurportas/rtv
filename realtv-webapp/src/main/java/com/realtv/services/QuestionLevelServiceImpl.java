@@ -5,22 +5,26 @@ package com.realtv.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.realtv.domain.Level;
-import com.realtv.repo.LevelDao;
+import com.realtv.domain.QuestionLevel;
+import com.realtv.repo.QuestionLevelDao;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class LevelServiceImpl implements LevelService {
+public class QuestionLevelServiceImpl implements QuestionLevelService {
 
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(QuestionLevelServiceImpl.class);
+	
 	@Autowired
-	private LevelDao levelDao;
+	private QuestionLevelDao questionLevelDao;
 
 	/*
 	 * (non-Javadoc)
@@ -29,8 +33,9 @@ public class LevelServiceImpl implements LevelService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Level create(Level level) {
-		return levelDao.create(level);
+	public QuestionLevel create(QuestionLevel questionLevel) {
+		slf4jLogger.info("==QuestionLevel create(QuestionLevel questionLevel)==");
+		return questionLevelDao.create(questionLevel);
 	}
 
 	/*
@@ -41,7 +46,8 @@ public class LevelServiceImpl implements LevelService {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
-		levelDao.delete(id);
+		slf4jLogger.info("==void delete(Long id)==");
+		questionLevelDao.delete(id);
 	}
 
 	/*
@@ -51,8 +57,9 @@ public class LevelServiceImpl implements LevelService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Level update(Level level) {
-		return levelDao.update(level);
+	public QuestionLevel update(QuestionLevel questionLevel) {
+		slf4jLogger.info("==QuestionLevel update(QuestionLevel questionLevel)==");
+		return questionLevelDao.update(questionLevel);
 	}
 
 	/*
@@ -62,8 +69,9 @@ public class LevelServiceImpl implements LevelService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Level find(Long id) {
-		return levelDao.find(id);
+	public QuestionLevel find(Long id) {
+		slf4jLogger.info("==QuestionLevel find(Long id)==");
+		return questionLevelDao.find(id);
 	}
 
 	/*
@@ -73,8 +81,9 @@ public class LevelServiceImpl implements LevelService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Level> getAll() {
-		return levelDao.getAll();
+	public List<QuestionLevel> getAll() {
+		slf4jLogger.info("==List<QuestionLevel> getAll()==");
+		return questionLevelDao.getAll();
 	}
 
 	/*
@@ -85,7 +94,8 @@ public class LevelServiceImpl implements LevelService {
 	@Override
 	@Transactional(readOnly = true)
 	public Long count() {
-		return levelDao.count();
+		slf4jLogger.info("==Long count()==");
+		return questionLevelDao.count();
 	}
 
 	/* (non-Javadoc)
@@ -93,7 +103,8 @@ public class LevelServiceImpl implements LevelService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Level> findAllNamedQuery() {
-		return levelDao.findAllNamedQuery();
+	public List<QuestionLevel> findAllNamedQuery() {
+		slf4jLogger.info("==questionLevelDao.findAllNamedQuery()==");
+		return questionLevelDao.findAllNamedQuery();
 	}
 }

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,6 +22,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.GsonBuilder;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "question"))
@@ -58,8 +58,9 @@ public class Question extends BaseEntity implements Serializable {
 	@JoinColumn(name = "themeId")
 	private Theme theme;
 
-	@ManyToMany(mappedBy = "questions")
-	private List<Level> levels;/*refator to questionLevel and test this bi-diretional relathionship*/
+	@ManyToOne
+	@JoinColumn(name = "questionLevelId")
+	private QuestionLevel questionLevel;
 
 	/* ==========================GETTERS/SETTERS======================= */
 
@@ -90,13 +91,22 @@ public class Question extends BaseEntity implements Serializable {
 		this.answers = answers;
 	}
 
+	public Theme getTheme() {
+		return theme;
+	}
+	
 	@XmlElement
 	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
 
-	public Theme getTheme() {
-		return theme;
+	public QuestionLevel getQuestionLevel() {
+		return questionLevel;
+	}
+	
+	@XmlElement
+	public void setQuestionLevel(QuestionLevel questionLevel) {
+		this.questionLevel = questionLevel;
 	}
 
 	/* ==========================CONSTRUCTOR======================= */
@@ -168,7 +178,6 @@ public class Question extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
 	}
 }

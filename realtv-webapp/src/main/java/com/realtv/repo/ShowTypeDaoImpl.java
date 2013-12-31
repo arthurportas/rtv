@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 @Repository
 public class ShowTypeDaoImpl extends GenericDaoImpl<ShowType> implements ShowTypeDao {
 
-	static final Logger LOG = LoggerFactory.getLogger(ShowTypeDaoImpl.class);
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowTypeDaoImpl.class);
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ShowType> findAllNamedQuery() {
-		LOG.debug("==List<ShowType> findAllNamedQuery()==");
+		slf4jLogger.info("==List<ShowType> findAllNamedQuery()==");
 		return super.em.createNamedQuery(Answer.FIND_ALL).getResultList();
 	}	
 }

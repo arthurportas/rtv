@@ -14,28 +14,36 @@ import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+
+import com.google.common.base.Preconditions;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
+@Repository
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 
-	static final Logger LOG = LoggerFactory.getLogger(GenericDaoImpl.class);
-	
+	private static final Logger slf4jLogger = LoggerFactory
+			.getLogger(GenericDaoImpl.class);
+
 	private Class<T> type;
 	@PersistenceContext
 	protected EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	public GenericDaoImpl() {
-		LOG.debug("==GenericDaoImpl()==");
+		slf4jLogger.info("==GenericDaoImpl()==");
 		Type t = getClass().getGenericSuperclass();
-		LOG.debug("==Type t==" + t);
+		slf4jLogger.debug("==Type t==" + t);
 		ParameterizedType pt = (ParameterizedType) t;
-		LOG.debug("==ParameterizedType pt==" + pt);
+		slf4jLogger.debug("==ParameterizedType pt==" + pt);
 		type = (Class<T>) pt.getActualTypeArguments()[0];
-		LOG.debug("==Class<T> type==" + type);	
+		slf4jLogger.debug("==Class<T> type==" + type);
 	}
 
 	/*
@@ -45,13 +53,13 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	 */
 	@Override
 	public long count() {
-		LOG.debug("==long count()==");	
+		slf4jLogger.info("==long count()==");
 		String entity = type.getSimpleName();
-		LOG.debug("==entity==" + entity);
+		slf4jLogger.debug("==entity==" + entity);
 		final StringBuffer queryString = new StringBuffer(
 				"select count(ent) from " + entity + " ent");
 		final Query query = this.em.createQuery(queryString.toString());
-		LOG.debug("==query==" + queryString.toString());	
+		slf4jLogger.debug("==query==" + queryString.toString());
 		return (Long) query.getSingleResult();
 	}
 
@@ -61,10 +69,11 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	 * @see com.realtv.repo.GenericDao#create(java.io.Serializable)
 	 */
 	@Override
-	public T create(final T t) {
-		LOG.debug("==T create(final T t)==");
-		em.persist(t);
-		return t;
+	public T create(final T entity) {
+		slf4jLogger.info("==T create(final T entity)==");
+		Preconditions.checkNotNull(entity);
+		em.persist(entity);
+		return entity;
 	}
 
 	/*
@@ -73,9 +82,11 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	 * @see com.realtv.repo.GenericDao#delete(java.lang.Object)
 	 */
 	@Override
-	public void delete(final Object id) {
-		LOG.debug("==void delete(final Object id)==");
-		em.remove(em.getReference(type, id));
+	public void delete(final long entityId) {
+		slf4jLogger.info("==void delete(final long entityId)==");
+		final T entity = find(entityId);
+		Preconditions.checkState(entity != null);
+		em.remove(entity);
 	}
 
 	/*
@@ -84,8 +95,8 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	 * @see com.realtv.repo.GenericDao#find(java.lang.Object)
 	 */
 	@Override
-	public T find(final Object id) {
-		LOG.debug("==T find(final Object id)==");
+	public T find(final long id) {
+		slf4jLogger.info("==T find(final long id)==");
 		return em.find(type, id);
 	}
 
@@ -97,7 +108,7 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
-		LOG.debug("==List<T> getAll()==");
+		slf4jLogger.info("==List<T> getAll()==");
 		Query query = em.createQuery("from " + type.getName());
 		return query.getResultList();
 	}
@@ -108,9 +119,10 @@ public class GenericDaoImpl<T extends Serializable> implements GenericDao<T> {
 	 * @see com.realtv.repo.GenericDao#update(java.io.Serializable)
 	 */
 	@Override
-	public T update(final T t) {
-		LOG.debug("==T update(final T t)==");
-		return em.merge(t);
+	public T update(final T entity) {
+		slf4jLogger.info("==T update(final T entity)==");
+		Preconditions.checkNotNull(entity);
+		return em.merge(entity);
 	}
 
 }

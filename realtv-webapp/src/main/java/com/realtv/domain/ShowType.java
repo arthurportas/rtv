@@ -1,6 +1,5 @@
 package com.realtv.domain;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,11 +18,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.AnnotationIntrospector;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
+import com.google.gson.GsonBuilder;
 
 @Entity
 @Table
@@ -41,7 +36,7 @@ public class ShowType extends BaseEntity implements Serializable {
 	private Long id;
 
 	@NotNull
-	private int type;/*'0-Jogo em modo DEMO\\n1-Jogo em modo RealTime'*/
+	private int mode;/*'0-Jogo em modo DEMO\\n1-Jogo em modo RealTime'*/
 	
 	@NotNull
 	@Size(min = 1, max = 255)
@@ -63,13 +58,13 @@ public class ShowType extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 
-	public int getType() {
-		return type;
+	public int getMode() {
+		return mode;
 	}
 
 	@XmlElement
-	public void setType(int type) {
-		this.type = type;
+	public void setMode(int mode) {
+		this.mode = mode;
 	}
 	
 	
@@ -106,7 +101,7 @@ public class ShowType extends BaseEntity implements Serializable {
 	@Override
 	public int hashCode() {
 		return com.google.common.base.Objects.hashCode(this.description,
-				this.type, this.shows);
+				this.mode, this.shows);
 	}
 
 	/**
@@ -130,8 +125,8 @@ public class ShowType extends BaseEntity implements Serializable {
 		final ShowType other = (ShowType) obj;
 
 		return com.google.common.base.Objects.equal(this.description, other.description)
-				&& com.google.common.base.Objects.equal(this.type,
-						other.type);
+				&& com.google.common.base.Objects.equal(this.mode,
+						other.mode);
 	}
 
 	/**
@@ -144,7 +139,7 @@ public class ShowType extends BaseEntity implements Serializable {
 	@Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.type).addValue(this.description)
+				.addValue(this.mode).addValue(this.description)
 				.toString();
 	}
 
@@ -155,24 +150,6 @@ public class ShowType extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		/* needs refactor */
-		ObjectMapper mapper = new ObjectMapper();
-		AnnotationIntrospector introspector = new JacksonAnnotationIntrospector();
-		mapper.setAnnotationIntrospector(introspector);
-		String result = null;
-		try {
-			result = mapper.writeValueAsString(this);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(result);
-		return result;
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
 	}
 }

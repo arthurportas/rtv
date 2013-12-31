@@ -3,17 +3,19 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
 	<persistence-unit name="testPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.realtv.domain.Member</class>
 		<class>com.realtv.domain.Question</class>
 		<class>com.realtv.domain.Answer</class>
 		<class>com.realtv.domain.Theme</class>
-		<class>com.realtv.domain.Level</class>
+		<class>com.realtv.domain.QuestionLevel</class>
 		<class>com.realtv.domain.Show</class>
 		<class>com.realtv.domain.ShowType</class>
+		<class>com.realtv.domain.Client</class>
         <properties>
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         	<property name="hibernate.show_sql" value="true" />
         	<property name="hibernate.format_sql" value="true" />
+        	<property name="hibernate.generate_statistics" value="true" />
+        	
         </properties>
 	</persistence-unit>
 </persistence>

@@ -9,6 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>RealTV</name>
+	<url>http://rtv.net</url>
 
 	<properties>
 		<!-- Spring version -->
@@ -23,25 +24,20 @@
 
 		<!-- JBoss AS plugin for deployment -->
 		<version.jboss.as.maven.plugin>7.1.1.Final</version.jboss.as.maven.plugin>
-
+		<!-- Slf4j version -->
+		<slf4j.version>1.6.6</slf4j.version>
 		<!-- Logback version -->
-		<logback.version>1.0.1</logback.version>
-
+		<logback.version>1.0.7</logback.version>
 		<!-- Freemarker version -->
 		<freemarker.version>2.3.20</freemarker.version>
-
 		<!-- Guava version -->
 		<guava.version>12.0</guava.version>
-
 		<!-- Selenium version -->
 		<selenium.version>2.26.0</selenium.version>
-
 		<!-- Junit version -->
 		<junit.version>4.8.2</junit.version>
-
 		<!-- Mockito version -->
 		<mockito.version>1.9.5</mockito.version>
-
 		<!-- ActiveMQ version -->
 		<activemq.version>5.8.0</activemq.version>
 
@@ -310,21 +306,21 @@
 			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-	<groupId>com.google.code.gson</groupId>
-	<artifactId>gson</artifactId>
-	<version>2.2.4</version>
-</dependency>
-            
-		
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+
 		<!-- Add cglib for the MemberDaoTest -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>
 		</dependency>
-		
+
 		<!-- Add cglib for the MemberDaoTest -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -357,12 +353,7 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.6.4</version>
-			<scope>provided</scope>
-		</dependency>
+
 
 		<!-- freemarker -->
 		<dependency>
@@ -383,6 +374,15 @@
 			<artifactId>guava-testlib</artifactId>
 			<version>${guava.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- =======LOGGING======== -->
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- logback -->
@@ -493,6 +493,7 @@
 			</build>
 		</profile>
 	</profiles>
+
 	<scm>
 		<developerConnection>Arthur Portas</developerConnection>
 		<tag>RealTV</tag>

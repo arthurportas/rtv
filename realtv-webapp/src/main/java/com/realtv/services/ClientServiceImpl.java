@@ -11,20 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.realtv.domain.Answer;
-import com.realtv.repo.AnswerDao;
+import com.realtv.domain.Client;
+import com.realtv.repo.ClientDao;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class AnswerServiceImpl implements AnswerService {
+public class ClientServiceImpl implements ClientService {
 
-	private static final Logger slf4jLogger = LoggerFactory.getLogger(AnswerServiceImpl.class);
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ClientServiceImpl.class);
 	
 	@Autowired
-	private AnswerDao answerDao;
+	private ClientDao clientDao;
 
 	/*
 	 * (non-Javadoc)
@@ -33,9 +33,9 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Answer create(Answer answer) {
-		slf4jLogger.info("==Answer create(Answer answer)==");
-		return answerDao.create(answer);
+	public Client create(Client client) {
+		slf4jLogger.info("==Client create(Client client)==");
+		return clientDao.create(client);
 	}
 
 	/*
@@ -47,7 +47,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
 		slf4jLogger.info("==void delete(Long id)==");
-		answerDao.delete(id);
+		clientDao.delete(id);
 	}
 
 	/*
@@ -57,9 +57,9 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Answer update(Answer answer) {
-		slf4jLogger.info("==Answer update(Answer answer)==");
-		return answerDao.update(answer);
+	public Client update(Client client) {
+		slf4jLogger.info("==Client update(Client client)==");
+		return clientDao.update(client);
 	}
 
 	/*
@@ -69,9 +69,9 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public Answer find(Long id) {
-		slf4jLogger.info("==Answer find(Long id)==");
-		return answerDao.find(id);
+	public Client find(Long id) {
+		slf4jLogger.info("==Client find(Long id)==");
+		return clientDao.find(id);
 	}
 
 	/*
@@ -81,9 +81,9 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Answer> getAll() {
-		slf4jLogger.info("==List<Answer> getAll()==");
-		return answerDao.getAll();
+	public List<Client> getAll() {
+		slf4jLogger.info("==List<Client> getAll()==");
+		return clientDao.getAll();
 	}
 
 	/*
@@ -95,7 +95,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Transactional(readOnly = true)
 	public Long count() {
 		slf4jLogger.info("==Long count()==");
-		return answerDao.count();
+		return clientDao.count();
 	}
 
 	/* (non-Javadoc)
@@ -103,8 +103,8 @@ public class AnswerServiceImpl implements AnswerService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Answer> findAllNamedQuery() {
-		slf4jLogger.info("==List<Answer> findAllNamedQuery()==");
-		return answerDao.findAllNamedQuery();
+	public List<Client> findAllNamedQuery() {
+		slf4jLogger.info("==List<Client> findAllNamedQuery()==");
+		return clientDao.findAllNamedQuery();
 	}
 }

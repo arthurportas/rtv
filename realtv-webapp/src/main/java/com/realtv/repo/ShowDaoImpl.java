@@ -11,12 +11,12 @@ import com.realtv.domain.Show;
 @Repository
 public class ShowDaoImpl extends GenericDaoImpl<Show> implements ShowDao {
 
-	static final Logger LOG = LoggerFactory.getLogger(ShowDaoImpl.class);
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowDaoImpl.class);
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Show> findAllNamedQuery() {
-		LOG.debug("==List<Show> findAllNamedQuery()==");
+		slf4jLogger.info("==List<Show> findAllNamedQuery()==");
 		return super.em.createNamedQuery(Show.FIND_ALL).getResultList();
 	}	
 }

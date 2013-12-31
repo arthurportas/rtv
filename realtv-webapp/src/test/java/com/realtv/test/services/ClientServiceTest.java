@@ -6,7 +6,7 @@ package com.realtv.test.services;
  * @author Arthur Portas
  * @date 24/12/2013
  */
-public interface LevelServiceTest {
+public interface ClientServiceTest {
 	
 	/*CRUD*/
 	public void create();
@@ -16,5 +16,6 @@ public interface LevelServiceTest {
 	public void getAll();
 	public void count();
 	/*DAO*/
+	public void findAllClientsNamedQuery();
 	public void findAllNamedQuery();
 }

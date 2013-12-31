@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +19,15 @@ import com.realtv.domain.Question;
 @Transactional
 public class QuestionDaoImpl extends GenericDaoImpl<Question> implements QuestionDao {
 
+	private static final Logger slf4jLogger = LoggerFactory
+			.getLogger(QuestionDaoImpl.class);
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.realtv.repo.QuestionDao#findAllOrderedByName()
 	 */
 	public List<Question> findAllOrderedByName() {
+		slf4jLogger.info("==List<Question> findAllOrderedByName()==");
 		CriteriaBuilder cb = super.em.getCriteriaBuilder();
 		CriteriaQuery<Question> criteria = cb.createQuery(Question.class);
 		Root<Question> question = criteria.from(Question.class);
@@ -37,6 +42,7 @@ public class QuestionDaoImpl extends GenericDaoImpl<Question> implements Questio
 	 */
 	@Override
 	public void registerAnswers(Question question, List<Answer> answers) {
+		slf4jLogger.info("==registerAnswers(Question question, List<Answer> answers)==");
 		if(answers!=null && !answers.isEmpty()){
 			question.setAnswers(answers);
 			super.em.persist(question);
@@ -51,6 +57,7 @@ public class QuestionDaoImpl extends GenericDaoImpl<Question> implements Questio
 	 */
 	@Override
 	public Question findQuestionNamedQuery(String question) {
+		slf4jLogger.info("==Question findQuestionNamedQuery(String question)==");
 		Query q = super.em.createNamedQuery(Question.FIND_BY_QUESTION).setParameter(
 				"question", question);
 		return (Question) q.getSingleResult();
@@ -65,7 +72,7 @@ public class QuestionDaoImpl extends GenericDaoImpl<Question> implements Questio
 	 */
 	@Override
 	public List<Answer> findAnswersByQuestionNamedQuery(String question) {
-
+		slf4jLogger.info("==List<Answer> findAnswersByQuestionNamedQuery(String question)==");
 		Query query = em.createNamedQuery(Question.FIND_ANSWERS_BY_QUESTION)
 				.setParameter("question", question);
 		Question q = (Question) query.getSingleResult();

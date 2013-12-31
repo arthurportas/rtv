@@ -8,13 +8,14 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.realtv.domain.Answer;
 import com.realtv.domain.Show;
 import com.realtv.domain.ShowType;
 import com.realtv.services.ShowTypeService;
@@ -26,6 +27,9 @@ import com.realtv.services.ShowTypeService;
 @TransactionConfiguration(defaultRollback = true)
 public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 
+	private final static Logger slf4jLogger = LoggerFactory
+			.getLogger(ShowTypeServiceTestImpl.class);
+	
 	@Autowired
 	private ShowTypeService showTypeService;
 
@@ -37,7 +41,7 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 	public void setup() {
 		mockedShowType = new ShowType();
 		mockedShowType.setDescription("description");
-		mockedShowType.setType(1);/* refactor to enum */
+		mockedShowType.setMode(1);/* refactor to enum */
 		mockedShow = new Show();
 		mockedShow.setName("show");
 		mockedShow.setBeginning(Calendar.getInstance().getTime());
@@ -53,6 +57,7 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 	@Test
 	@Override
 	public void create() {
+		slf4jLogger.info("==create()==");
 		Assert.assertNotNull("showType should not be null",
 				showTypeService.create(mockedShowType));
 	}
@@ -60,7 +65,7 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 	@Test
 	@Override
 	public void delete() {
-
+		slf4jLogger.info("==delete()==");
 		final ShowType showType = showTypeService.create(mockedShowType);
 		Assert.assertNotNull("showType should not be null", showType);
 		Assert.assertNotNull("showType should not be null", showType.getId());
@@ -77,6 +82,7 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 	@Test
 	@Override
 	public void update() {
+		slf4jLogger.info("==update()==");
 		ShowType showType = showTypeService.create(mockedShowType);
 		Assert.assertNotNull("showType should not be null", showType);
 		Assert.assertNotNull("showType should not be null", showType.getId());
@@ -96,6 +102,7 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 	@Test
 	@Override
 	public void find() {
+		slf4jLogger.info("==find()==");
 		final ShowType showType = showTypeService.create(mockedShowType);
 		Assert.assertNotNull("showType should not be null", showType);
 		Assert.assertNotNull("showType should not be null", showType.getId());
@@ -104,24 +111,27 @@ public class ShowTypeServiceTestImpl implements ShowTypeServiceTest {
 				showTypeService.find(showType.getId()));
 		Assert.assertNotNull("shows should not be null",
 				showTypeService.getAll().get(0).getShows());
-		Assert.assertEquals(showTypeService.getAll().get(0).getShows().size(), 1);
+		Assert.assertEquals(showTypeService.getAll().get(0).getShows().size(), 11);
 	}
 
 	@Test
 	@Override
 	public void getAll() {
+		slf4jLogger.info("==getAll()==");
 		Assert.assertTrue(showTypeService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void findAllNamedQuery() {
+		slf4jLogger.info("==findAllNamedQuery()==");
 		Assert.assertTrue(showTypeService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
+		slf4jLogger.info("==count()==");
 		Assert.assertTrue(showTypeService.getAll().size() >= 2);
 	}
 }

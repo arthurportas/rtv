@@ -8,6 +8,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,6 +26,9 @@ import com.realtv.services.ThemeService;
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class ThemeServiceTestImpl implements ThemeServiceTest {
+
+	private final static Logger slf4jLogger = LoggerFactory
+			.getLogger(ThemeServiceTestImpl.class);
 
 	@Autowired
 	private ThemeService themeService;
@@ -53,6 +58,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void create() {
+		slf4jLogger.info("==create()==");
 		Assert.assertNotNull("theme should not be null",
 				themeService.create(mockedTheme));
 	}
@@ -60,7 +66,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void delete() {
-
+		slf4jLogger.info("==delete()==");
 		final Theme theme = themeService.create(mockedTheme);
 		Assert.assertNotNull("theme should not be null", theme);
 		Assert.assertNotNull("theme should not be null", theme.getId());
@@ -77,6 +83,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void update() {
+		slf4jLogger.info("==update()==");
 		Theme theme = themeService.create(mockedTheme);
 		Assert.assertNotNull("theme should not be null", theme);
 		Assert.assertNotNull("theme should not be null", theme.getId());
@@ -95,6 +102,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void find() {
+		slf4jLogger.info("==find()==");
 		final Theme theme = themeService.create(mockedTheme);
 		Assert.assertNotNull("theme should not be null", theme);
 		Assert.assertNotNull("theme should not be null", theme.getId());
@@ -106,12 +114,14 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void getAll() {
+		slf4jLogger.info("==getAll()==");
 		Assert.assertTrue(themeService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
+		slf4jLogger.info("==count()==");
 		Assert.assertTrue(themeService.getAll().size() >= 1);
 	}
 
@@ -123,6 +133,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void findAllOrderedByName() {
+		slf4jLogger.info("==findAllOrderedByName()==");
 		List<Theme> themes = themeService.findAllOrderedByName();
 		Assert.assertNotNull("theme should not be null", themes);
 		/* uses Criteria Builder */
@@ -136,6 +147,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Test
 	@Override
 	public void findByTheme() {
+		slf4jLogger.info("==findByTheme()==");
 		Theme theme = themeService.getAll().get(0);
 		final Theme lookup = themeService.findByTheme(theme.getTheme());
 		Assert.assertNotNull("lookup should not be null", lookup);

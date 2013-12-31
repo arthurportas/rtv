@@ -1,6 +1,5 @@
 package com.realtv.domain;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,13 +22,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.AnnotationIntrospector;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
-
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -113,7 +105,7 @@ public class Show extends BaseEntity implements Serializable {
 	public void setShowType(ShowType showType) {
 		this.showType = showType;
 	}
-
+	
 	/* ==========================CONSTRUCTOR======================= */
 
 	public Show() {
@@ -181,20 +173,6 @@ public class Show extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		/* needs refactor */
-		/*
-		 * ObjectMapper mapper = new ObjectMapper(); AnnotationIntrospector
-		 * introspector = new JacksonAnnotationIntrospector();
-		 * mapper.setAnnotationIntrospector(introspector); String result = null;
-		 * try { result = mapper.writeValueAsString(this); } catch
-		 * (JsonGenerationException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (JsonMappingException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } catch (IOException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-		 * System.out.println(result); return result;
-		 */
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(this).toString();
-
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
 	}
 }

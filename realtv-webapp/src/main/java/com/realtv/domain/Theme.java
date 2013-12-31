@@ -18,7 +18,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.ImmutableList;
-
+import com.google.gson.GsonBuilder;
+/**
+ * Represents an associated question theme.
+ * Possible values are ()
+ * */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "theme"))
 @XmlRootElement(name = "theme")
@@ -145,8 +149,7 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
 	}
 
 }

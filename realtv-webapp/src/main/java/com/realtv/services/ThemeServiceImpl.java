@@ -5,6 +5,8 @@ package com.realtv.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.realtv.repo.ThemeDao;
 @Service
 public class ThemeServiceImpl implements ThemeService {
 
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ThemeServiceImpl.class);
+	
 	@Autowired
 	private ThemeDao themeDao;
 
@@ -26,6 +30,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public Theme create(Theme theme) {
+		slf4jLogger.info("==Theme create(Theme theme)==");
 		return themeDao.create(theme);
 	}
 
@@ -34,6 +39,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public void delete(Long id) {
+		slf4jLogger.info("==void delete(Long id)==");
 		themeDao.delete(id);
 	}
 
@@ -42,6 +48,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public Theme update(Theme theme) {
+		slf4jLogger.info("==Theme update(Theme theme)==");
 		return themeDao.update(theme);
 	}
 
@@ -50,6 +57,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public Theme find(Long id) {
+		slf4jLogger.info("==Theme find(Long id)==");
 		return themeDao.find(id);
 	}
 
@@ -58,6 +66,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public List<Theme> getAll() {
+		slf4jLogger.info("==List<Theme> getAll()==");
 		return themeDao.getAll();
 	}
 
@@ -66,6 +75,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public Long count() {
+		slf4jLogger.info("==Long count()==");
 		return themeDao.count();
 	}
 
@@ -74,6 +84,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public List<Theme> findAllOrderedByName() {
+		slf4jLogger.info("==List<Theme> findAllOrderedByName()==");
 		return themeDao.findAllOrderedByName();
 	}
 
@@ -82,6 +93,7 @@ public class ThemeServiceImpl implements ThemeService {
 	 */
 	@Override
 	public Theme findByTheme(String theme) {
+		slf4jLogger.info("==Theme findByTheme(String theme)==");
 		return themeDao.findByTheme(theme);
 	}
 

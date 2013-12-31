@@ -7,11 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -20,16 +18,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.GsonBuilder;
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "dificultyLevel"))
-@NamedQueries({ @NamedQuery(name = "Level.FIND_ALL", query = "select l from Level l") })
-@XmlRootElement(name = "level")
+@NamedQueries({ @NamedQuery(name = "QuestionLevel.FIND_ALL", query = "select ql from QuestionLevel ql") })
+@XmlRootElement(name = "questionLevel")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class Level extends BaseEntity implements Serializable {
+public class QuestionLevel extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
-	public static final String FIND_ALL = "Level.FIND_ALL";
+	public static final String FIND_ALL = "QuestionLevel.FIND_ALL";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -41,10 +41,7 @@ public class Level extends BaseEntity implements Serializable {
 	@NotNull
 	private int timeAvailableToAnswer;
 
-	@ManyToMany
-	@JoinTable(name = "LEVEL_QUESTION", 
-				joinColumns = { @JoinColumn(name = "questionID", referencedColumnName = "id") }, 
-				inverseJoinColumns = { @JoinColumn(name = "levelId", referencedColumnName = "id") })
+	@OneToMany(mappedBy = "questionLevel")
 	private List<Question> questions;
 
 	/* ==========================GETTERS/SETTERS======================= */
@@ -86,7 +83,7 @@ public class Level extends BaseEntity implements Serializable {
 	}
 	/* ==========================CONSTRUCTOR======================= */
 
-	public Level() {
+	public QuestionLevel() {
 
 	}
 
@@ -117,7 +114,7 @@ public class Level extends BaseEntity implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Level other = (Level) obj;
+		final QuestionLevel other = (QuestionLevel) obj;
 
 		return com.google.common.base.Objects.equal(this.timeAvailableToAnswer,
 				other.timeAvailableToAnswer)
@@ -144,8 +141,7 @@ public class Level extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
 	}
 
 }

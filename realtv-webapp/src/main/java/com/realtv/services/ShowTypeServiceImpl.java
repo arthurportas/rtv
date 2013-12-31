@@ -5,6 +5,8 @@ package com.realtv.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import com.realtv.repo.ShowTypeDao;
 @Service
 public class ShowTypeServiceImpl implements ShowTypeService {
 
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowTypeServiceImpl.class);
+	
 	@Autowired
 	private ShowTypeDao showTypeDao;
 
@@ -30,6 +34,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = false)
 	public ShowType create(ShowType showType) {
+		slf4jLogger.info("==ShowType create(ShowType showType)==");
 		return showTypeDao.create(showType);
 	}
 
@@ -41,6 +46,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
+		slf4jLogger.info("==void delete(Long id)==");
 		showTypeDao.delete(id);
 	}
 
@@ -52,6 +58,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = false)
 	public ShowType update(ShowType showType) {
+		slf4jLogger.info("==ShowType update(ShowType showType)==");
 		return showTypeDao.update(showType);
 	}
 
@@ -63,6 +70,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = false)
 	public ShowType find(Long id) {
+		slf4jLogger.info("==ShowType find(Long id)==");
 		return showTypeDao.find(id);
 	}
 
@@ -74,6 +82,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ShowType> getAll() {
+		slf4jLogger.info("==List<ShowType> getAll()==");
 		return showTypeDao.getAll();
 	}
 
@@ -85,6 +94,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = true)
 	public Long count() {
+		slf4jLogger.info("==Long count()==");
 		return showTypeDao.count();
 	}
 
@@ -94,6 +104,7 @@ public class ShowTypeServiceImpl implements ShowTypeService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ShowType> findAllNamedQuery() {
+		slf4jLogger.info("==List<ShowType> findAllNamedQuery()==");
 		return showTypeDao.findAllNamedQuery();
 	}
 }

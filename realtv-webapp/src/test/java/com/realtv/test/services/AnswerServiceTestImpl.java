@@ -8,6 +8,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,6 +27,9 @@ import com.realtv.services.AnswerService;
 @TransactionConfiguration(defaultRollback = true)
 public class AnswerServiceTestImpl implements AnswerServiceTest {
 
+	private static final Logger slf4jLogger = LoggerFactory
+			.getLogger(AnswerServiceTestImpl.class);
+	
 	@Autowired
 	private AnswerService answerService;
 
@@ -53,6 +58,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void findAllAnswersNamedQuery() {
+		slf4jLogger.info("==findAllAnswersNamedQuery()==");
 		List<Answer> answers = answerService.findAllNamedQuery();
 		Assert.assertNotNull("answers should not be null", answers);
 		Assert.assertEquals(60, answers.size());
@@ -61,6 +67,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void create() {
+		slf4jLogger.info("==create()==");
 		Assert.assertNotNull("answer should not be null",
 				answerService.create(mockedAnswer));
 	}
@@ -68,7 +75,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void delete() {
-
+		slf4jLogger.info("==delete()==");
 		final Answer answer = answerService.create(mockedAnswer);
 		Assert.assertNotNull("answer should not be null", answer);
 		Assert.assertNotNull("answer should not be null", answer.getId());
@@ -86,6 +93,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void update() {
+		slf4jLogger.info("==update()==");
 		Answer answer = answerService.create(mockedAnswer);
 		Assert.assertNotNull("answer should not be null", answer);
 		Assert.assertNotNull("answer should not be null", answer.getId());
@@ -102,6 +110,7 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void find() {
+		slf4jLogger.info("==find()==");
 		final Answer answer = answerService.create(mockedAnswer);
 		Assert.assertNotNull("answer should not be null", answer);
 		Assert.assertNotNull("answer should not be null", answer.getId());
@@ -113,18 +122,21 @@ public class AnswerServiceTestImpl implements AnswerServiceTest {
 	@Test
 	@Override
 	public void getAll() {
+		slf4jLogger.info("==getAll()==");
 		Assert.assertTrue(answerService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void findAllNamedQuery() {
+		slf4jLogger.info("==findAllNamedQuery()==");
 		Assert.assertTrue(answerService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
+		slf4jLogger.info("==count()==");
 		Assert.assertTrue(answerService.getAll().size() >= 60);
 	}
 

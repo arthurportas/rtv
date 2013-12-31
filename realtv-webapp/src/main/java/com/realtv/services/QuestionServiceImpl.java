@@ -5,6 +5,8 @@ package com.realtv.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import com.realtv.repo.QuestionDao;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(QuestionServiceImpl.class);
+	
 	@Autowired
 	private QuestionDao questionDao;
 
@@ -32,6 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = false)
 	public Question create(Question question) {
+		slf4jLogger.info("==Question create(Question question)==");
 		return questionDao.create(question);
 	}
 
@@ -43,6 +48,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
+		slf4jLogger.info("==void delete(Long id)==");
 		questionDao.delete(id);
 	}
 
@@ -55,6 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = false)
 	public Question update(Question question) {
+		slf4jLogger.info("==Question update(Question question)==");
 		return questionDao.update(question);
 	}
 
@@ -66,6 +73,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = false)
 	public Question find(Long id) {
+		slf4jLogger.info("==Question find(Long id)==");
 		return questionDao.find(id);
 	}
 
@@ -77,6 +85,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Question> getAll() {
+		slf4jLogger.info("==List<Question> getAll()==");
 		return questionDao.getAll();
 	}
 
@@ -88,6 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public Long count() {
+		slf4jLogger.info("==Long count()==");
 		return questionDao.count();
 	}
 
@@ -101,6 +111,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public Question findQuestionNamedQuery(String question) {
+		slf4jLogger.info("==Question findQuestionNamedQuery(String question)==");
 		return questionDao.findQuestionNamedQuery(question);
 	}
 
@@ -114,6 +125,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Answer> findAnswersByQuestionNamedQuery(String question) {
+		slf4jLogger.info("==List<Answer> findAnswersByQuestionNamedQuery(String question)==");
 		return questionDao.findAnswersByQuestionNamedQuery(question);
 	}
 
@@ -125,6 +137,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Question> findAllOrderedByName() {
+		slf4jLogger.info("==List<Question> findAllOrderedByName()==");
 		return questionDao.findAllOrderedByName();
 	}
 
@@ -138,6 +151,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional(readOnly = true)
 	public void registerAnswers(Question question, List<Answer> answers) {
+		slf4jLogger.info("==void registerAnswers(Question question, List<Answer> answers)==");
 		questionDao.registerAnswers(question, answers);
 	}
 }
