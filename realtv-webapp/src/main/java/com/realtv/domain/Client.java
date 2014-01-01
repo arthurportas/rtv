@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -16,6 +18,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.Email;
 
 import com.google.gson.GsonBuilder;
 
@@ -38,6 +42,7 @@ public class Client extends BaseEntity implements Serializable {
 	private String clientGCMRegistrationID;
 
 	@NotNull
+	@Email
 	@Size(min = 1, max = 255)
 	private String mobileID;/*default first gmail registered on device*/
 
@@ -46,7 +51,16 @@ public class Client extends BaseEntity implements Serializable {
 
 	@Size(min = 1, max = 255)
 	private String password;/*SHA-1*/
-		
+
+	/*relation to Show*/
+	
+	/*relation to AndroidNotificationServer*/
+	
+	/*relation to ClientHistory*/
+	@ManyToOne
+	@JoinColumn(name = "clientHistoryId")
+	private ClientHistory clientHistory;
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -94,6 +108,20 @@ public class Client extends BaseEntity implements Serializable {
 		this.password = password;
 	}
 
+	/**
+	 * @return the clientHistory
+	 */
+	public ClientHistory getClientHistory() {
+		return clientHistory;
+	}
+
+	/**
+	 * @param clientHistory the clientHistory to set
+	 */
+	public void setClientHistory(ClientHistory clientHistory) {
+		this.clientHistory = clientHistory;
+	}
+	
 	/* ==========================CONSTRUCTOR======================= */
 
 	public Client() {

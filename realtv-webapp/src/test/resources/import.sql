@@ -182,3 +182,7 @@ insert into Client (id, mobileID) values (58, 'ggn9dvp@ii2tjbz34f.com')
 insert into Client (id, mobileID) values (59, 'u_m6jnvy@bb-whg9d.com')
 
 insert into AndroidNotificationServer (id, registeredEmail, GCMAuthorizationKey) values (1, 'arthurportas@gmail.com', 'GCMAuthorizationKey')
+
+--timeSpentPlaying should be a long(millis) updated from Participation
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (1, 1, 15, 0, 1263585534000)
+

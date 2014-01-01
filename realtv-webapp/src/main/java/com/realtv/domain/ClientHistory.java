@@ -1,6 +1,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,42 +9,47 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Digits;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.validator.constraints.Email;
-
 import com.google.gson.GsonBuilder;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "GCMAuthorizationKey"))
-@NamedQueries({ @NamedQuery(name = "AndroidNotificationServer.FIND_ALL", query = "select ans from AndroidNotificationServer ans") })
-@XmlRootElement(name = "androidNotificationServer")
+@Table
+@NamedQueries({ @NamedQuery(name = "ClientHistory.FIND_ALL", query = "select ch from ClientHistory ch") })
+@XmlRootElement(name = "clientHistory")
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class AndroidNotificationServer extends BaseEntity implements Serializable {
+public class ClientHistory extends BaseEntity implements Serializable {
 	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
-	public static final String FIND_ALL = "AndroidNotificationServer.FIND_ALL";
+	public static final String FIND_ALL = "ClientHistory.FIND_ALL";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	//TODO set default value from properties file
-	@NotNull
-	private String GCMAuthorizationKey;
-	/*registado em https://code.google.com/apis/console/#project:549909978524 para envio de notificações*/
+	private long timeSpentPlaying;
 
-	@NotNull
-	@Email
-	private String registeredEmail;
-	/*registeredEmail-email registado no GCM para envio de notificações narthurportas@gmail.com*/
+	@Digits(fraction = 0, integer = 6)
+	private int numRightanswers;
+
+	@Digits(fraction = 0, integer = 6)
+	private int numWrongAnswers;
+
+	@Digits(fraction = 0, integer = 6)
+	private int numGamesCompleted;
+
+	/* relation to Client */
+	@OneToMany(mappedBy = "clientHistory")
+	private List<Client> clients;
+
+	/* relation to Show */
 
 	/* ==========================GETTERS/SETTERS======================= */
 
@@ -56,27 +62,60 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 		this.id = id;
 	}
 
-	public String getGCMAuthorizationKey() {
-		return GCMAuthorizationKey;
+	public long getTimeSpentPlaying() {
+		return timeSpentPlaying;
 	}
 
 	@XmlElement
-	public void setGCMAuthorizationKey(String GCMAuthorizationKey) {
-		this.GCMAuthorizationKey = GCMAuthorizationKey;
+	public void setTimeSpentPlaying(long timeSpentPlaying) {
+		this.timeSpentPlaying = timeSpentPlaying;
 	}
 
-	public String getRegisteredEmail() {
-		return registeredEmail;
+	public int getNumRightanswers() {
+		return numRightanswers;
 	}
 
 	@XmlElement
-	public void setRegisteredEmail(String registeredEmail) {
-		this.registeredEmail = registeredEmail;
+	public void setNumRightanswers(int numRightanswers) {
+		this.numRightanswers = numRightanswers;
 	}
-	
+
+	public int getNumWrongAnswers() {
+		return numWrongAnswers;
+	}
+
+	@XmlElement
+	public void setNumWrongAnswers(int numWrongAnswers) {
+		this.numWrongAnswers = numWrongAnswers;
+	}
+
+	public int getNumGamesCompleted() {
+		return numGamesCompleted;
+	}
+
+	@XmlElement
+	public void setNumGamesCompleted(int numGamesCompleted) {
+		this.numGamesCompleted = numGamesCompleted;
+	}
+
+	/**
+	 * @return the clients
+	 */
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	/**
+	 * @param clients
+	 *            the clients to set
+	 */
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
+
 	/* ==========================CONSTRUCTOR======================= */
 
-	public AndroidNotificationServer() {
+	public ClientHistory() {
 
 	}
 
@@ -89,7 +128,7 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.GCMAuthorizationKey);
+		return com.google.common.base.Objects.hashCode(this.id);
 	}
 
 	/**
@@ -110,9 +149,9 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final AndroidNotificationServer other = (AndroidNotificationServer) obj;
+		final ClientHistory other = (ClientHistory) obj;
 
-		return com.google.common.base.Objects.equal(this.GCMAuthorizationKey, other.GCMAuthorizationKey);
+		return com.google.common.base.Objects.equal(this.id, other.id);
 	}
 
 	/**
@@ -124,7 +163,8 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this).toString();
+		return com.google.common.base.Objects.toStringHelper(this)
+				.addValue(this.id).toString();
 	}
 
 	/*
@@ -134,6 +174,7 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }

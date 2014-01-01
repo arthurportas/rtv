@@ -14,6 +14,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.domain.Client;
+import com.realtv.domain.ClientHistory;
 import com.realtv.services.ClientService;
 
 import org.slf4j.Logger;
@@ -32,11 +33,20 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	private ClientService clientService;
 
 	private Client mockedClient;
+	
+	private ClientHistory mockedClientHistory;
 
 	@Before
 	public void setup() {
 		mockedClient = new Client();
 		mockedClient.setMobileID("mobileID");
+		
+		mockedClientHistory = new ClientHistory();
+		mockedClientHistory.setNumGamesCompleted(3);
+		mockedClientHistory.setNumRightanswers(30);
+		mockedClientHistory.setNumWrongAnswers(3);
+		
+		mockedClient.setClientHistory(mockedClientHistory);
 	}
 
 	@Test
@@ -123,5 +133,20 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	public void count() {
 		slf4jLogger.info("==count()==");
 		Assert.assertTrue(clientService.getAll().size() >= 30);
+	}
+
+	@Test
+	@Override
+	public void testCLientHistory() {
+		slf4jLogger.info("==testCLientHistory() ==");
+		final Client client = clientService.create(mockedClient);
+		Assert.assertNotNull("client should not be null", client);
+		Assert.assertNotNull("client should not be null", client.getId());
+		Assert.assertNotNull("clientHistory should not be null",
+				client.getClientHistory());
+		Assert.assertEquals(client.getClientHistory().getId(), mockedClientHistory.getId());
+		Assert.assertEquals(3, client.getClientHistory().getNumGamesCompleted());
+		Assert.assertEquals(30, client.getClientHistory().getNumRightanswers());
+		Assert.assertEquals(3, client.getClientHistory().getNumWrongAnswers());
 	}
 }
