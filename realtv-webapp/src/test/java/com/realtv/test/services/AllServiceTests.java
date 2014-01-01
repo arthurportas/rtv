@@ -15,7 +15,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ AnswerServiceTestImpl.class,
 		QuestionLevelServiceTestImpl.class, QuestionServiceTestImpl.class,
 		ShowServiceTestImpl.class, ShowTypeServiceTestImpl.class,
-		ThemeServiceTestImpl.class, ClientServiceTestImpl.class })
+		ThemeServiceTestImpl.class, ClientServiceTestImpl.class,
+		AndroidNotificationServerServiceTestImpl.class})
 public class AllServiceTests {
 
 }

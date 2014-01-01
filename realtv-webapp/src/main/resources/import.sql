@@ -181,3 +181,4 @@ insert into Client (id, mobileID) values (57, 'cu-kvyv5.fq@jmw2uh.com')
 insert into Client (id, mobileID) values (58, 'ggn9dvp@ii2tjbz34f.com')
 insert into Client (id, mobileID) values (59, 'u_m6jnvy@bb-whg9d.com')
 
+insert into AndroidNotificationServer (id, registeredEmail, GCMAuthorizationKey) values (1, 'arthurportas@gmail.com', 'GCMAuthorizationKey')

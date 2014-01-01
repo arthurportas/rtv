@@ -10,6 +10,8 @@
 		<class>com.realtv.domain.Show</class>
 		<class>com.realtv.domain.ShowType</class>
 		<class>com.realtv.domain.Client</class>
+		<class>com.realtv.domain.AndroidNotificationServer</class>
+		
         <properties>
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         	<property name="hibernate.show_sql" value="true" />
