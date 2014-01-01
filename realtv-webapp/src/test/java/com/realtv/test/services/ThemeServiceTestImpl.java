@@ -3,8 +3,6 @@ package com.realtv.test.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,20 +16,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.domain.Question;
 import com.realtv.domain.Theme;
-import com.realtv.services.ThemeService;
+import com.realtv.services.interfaces.IThemeService;
+import com.realtv.test.services.interfaces.IThemeServiceTest;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml",
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ThemeServiceTestImpl implements ThemeServiceTest {
+public class ThemeServiceTestImpl implements IThemeServiceTest {
 
 	private final static Logger slf4jLogger = LoggerFactory
 			.getLogger(ThemeServiceTestImpl.class);
 
 	@Autowired
-	private ThemeService themeService;
+	private IThemeService themeService;
 
 	private Theme mockedTheme;
 	private Question mockedQuestion;
@@ -59,7 +63,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Override
 	public void create() {
 		slf4jLogger.info("==create()==");
-		Assert.assertNotNull("theme should not be null",
+		assertNotNull("theme should not be null",
 				themeService.create(mockedTheme));
 	}
 
@@ -68,15 +72,15 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	public void delete() {
 		slf4jLogger.info("==delete()==");
 		final Theme theme = themeService.create(mockedTheme);
-		Assert.assertNotNull("theme should not be null", theme);
-		Assert.assertNotNull("theme should not be null", theme.getId());
+		assertNotNull("theme should not be null", theme);
+		assertNotNull("theme should not be null", theme.getId());
 		// It should be found
-		Assert.assertNotNull("theme should not be null",
+		assertNotNull("theme should not be null",
 				themeService.find(theme.getId()));
 
 		themeService.delete(theme.getId());
 		// It should not be found
-		Assert.assertNull("theme should be null",
+		assertNull("theme should be null",
 				themeService.find(theme.getId()));
 	}
 
@@ -85,17 +89,17 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	public void update() {
 		slf4jLogger.info("==update()==");
 		Theme theme = themeService.create(mockedTheme);
-		Assert.assertNotNull("theme should not be null", theme);
-		Assert.assertNotNull("theme should not be null", theme.getId());
+		assertNotNull("theme should not be null", theme);
+		assertNotNull("theme should not be null", theme.getId());
 		theme.setTheme("theme");
 
 		themeService.update(theme);
 		final Theme themeUpdated = themeService.find(theme.getId());
-		Assert.assertNotNull("themeUpdated should not be null", themeUpdated);
-		Assert.assertNotNull("themeUpdated should not be null",
+		assertNotNull("themeUpdated should not be null", themeUpdated);
+		assertNotNull("themeUpdated should not be null",
 				themeUpdated.getId());
-		Assert.assertEquals(theme.getId(), themeUpdated.getId());
-		Assert.assertTrue(themeUpdated.getTheme().equals("theme"));
+		assertEquals(theme.getId(), themeUpdated.getId());
+		assertTrue(themeUpdated.getTheme().equals("theme"));
 
 	}
 
@@ -104,10 +108,10 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	public void find() {
 		slf4jLogger.info("==find()==");
 		final Theme theme = themeService.create(mockedTheme);
-		Assert.assertNotNull("theme should not be null", theme);
-		Assert.assertNotNull("theme should not be null", theme.getId());
+		assertNotNull("theme should not be null", theme);
+		assertNotNull("theme should not be null", theme.getId());
 		// It should be found
-		Assert.assertNotNull("theme should not be null",
+		assertNotNull("theme should not be null",
 				themeService.find(theme.getId()));
 	}
 
@@ -115,14 +119,14 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	@Override
 	public void getAll() {
 		slf4jLogger.info("==getAll()==");
-		Assert.assertTrue(themeService.getAll().size() > 0);
+		assertTrue(themeService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
 		slf4jLogger.info("==count()==");
-		Assert.assertTrue(themeService.getAll().size() >= 1);
+		assertTrue(themeService.getAll().size() >= 1);
 	}
 
 	/*
@@ -135,7 +139,7 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 	public void findAllOrderedByName() {
 		slf4jLogger.info("==findAllOrderedByName()==");
 		List<Theme> themes = themeService.findAllOrderedByName();
-		Assert.assertNotNull("theme should not be null", themes);
+		assertNotNull("theme should not be null", themes);
 		/* uses Criteria Builder */
 	}
 
@@ -150,8 +154,8 @@ public class ThemeServiceTestImpl implements ThemeServiceTest {
 		slf4jLogger.info("==findByTheme()==");
 		Theme theme = themeService.getAll().get(0);
 		final Theme lookup = themeService.findByTheme(theme.getTheme());
-		Assert.assertNotNull("lookup should not be null", lookup);
-		Assert.assertEquals(lookup.getId(), theme.getId());
+		assertNotNull("lookup should not be null", lookup);
+		assertEquals(lookup.getId(), theme.getId());
 
 	}
 }

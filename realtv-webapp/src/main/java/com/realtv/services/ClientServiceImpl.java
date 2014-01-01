@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IClientDao;
 import com.realtv.domain.Client;
-import com.realtv.repo.ClientDao;
+import com.realtv.services.interfaces.IClientService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements IClientService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ClientServiceImpl.class);
 	
 	@Autowired
-	private ClientDao clientDao;
+	private IClientDao clientDao;
 
 	/*
 	 * (non-Javadoc)

@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IClientHistoryDao;
 import com.realtv.domain.ClientHistory;
-import com.realtv.repo.ClientHistoryDao;
+import com.realtv.services.interfaces.IClientHistoryService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class ClientHistoryServiceImpl implements ClientHistoryService {
+public class ClientHistoryServiceImpl implements IClientHistoryService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ClientHistoryServiceImpl.class);
 	
 	@Autowired
-	private ClientHistoryDao clientHistoryDao;
+	private IClientHistoryDao clientHistoryDao;
 
 	@Override
 	@Transactional(readOnly = false)

@@ -13,13 +13,11 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<context:component-scan base-package="com.realtv.domain" />
-
-	<context:component-scan base-package="com.realtv.repo" />
-
+	<context:component-scan base-package="com.realtv.dao" />
 	<context:component-scan base-package="com.realtv.messaging" />
-	
 	<context:component-scan base-package="com.realtv.services" />
-
+	<context:component-scan base-package="com.realtv.facade" />
+	
 	<!-- Defined AMQ connectionFactory -->
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL">

@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IAnswerDao;
 import com.realtv.domain.Answer;
-import com.realtv.repo.AnswerDao;
+import com.realtv.services.interfaces.IAnswerService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class AnswerServiceImpl implements AnswerService {
+public class AnswerServiceImpl implements IAnswerService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(AnswerServiceImpl.class);
 	
 	@Autowired
-	private AnswerDao answerDao;
+	private IAnswerDao answerDao;
 
 	/*
 	 * (non-Javadoc)

@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IQuestionLevelDao;
 import com.realtv.domain.QuestionLevel;
-import com.realtv.repo.QuestionLevelDao;
+import com.realtv.services.interfaces.IQuestionLevelService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class QuestionLevelServiceImpl implements QuestionLevelService {
+public class QuestionLevelServiceImpl implements IQuestionLevelService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(QuestionLevelServiceImpl.class);
 	
 	@Autowired
-	private QuestionLevelDao questionLevelDao;
+	private IQuestionLevelDao questionLevelDao;
 
 	/*
 	 * (non-Javadoc)

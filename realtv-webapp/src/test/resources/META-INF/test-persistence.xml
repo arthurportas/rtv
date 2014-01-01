@@ -12,12 +12,17 @@
 		<class>com.realtv.domain.Client</class>
 		<class>com.realtv.domain.AndroidNotificationServer</class>
 		<class>com.realtv.domain.ClientHistory</class>
-		
+		<class>com.realtv.domain.ShowParticipation</class>
         <properties>
+        	<prop key="hibernate.max_fetch_depth">3</prop>
+        	<!-- disable second lvl caching -->
+        	<prop name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+        	<!-- Development settings -->
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         	<property name="hibernate.show_sql" value="true" />
         	<property name="hibernate.format_sql" value="true" />
         	<property name="hibernate.generate_statistics" value="true" />
+        	<prop name="hibernate.bytecode.use_reflection_optimizer" value="false"/>
         	
         </properties>
 	</persistence-unit>

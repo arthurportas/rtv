@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IShowTypeDao;
 import com.realtv.domain.ShowType;
-import com.realtv.repo.ShowTypeDao;
+import com.realtv.services.interfaces.IShowTypeService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class ShowTypeServiceImpl implements ShowTypeService {
+public class ShowTypeServiceImpl implements IShowTypeService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowTypeServiceImpl.class);
 	
 	@Autowired
-	private ShowTypeDao showTypeDao;
+	private IShowTypeDao showTypeDao;
 
 	/*
 	 * (non-Javadoc)

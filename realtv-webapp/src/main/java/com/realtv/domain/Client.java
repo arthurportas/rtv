@@ -51,16 +51,21 @@ public class Client extends BaseEntity implements Serializable {
 
 	@Size(min = 1, max = 255)
 	private String password;/*SHA-1*/
-
-	/*relation to Show*/
 	
 	/*relation to AndroidNotificationServer*/
+	@ManyToOne
+	@JoinColumn(name = "AndroidNotificationServerId")
+	private AndroidNotificationServer androidNotificationServer;
 	
 	/*relation to ClientHistory*/
 	@ManyToOne
 	@JoinColumn(name = "clientHistoryId")
 	private ClientHistory clientHistory;
 
+	@ManyToOne
+	@JoinColumn(name = "ShowParticipationId")
+	private ShowParticipation showParticipation;
+	
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -109,6 +114,22 @@ public class Client extends BaseEntity implements Serializable {
 	}
 
 	/**
+	 * @return the androidNotificationServer
+	 */
+	public AndroidNotificationServer getAndroidNotificationServer() {
+		return androidNotificationServer;
+	}
+
+	/**
+	 * @param androidNotificationServer the androidNotificationServer to set
+	 */
+	@XmlElement
+	public void setAndroidNotificationServer(
+			AndroidNotificationServer androidNotificationServer) {
+		this.androidNotificationServer = androidNotificationServer;
+	}
+	
+	/**
 	 * @return the clientHistory
 	 */
 	public ClientHistory getClientHistory() {
@@ -120,6 +141,20 @@ public class Client extends BaseEntity implements Serializable {
 	 */
 	public void setClientHistory(ClientHistory clientHistory) {
 		this.clientHistory = clientHistory;
+	}
+	
+	/**
+	 * @return the showParticipation
+	 */
+	public ShowParticipation getShowParticipation() {
+		return showParticipation;
+	}
+
+	/**
+	 * @param showParticipation the showParticipation to set
+	 */
+	public void setShowParticipation(ShowParticipation showParticipation) {
+		this.showParticipation = showParticipation;
 	}
 	
 	/* ==========================CONSTRUCTOR======================= */

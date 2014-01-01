@@ -12,16 +12,13 @@
 
 	<!-- Enabling Spring beans auto-discovery -->
 	<context:component-scan base-package="com.realtv.mvc" />
-	<context:component-scan base-package="com.realtv.repo" />
+	<context:component-scan base-package="com.realtv.dao" />
 	<context:component-scan base-package="com.realtv.domain" />
 	<context:component-scan base-package="com.realtv.services" />
 	
 	<!-- Enabling Spring MVC configuration through annotations -->
 	<mvc:annotation-driven />
 	
-	<!-- Enable the configuration of transactional behavior based on annotations -->
-	<!-- <tx:annotation-driven transaction-manager="txManager" />-->
-
 	<!-- freemarker config -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -37,16 +34,8 @@
       <property name="prefix" value=""/>
       <property name="suffix" value=".ftl"/>
     </bean>
-	<!--  <bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>-->
-
 	<mvc:resources mapping="/static/**" location="/" />
 
 	<mvc:default-servlet-handler />
-
-
 
 </beans>

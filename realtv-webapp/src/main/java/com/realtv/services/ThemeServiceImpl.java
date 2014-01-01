@@ -10,20 +10,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.realtv.dao.interfaces.IThemeDao;
 import com.realtv.domain.Theme;
-import com.realtv.repo.ThemeDao;
+import com.realtv.services.interfaces.IThemeService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class ThemeServiceImpl implements ThemeService {
+public class ThemeServiceImpl implements IThemeService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ThemeServiceImpl.class);
 	
 	@Autowired
-	private ThemeDao themeDao;
+	private IThemeDao themeDao;
 
 	/* (non-Javadoc)
 	 * @see com.realtv.services.ThemeService#create(com.realtv.domain.Theme)

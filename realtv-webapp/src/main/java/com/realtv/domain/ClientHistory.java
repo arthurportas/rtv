@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -50,6 +52,9 @@ public class ClientHistory extends BaseEntity implements Serializable {
 	private List<Client> clients;
 
 	/* relation to Show */
+	@ManyToOne
+	@JoinColumn(name = "showId")
+	private Show show;
 
 	/* ==========================GETTERS/SETTERS======================= */
 
@@ -109,10 +114,26 @@ public class ClientHistory extends BaseEntity implements Serializable {
 	 * @param clients
 	 *            the clients to set
 	 */
+	@XmlElement
 	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
 
+	/**
+	 * @return the show
+	 */
+	public Show getShow() {
+		return show;
+	}
+
+	/**
+	 * @param show the show to set
+	 */
+	@XmlElement
+	public void setShow(Show show) {
+		this.show = show;
+	}
+	
 	/* ==========================CONSTRUCTOR======================= */
 
 	public ClientHistory() {

@@ -1,7 +1,5 @@
 package com.realtv.test.services;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,20 +12,26 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.domain.QuestionLevel;
-import com.realtv.services.QuestionLevelService;
+import com.realtv.services.interfaces.IQuestionLevelService;
+import com.realtv.test.services.interfaces.IQuestionLevelServiceTest;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml",
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
+public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 
 	private static final Logger slf4jLogger = LoggerFactory
 			.getLogger(QuestionLevelServiceTestImpl.class);
 
 	@Autowired
-	private QuestionLevelService questionLevelService;
+	private IQuestionLevelService questionLevelService;
 
 	private QuestionLevel mockedQuestionLevel;
 
@@ -42,7 +46,7 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 	@Override
 	public void create() {
 		slf4jLogger.info("==create()==");
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null",
 				questionLevelService.create(mockedQuestionLevel));
 	}
 
@@ -52,16 +56,16 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 		slf4jLogger.info("==delete()==");
 		final QuestionLevel questionLevel = questionLevelService
 				.create(mockedQuestionLevel);
-		Assert.assertNotNull("questionLevel should not be null", questionLevel);
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null", questionLevel);
+		assertNotNull("questionLevel should not be null",
 				questionLevel.getId());
 		// It should be found
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null",
 				questionLevelService.find(questionLevel.getId()));
 
 		questionLevelService.delete(questionLevel.getId());
 		// It should not be found
-		Assert.assertNull("questionLevel should be null",
+		assertNull("questionLevel should be null",
 				questionLevelService.find(questionLevel.getId()));
 
 	}
@@ -72,8 +76,8 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 		slf4jLogger.info("==update()==");
 		QuestionLevel questionLevel = questionLevelService
 				.create(mockedQuestionLevel);
-		Assert.assertNotNull("questionLevel should not be null", questionLevel);
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null", questionLevel);
+		assertNotNull("questionLevel should not be null",
 				questionLevel.getId());
 		questionLevel.setDificultyLevel(2);
 
@@ -81,12 +85,12 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 
 		final QuestionLevel questionLevelUpdated = questionLevelService
 				.find(questionLevel.getId());
-		Assert.assertNotNull("questionLevelUpdated should not be null",
+		assertNotNull("questionLevelUpdated should not be null",
 				questionLevelUpdated);
-		Assert.assertNotNull("questionLevelUpdated should not be null",
+		assertNotNull("questionLevelUpdated should not be null",
 				questionLevelUpdated.getId());
-		Assert.assertEquals(questionLevel.getId(), questionLevelUpdated.getId());
-		Assert.assertEquals(questionLevelUpdated.getDificultyLevel(), 2);
+		assertEquals(questionLevel.getId(), questionLevelUpdated.getId());
+		assertEquals(questionLevelUpdated.getDificultyLevel(), 2);
 	}
 
 	@Test
@@ -95,11 +99,11 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 		slf4jLogger.info("==find()==");
 		final QuestionLevel questionLevel = questionLevelService
 				.create(mockedQuestionLevel);
-		Assert.assertNotNull("questionLevel should not be null", questionLevel);
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null", questionLevel);
+		assertNotNull("questionLevel should not be null",
 				questionLevel.getId());
 		// It should be found
-		Assert.assertNotNull("questionLevel should not be null",
+		assertNotNull("questionLevel should not be null",
 				questionLevelService.find(questionLevel.getId()));
 	}
 
@@ -107,21 +111,21 @@ public class QuestionLevelServiceTestImpl implements QuestionLevelServiceTest {
 	@Override
 	public void getAll() {
 		slf4jLogger.info("==getAll()==");
-		Assert.assertTrue(questionLevelService.getAll().size() > 0);
+		assertTrue(questionLevelService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void findAllNamedQuery() {
 		slf4jLogger.info("==findAllNamedQuery()==");
-		Assert.assertTrue(questionLevelService.findAllNamedQuery().size() > 0);
+		assertTrue(questionLevelService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
 		slf4jLogger.info("==count()==");
-		Assert.assertTrue(questionLevelService.getAll().size() >= 5);
+		assertTrue(questionLevelService.getAll().size() >= 5);
 	}
 
 }

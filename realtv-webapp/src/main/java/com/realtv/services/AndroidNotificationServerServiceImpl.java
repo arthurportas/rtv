@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtv.dao.interfaces.IAndroidNotificationServerDao;
 import com.realtv.domain.AndroidNotificationServer;
-import com.realtv.repo.AndroidNotificationServerDao;
+import com.realtv.services.interfaces.IAndroidNotificationServerService;
 
 /**
  * @author Arthur Portas
  * @date 24/12/2013
  */
 @Service
-public class AndroidNotificationServerServiceImpl implements AndroidNotificationServerService {
+public class AndroidNotificationServerServiceImpl implements IAndroidNotificationServerService {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(AndroidNotificationServerServiceImpl.class);
 	
 	@Autowired
-	private AndroidNotificationServerDao androidNotificationServerDao;
+	private IAndroidNotificationServerDao androidNotificationServerDao;
 
 	/*
 	 * (non-Javadoc)

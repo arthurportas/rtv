@@ -2,8 +2,6 @@ package com.realtv.test.services;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,22 +13,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.domain.Client;
 import com.realtv.domain.ClientHistory;
-import com.realtv.services.ClientService;
+import com.realtv.services.interfaces.IClientService;
+import com.realtv.test.services.interfaces.IClientServiceTest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml",
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ClientServiceTestImpl implements ClientServiceTest {
+public class ClientServiceTestImpl implements IClientServiceTest {
 
 	private static final Logger slf4jLogger = LoggerFactory
 			.getLogger(ClientServiceTestImpl.class);
 	@Autowired
-	private ClientService clientService;
+	private IClientService clientService;
 
 	private Client mockedClient;
 	
@@ -54,15 +58,15 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	public void findAllClientsNamedQuery() {
 		slf4jLogger.info("==findAllClientsNamedQuery()==");
 		List<Client> clients = clientService.findAllNamedQuery();
-		Assert.assertNotNull("clients should not be null", clients);
-		Assert.assertEquals(59, clients.size());
+		assertNotNull("clients should not be null", clients);
+		assertEquals(59, clients.size());
 	}
 
 	@Test
 	@Override
 	public void create() {
 		slf4jLogger.info("==create()==");
-		Assert.assertNotNull("client should not be null",
+		assertNotNull("client should not be null",
 				clientService.create(mockedClient));
 	}
 
@@ -71,15 +75,15 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	public void delete() {
 		slf4jLogger.info("==delete()==");
 		final Client client = clientService.create(mockedClient);
-		Assert.assertNotNull("client should not be null", client);
-		Assert.assertNotNull("client should not be null", client.getId());
+		assertNotNull("client should not be null", client);
+		assertNotNull("client should not be null", client.getId());
 		// It should be found
-		Assert.assertNotNull("client should not be null",
+		assertNotNull("client should not be null",
 				clientService.find(client.getId()));
 
 		clientService.delete(client.getId());
 		// It should not be found
-		Assert.assertNull("client should be null",
+		assertNull("client should be null",
 				clientService.find(client.getId()));
 
 	}
@@ -89,17 +93,17 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	public void update() {
 		slf4jLogger.info("==update()==");
 		Client client = clientService.create(mockedClient);
-		Assert.assertNotNull("client should not be null", client);
-		Assert.assertNotNull("client should not be null", client.getId());
+		assertNotNull("client should not be null", client);
+		assertNotNull("client should not be null", client.getId());
 		client.setMobileID("mobileId");
 
 		clientService.update(client);
 		final Client clientUpdated = clientService.find(client.getId());
-		Assert.assertNotNull("clientUpdated should not be null", clientUpdated);
-		Assert.assertNotNull("clientUpdated should not be null",
+		assertNotNull("clientUpdated should not be null", clientUpdated);
+		assertNotNull("clientUpdated should not be null",
 				clientUpdated.getId());
-		Assert.assertEquals(client.getId(), clientUpdated.getId());
-		Assert.assertTrue(clientUpdated.getMobileID().equals("mobileId"));
+		assertEquals(client.getId(), clientUpdated.getId());
+		assertTrue(clientUpdated.getMobileID().equals("mobileId"));
 	}
 
 	@Test
@@ -107,10 +111,10 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	public void find() {
 		slf4jLogger.info("==find()==");
 		final Client client = clientService.create(mockedClient);
-		Assert.assertNotNull("client should not be null", client);
-		Assert.assertNotNull("client should not be null", client.getId());
+		assertNotNull("client should not be null", client);
+		assertNotNull("client should not be null", client.getId());
 		// It should be found
-		Assert.assertNotNull("client should not be null",
+		assertNotNull("client should not be null",
 				clientService.find(client.getId()));
 	}
 
@@ -118,35 +122,35 @@ public class ClientServiceTestImpl implements ClientServiceTest {
 	@Override
 	public void getAll() {
 		slf4jLogger.info("==getAll()==");
-		Assert.assertTrue(clientService.getAll().size() > 0);
+		assertTrue(clientService.getAll().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void findAllNamedQuery() {
 		slf4jLogger.info("==findAllNamedQuery()==");
-		Assert.assertTrue(clientService.findAllNamedQuery().size() > 0);
+		assertTrue(clientService.findAllNamedQuery().size() > 0);
 	}
 
 	@Test
 	@Override
 	public void count() {
 		slf4jLogger.info("==count()==");
-		Assert.assertTrue(clientService.getAll().size() >= 30);
+		assertTrue(clientService.getAll().size() >= 30);
 	}
 
 	@Test
 	@Override
-	public void testCLientHistory() {
+	public void testClientHistory() {
 		slf4jLogger.info("==testCLientHistory() ==");
 		final Client client = clientService.create(mockedClient);
-		Assert.assertNotNull("client should not be null", client);
-		Assert.assertNotNull("client should not be null", client.getId());
-		Assert.assertNotNull("clientHistory should not be null",
+		assertNotNull("client should not be null", client);
+		assertNotNull("client should not be null", client.getId());
+		assertNotNull("clientHistory should not be null",
 				client.getClientHistory());
-		Assert.assertEquals(client.getClientHistory().getId(), mockedClientHistory.getId());
-		Assert.assertEquals(3, client.getClientHistory().getNumGamesCompleted());
-		Assert.assertEquals(30, client.getClientHistory().getNumRightanswers());
-		Assert.assertEquals(3, client.getClientHistory().getNumWrongAnswers());
+		assertEquals(client.getClientHistory().getId(), mockedClientHistory.getId());
+		assertEquals(3, client.getClientHistory().getNumGamesCompleted());
+		assertEquals(30, client.getClientHistory().getNumRightanswers());
+		assertEquals(3, client.getClientHistory().getNumWrongAnswers());
 	}
 }

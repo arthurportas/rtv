@@ -426,6 +426,13 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<!-- commons-codec(SHA1) -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>20041127.091804</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,5 +1,6 @@
 package com.realtv.test.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.persistence.EntityManager;
@@ -20,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.realtv.domain.ClientHistory;
 import com.realtv.domain.Show;
-import com.realtv.services.ShowService;
+import com.realtv.services.interfaces.IShowService;
+import com.realtv.test.services.interfaces.IShowServiceTest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
@@ -35,19 +38,22 @@ import static org.junit.Assert.assertThat;
 		"classpath:/META-INF/spring/applicationContext.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class ShowServiceTestImpl implements ShowServiceTest {
+public class ShowServiceTestImpl implements IShowServiceTest {
 
 	private final static Logger slf4jLogger = LoggerFactory
 			.getLogger(ShowServiceTestImpl.class);
 
 	@Autowired
-	private ShowService showService;
+	private IShowService showService;
 
 	@PersistenceContext
 	protected EntityManager em;
 
 	private Show mockedShow;
 
+	private ClientHistory mockedClientHistory;	
+	private ArrayList<ClientHistory> clientsHistory;
+	
 	@Mock
 	private Show _mockedShow;
 
@@ -55,6 +61,17 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 	public void setup() {
 		mockedShow = new Show();
 		mockedShow.setBeginning(Calendar.getInstance().getTime());
+		
+		mockedClientHistory = new ClientHistory();
+		mockedClientHistory.setNumGamesCompleted(2);
+		mockedClientHistory.setNumRightanswers(40);
+		mockedClientHistory.setNumWrongAnswers(5);
+		mockedClientHistory.setTimeSpentPlaying(1388606491402L);
+		
+		clientsHistory = new ArrayList<ClientHistory>();
+		clientsHistory.add(mockedClientHistory);
+		
+		mockedShow.setClientsHistory(clientsHistory);
 		MockitoAnnotations.initMocks(this);
 	}
 
@@ -63,6 +80,7 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 		showService = null;
 		mockedShow = null;
 		_mockedShow = null;
+		clientsHistory = null;
 	}
 
 	@Test
@@ -152,5 +170,18 @@ public class ShowServiceTestImpl implements ShowServiceTest {
 		query.setParameter(3, "2012-12-26 05:22:30");
 		int res = query.executeUpdate();
 		assertEquals(res, 1);
+	}
+
+	
+	@Test
+	@Override
+	public void testClientHistory() {
+		slf4jLogger.info("==testClientHistory()==");
+		assertNotNull("show should not be null", mockedShow.getClientsHistory());
+		assertEquals(1, mockedShow.getClientsHistory().size());
+		assertEquals(2, mockedShow.getClientsHistory().get(0).getNumGamesCompleted());
+		assertEquals(40, mockedShow.getClientsHistory().get(0).getNumRightanswers());
+		assertEquals(5, mockedShow.getClientsHistory().get(0).getNumWrongAnswers());
+		assertEquals(1388606491402L, mockedShow.getClientsHistory().get(0).getTimeSpentPlaying());
 	}
 }

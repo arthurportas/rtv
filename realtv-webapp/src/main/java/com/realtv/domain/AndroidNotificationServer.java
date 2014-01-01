@@ -1,6 +1,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -45,6 +47,9 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	private String registeredEmail;
 	/*registeredEmail-email registado no GCM para envio de notificações narthurportas@gmail.com*/
 
+	@OneToMany(mappedBy = "androidNotificationServer")
+	private List<Client> clients;
+	
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -74,7 +79,23 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 		this.registeredEmail = registeredEmail;
 	}
 	
+	/**
+	 * @return the clients
+	 */
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	/**
+	 * @param clients the clients to set
+	 */
+	@XmlElement
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
 	/* ==========================CONSTRUCTOR======================= */
+
+	
 
 	public AndroidNotificationServer() {
 

@@ -2,6 +2,7 @@ package com.realtv.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,7 +60,14 @@ public class Show extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "showTypeId")
 	private ShowType showType;
-
+	
+	/* relation to ClientHistory */
+	@OneToMany(mappedBy = "show")
+	private List<ClientHistory> clientsHistory;
+	
+	@OneToMany(mappedBy = "show")
+	private List<ShowParticipation> showsParticipation;
+	
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -106,6 +115,36 @@ public class Show extends BaseEntity implements Serializable {
 		this.showType = showType;
 	}
 	
+	/**
+	 * @return the clientsHistory
+	 */
+	public List<ClientHistory> getClientsHistory() {
+		return clientsHistory;
+	}
+
+	/**
+	 * @param clientsHistory the clientsHistory to set
+	 */
+	@XmlElement
+	public void setClientsHistory(List<ClientHistory> clientsHistory) {
+		this.clientsHistory = clientsHistory;
+	}
+	
+	/**
+	 * @return the showsParticipation
+	 */
+	public List<ShowParticipation> getShowsParticipation() {
+		return showsParticipation;
+	}
+
+	/**
+	 * @param showsParticipation the showsParticipation to set
+	 */
+	@XmlElement
+	public void setShowsParticipation(List<ShowParticipation> showsParticipation) {
+		this.showsParticipation = showsParticipation;
+	}
+
 	/* ==========================CONSTRUCTOR======================= */
 
 	public Show() {

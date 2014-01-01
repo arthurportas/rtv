@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.realtv.dao.interfaces.IAnswerDao;
 import com.realtv.domain.Answer;
-import com.realtv.repo.AnswerDao;
 
 @Controller
 @RequestMapping("/rest/answers")
