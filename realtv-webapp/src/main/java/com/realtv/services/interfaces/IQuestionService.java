@@ -45,9 +45,10 @@ public interface IQuestionService {
 	public List<Question> findAllOrderedByName();
 
 	/**
-	 * Persist an {@link List{@link Answer}} list
+	 * Persist a {@link Answer} list
 	 * 
-	 * @param answers
+	 * @param question - Question to associate answers
+	 * @param answers - Answer list to associate to question
 	 * */
 	public void registerAnswers(Question question, List<Answer> answers);
 }

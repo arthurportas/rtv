@@ -3,9 +3,12 @@
  */
 package com.realtv.test.services;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.realtv.domain.Answer;
 import com.realtv.domain.Question;
 import com.realtv.domain.QuestionLevel;
+import com.realtv.domain.Theme;
 import com.realtv.services.interfaces.IQuestionService;
 import com.realtv.test.services.interfaces.IQuestionServiceTest;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Arthur Portas
@@ -45,7 +44,7 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 
 	@Autowired
 	private IQuestionService questionService;
-
+	
 	private Answer mockedAnswer;
 	private Question mockedQuestion;
 	private QuestionLevel mockedQuestionLevel;
@@ -85,6 +84,20 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		mockedQuestion.setQuestionLevel(mockedQuestionLevel);
 	}
 
+	@After
+	public void tearDown() {
+		questionService = null;
+		mockedQuestion = null;
+		mockedQuestionLevel = null;
+		answers = null;
+		questions = null;
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -93,6 +106,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 				questionService.create(mockedQuestion));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -111,6 +130,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 				questionService.find(question.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -136,6 +161,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 				.equals("answer"));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -148,6 +179,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		assertEquals(question.getId(), lookup.getId());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -155,6 +192,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		assertTrue(questionService.getAll().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#count()
+	 */
 	@Test
 	@Override
 	public void count() {
@@ -162,6 +205,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		assertTrue(questionService.getAll().size() >= 15);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#findAllOrderedByName()
+	 */
 	@Test
 	@Override
 	public void findAllOrderedByName() {
@@ -171,6 +220,12 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		/* uses Criteria Builder */
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.realtv.test.services.IQuestionServiceTest#findAnswersByQuestionNamedQuery()
+	 */
 	@Test
 	@Override
 	public void findAnswersByQuestionNamedQuery() {
@@ -187,7 +242,7 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.realtv.test.services.QuestionServiceTest#findQuestionNamedQuery()
+	 * com.realtv.test.services.IQuestionServiceTest#findQuestionNamedQuery()
 	 */
 	@Test
 	@Override
@@ -203,7 +258,7 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.realtv.test.services.QuestionServiceTest#registerAnswers()
+	 * @see com.realtv.test.services.IQuestionServiceTest#registerAnswers()
 	 */
 	@Test
 	@Override
@@ -211,14 +266,13 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		slf4jLogger.info("==registerAnswers()==");
 		final Question question1 = questionService.getAll().get(0);
 		assertNotNull("question1 should not be null", question1);
-		final Question question2 = questionService.getAll().get(8);
-		assertNotNull("question2 should not be null", question2);
+		assertNotNull("question1(answers) should not be null", question1.getAnswers());
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.realtv.test.services.QuestionServiceTest#registerQuestionLevel()
+	 * @see com.realtv.test.services.IQuestionServiceTest#registerQuestionLevel()
 	 */
 	@Test
 	@Override
@@ -245,16 +299,72 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 				.getTimeAvailableToAnswer());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionServiceTest#getTimeToAnswer()
+	 */
 	@Test
 	@Override
 	public void getTimeToAnswer() {
 		slf4jLogger.info("==getTimeToAnswer()==");
+		slf4jLogger.info("==Entities needed: Question q, Theme t, QuestionLevel ql==");
+		final Question question = questionService.getAll().get(0);
+		final Theme theme =  question.getTheme();
+		final QuestionLevel questionLevel =  question.getQuestionLevel();
 		
+		assertNotNull("question should not be null", question);
+		assertNotNull("theme should not be null", theme);
+		assertNotNull("questionLevel should not be null", questionLevel);
+		
+		slf4jLogger.info("==Question:" + question.getQuestion());
+		slf4jLogger.info("==Theme:" + theme.getTheme());
+		slf4jLogger.info("==TimeToAnswer:" + questionLevel.getTimeAvailableToAnswer());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionServiceTest#getDificultyLevel()
+	 */
+	@Test
 	@Override
 	public void getDificultyLevel() {
 		slf4jLogger.info("==getDificultyLevel()==");
+		slf4jLogger.info("==Entities needed: Question q, Theme t, QuestionLevel ql==");
+		final Question question = questionService.getAll().get(0);
+		final Theme theme =  question.getTheme();
+		final QuestionLevel questionLevel =  question.getQuestionLevel();
 		
+		assertNotNull("question should not be null", question);
+		assertNotNull("theme should not be null", theme);
+		assertNotNull("questionLevel should not be null", questionLevel);
+		
+		slf4jLogger.info("==Question:" + question.getQuestion());
+		slf4jLogger.info("==Theme:" + theme.getTheme());
+		slf4jLogger.info("==TimeToAnswer:" + questionLevel.getTimeAvailableToAnswer());
+		slf4jLogger.info("==DificultyLevel:" + questionLevel.getDificultyLevel());
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionServiceTest#getAnswers()
+	 */
+	@Test
+	@Override
+	public void getAnswers() {
+		slf4jLogger.info("==getAnswers()==");
+		final Question question1 = questionService.getAll().get(0);
+		assertNotNull("question1 should not be null", question1);
+		assertNotNull("question1(answers) should not be null", question1.getAnswers());
+		
+		for (Answer answer : question1.getAnswers()) {
+			slf4jLogger.info("==Answer()==");
+			slf4jLogger.info("==answer.getAnswer() ==" + answer.getAnswer());
+			slf4jLogger.info("==answer.getCorrectAnswer() ==" + answer.getCorrectAnswer());
+		}
+		final Question question2 = questionService.getAll().get(8);
+		assertNotNull("question2 should not be null", question2);
 	}
 }

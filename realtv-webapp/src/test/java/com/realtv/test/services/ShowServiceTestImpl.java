@@ -12,8 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
@@ -62,10 +60,6 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	
 	@Value("${SHOW.ALL.REAL.TIME}")
 	private String SHOW_ALL_REAL_TIME;
-	
-	
-	@Mock
-	private Show _mockedShow;
 
 	@Before
 	public void setup() {
@@ -82,17 +76,22 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		clientsHistory.add(mockedClientHistory);
 		
 		mockedShow.setClientsHistory(clientsHistory);
-		MockitoAnnotations.initMocks(this);
 	}
 
 	@After
 	public void tearDown() {
 		showService = null;
 		mockedShow = null;
-		_mockedShow = null;
 		clientsHistory = null;
+		mockedClientHistory = null;
+		em = null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -101,6 +100,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -116,6 +120,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertNull("show should be null", showService.find(show.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -134,6 +143,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertTrue(showUpdated.getName().equals("show updated"));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -145,6 +159,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertNotNull("show should not be null", showService.find(show.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -152,6 +171,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertTrue(showService.getAll().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#findAllNamedQuery()
+	 */
 	@Test
 	@Override
 	public void findAllNamedQuery() {
@@ -159,6 +183,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertTrue(showService.findAllNamedQuery().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#count()
+	 */
 	@Test
 	@Override
 	public void count() {
@@ -168,6 +197,11 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		slf4jLogger.debug(" mockedShow.toJson()->" + mockedShow.toJson());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#insertShowNativeQuery()
+	 */
 	@Test
 	@Override
 	public void insertShowNativeQuery() {
@@ -182,9 +216,14 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertEquals(res, 1);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#getClientHistory()
+	 */
 	@Test
 	@Override
-	public void testClientHistory() {
+	public void getClientHistory() {
 		slf4jLogger.info("==testClientHistory()==");
 		assertNotNull("show should not be null", mockedShow.getClientsHistory());
 		assertEquals(1, mockedShow.getClientsHistory().size());
@@ -194,32 +233,44 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		assertEquals(1388606491402L, mockedShow.getClientsHistory().get(0).getTimeSpentPlaying());
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#showAllDemoShowNativeQuery()
+	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	@Override
 	public void showAllDemoShowNativeQuery() {
 		slf4jLogger.info("==showAllDemoShowNativeQuery()==");
 		Query query = em
 				.createNativeQuery(SHOW_ALL_DEMO, Show.class);
-		java.util.List<Object> list = query.getResultList();
+		java.util.List<Show> list = query.getResultList();
 		assertNotNull("list should not be null", list);
 
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+		for (Iterator<Show> iterator = list.iterator(); iterator.hasNext();) {
 			slf4jLogger.debug("==SHOW==");
 			Show show = (Show) iterator.next();
 			slf4jLogger.debug(show.toString());
 		}
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IShowServiceTest#showAllRealTimeShowNativeQuery()
+	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	@Override
 	public void showAllRealTimeShowNativeQuery() {
 		slf4jLogger.info("==showAllRealTimeShowNativeQuery()==");
 		Query query = em
 				.createNativeQuery(SHOW_ALL_REAL_TIME, Show.class);
-		java.util.List<Object> list = query.getResultList();
+		java.util.List<Show> list = query.getResultList();
 		assertNotNull("list should not be null", list);
 
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+		for (Iterator<Show> iterator = list.iterator(); iterator.hasNext();) {
 			slf4jLogger.debug("==SHOW==");
 			Show show = (Show) iterator.next();
 			slf4jLogger.debug(show.toString());

@@ -1,5 +1,6 @@
 package com.realtv.test.services;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +43,17 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 		mockedQuestionLevel.setTimeAvailableToAnswer(15);
 	}
 
+	@After
+	public void tearDown() {
+		questionLevelService = null;
+		mockedQuestionLevel = null;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -50,6 +62,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 				questionLevelService.create(mockedQuestionLevel));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -70,6 +87,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -93,6 +115,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 		assertEquals(questionLevelUpdated.getDificultyLevel(), 2);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -107,6 +134,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 				questionLevelService.find(questionLevel.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -114,6 +146,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 		assertTrue(questionLevelService.getAll().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#findAllNamedQuery()
+	 */
 	@Test
 	@Override
 	public void findAllNamedQuery() {
@@ -121,6 +158,11 @@ public class QuestionLevelServiceTestImpl implements IQuestionLevelServiceTest {
 		assertTrue(questionLevelService.findAllNamedQuery().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IQuestionLevelServiceTest#count()
+	 */
 	@Test
 	@Override
 	public void count() {

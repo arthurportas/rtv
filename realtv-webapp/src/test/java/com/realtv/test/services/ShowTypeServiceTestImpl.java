@@ -3,6 +3,7 @@ package com.realtv.test.services;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,6 +59,19 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 		mockedShowType.setShows(shows);
 	}
 
+	@After
+	public void tearDown() {
+		showTypeService = null;
+		mockedShowType = null;
+		mockedShow = null;
+		shows = null;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -66,6 +80,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 				showTypeService.create(mockedShowType));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -83,6 +102,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 				showTypeService.find(showType.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -103,6 +127,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 				"showType updated"));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -118,6 +147,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 		assertEquals(showTypeService.getAll().get(0).getShows().size(), 11);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -125,6 +159,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 		assertTrue(showTypeService.getAll().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#findAllNamedQuery()
+	 */
 	@Test
 	@Override
 	public void findAllNamedQuery() {
@@ -132,6 +171,11 @@ public class ShowTypeServiceTestImpl implements IShowTypeServiceTest {
 		assertTrue(showTypeService.findAllNamedQuery().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowTypeServiceTest#count()
+	 */
 	@Test
 	@Override
 	public void count() {

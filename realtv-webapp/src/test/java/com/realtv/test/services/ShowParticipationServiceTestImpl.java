@@ -57,9 +57,16 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 
 	@After
 	public void tearDown() {
+		showParticipationService = null;
+		em = null;
 		mockedShowParticipation = null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -68,6 +75,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -83,6 +95,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 		assertNull("show should be null", showParticipationService.find(showParticipation.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -103,6 +120,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 		//see how to compare dates
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -114,6 +136,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 		assertNotNull("showParticipation should not be null", showParticipationService.find(showParticipation.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -121,6 +148,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 		assertTrue(showParticipationService.getAll().size() >= 2);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#findAllNamedQuery()
+	 */
 	@Test
 	@Override
 	public void findAllNamedQuery() {
@@ -135,6 +167,11 @@ public class ShowParticipationServiceTestImpl implements IShowParticipationServi
 		assertTrue(showParticipationService.getAll().size() >= 2);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.IShowParticipationServiceTest#insertShowParticipationNativeQuery()
+	 */
 	@Test
 	@Ignore
 	@Override

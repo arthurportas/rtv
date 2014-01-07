@@ -3,6 +3,7 @@ package com.realtv.test.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +60,19 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 		mockedTheme.setQuestions(questions);
 	}
 
+	@After
+	public void tearDown() {
+		themeService = null;
+		mockedTheme = null;
+		mockedQuestion = null;
+		questions = null;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#create()
+	 */
 	@Test
 	@Override
 	public void create() {
@@ -67,6 +81,11 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 				themeService.create(mockedTheme));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#delete()
+	 */
 	@Test
 	@Override
 	public void delete() {
@@ -84,6 +103,11 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 				themeService.find(theme.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#update()
+	 */
 	@Test
 	@Override
 	public void update() {
@@ -103,6 +127,11 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#find()
+	 */
 	@Test
 	@Override
 	public void find() {
@@ -115,6 +144,11 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 				themeService.find(theme.getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#getAll()
+	 */
 	@Test
 	@Override
 	public void getAll() {
@@ -122,6 +156,11 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 		assertTrue(themeService.getAll().size() > 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#count()
+	 */
 	@Test
 	@Override
 	public void count() {
@@ -132,7 +171,7 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.realtv.test.services.ThemeServiceTest#findAllOrderedByName()
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#findAllOrderedByName()
 	 */
 	@Test
 	@Override
@@ -146,7 +185,7 @@ public class ThemeServiceTestImpl implements IThemeServiceTest {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.realtv.test.services.ThemeServiceTest#findByTheme()
+	 * @see com.realtv.test.services.interfaces.IThemeServiceTest#findByTheme()
 	 */
 	@Test
 	@Override
