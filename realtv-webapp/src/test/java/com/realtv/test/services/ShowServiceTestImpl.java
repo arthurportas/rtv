@@ -2,6 +2,7 @@ package com.realtv.test.services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -54,6 +56,9 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	private ClientHistory mockedClientHistory;	
 	private ArrayList<ClientHistory> clientsHistory;
 	
+	@Value("${SHOW.ALL.DEMO}")
+	private String SHOW_ALL_DEMO;
+	
 	@Mock
 	private Show _mockedShow;
 
@@ -88,7 +93,7 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	public void create() {
 		slf4jLogger.info("==create()==");
 		assertNotNull("show should not be null", showService.create(mockedShow));
-
+		
 	}
 
 	@Test
@@ -171,7 +176,22 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 		int res = query.executeUpdate();
 		assertEquals(res, 1);
 	}
+	
+	@Test
+	@Override
+	public void showAllDemoShowNativeQuery() {
+		slf4jLogger.info("==showAllDemoShowNativeQuery()==");
+		Query query = em
+				.createNativeQuery(SHOW_ALL_DEMO, Show.class);
+		java.util.List<Object> list = query.getResultList();
+		assertNotNull("list should not be null", list);
 
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			slf4jLogger.debug("==SHOW==");
+			Show show = (Show) iterator.next();
+			slf4jLogger.debug(show.toString());
+		}
+	}
 	
 	@Test
 	@Override

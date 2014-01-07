@@ -19,4 +19,6 @@ public interface IShowServiceTest {
 	public void findAllNamedQuery();
 	public void insertShowNativeQuery();
 	public void testClientHistory();
+	/*Multi entities queries*/
+	public void showAllDemoShowNativeQuery();
 }
