@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -51,6 +52,10 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 	private ArrayList<Answer> answers;
 	private ArrayList<Question> questions;
 
+	/*Properties Injected*/
+	@Value("${Question.ALL.QuestionLevel.Time.To.Answer}")
+	private String QUESTION_ALL_QUESTIONLEVEL_TIME_TO_ANSWER;
+	
 	@Before
 	public void setup() {
 
@@ -238,5 +243,18 @@ public class QuestionServiceTestImpl implements IQuestionServiceTest {
 		assertNotNull("question3 should not be null", question3);
 		assertEquals(5, question3.getQuestionLevel()
 				.getTimeAvailableToAnswer());
+	}
+
+	@Test
+	@Override
+	public void getTimeToAnswer() {
+		slf4jLogger.info("==getTimeToAnswer()==");
+		
+	}
+
+	@Override
+	public void getDificultyLevel() {
+		slf4jLogger.info("==getDificultyLevel()==");
+		
 	}
 }

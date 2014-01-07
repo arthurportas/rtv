@@ -21,4 +21,5 @@ public interface IShowServiceTest {
 	public void testClientHistory();
 	/*Multi entities queries*/
 	public void showAllDemoShowNativeQuery();
+	public void showAllRealTimeShowNativeQuery();
 }

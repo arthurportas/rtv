@@ -56,8 +56,13 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	private ClientHistory mockedClientHistory;	
 	private ArrayList<ClientHistory> clientsHistory;
 	
+	/*Properties Injected*/
 	@Value("${SHOW.ALL.DEMO}")
 	private String SHOW_ALL_DEMO;
+	
+	@Value("${SHOW.ALL.REAL.TIME}")
+	private String SHOW_ALL_REAL_TIME;
+	
 	
 	@Mock
 	private Show _mockedShow;
@@ -179,6 +184,18 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	
 	@Test
 	@Override
+	public void testClientHistory() {
+		slf4jLogger.info("==testClientHistory()==");
+		assertNotNull("show should not be null", mockedShow.getClientsHistory());
+		assertEquals(1, mockedShow.getClientsHistory().size());
+		assertEquals(2, mockedShow.getClientsHistory().get(0).getNumGamesCompleted());
+		assertEquals(40, mockedShow.getClientsHistory().get(0).getNumRightanswers());
+		assertEquals(5, mockedShow.getClientsHistory().get(0).getNumWrongAnswers());
+		assertEquals(1388606491402L, mockedShow.getClientsHistory().get(0).getTimeSpentPlaying());
+	}
+	
+	@Test
+	@Override
 	public void showAllDemoShowNativeQuery() {
 		slf4jLogger.info("==showAllDemoShowNativeQuery()==");
 		Query query = em
@@ -195,13 +212,17 @@ public class ShowServiceTestImpl implements IShowServiceTest {
 	
 	@Test
 	@Override
-	public void testClientHistory() {
-		slf4jLogger.info("==testClientHistory()==");
-		assertNotNull("show should not be null", mockedShow.getClientsHistory());
-		assertEquals(1, mockedShow.getClientsHistory().size());
-		assertEquals(2, mockedShow.getClientsHistory().get(0).getNumGamesCompleted());
-		assertEquals(40, mockedShow.getClientsHistory().get(0).getNumRightanswers());
-		assertEquals(5, mockedShow.getClientsHistory().get(0).getNumWrongAnswers());
-		assertEquals(1388606491402L, mockedShow.getClientsHistory().get(0).getTimeSpentPlaying());
+	public void showAllRealTimeShowNativeQuery() {
+		slf4jLogger.info("==showAllRealTimeShowNativeQuery()==");
+		Query query = em
+				.createNativeQuery(SHOW_ALL_REAL_TIME, Show.class);
+		java.util.List<Object> list = query.getResultList();
+		assertNotNull("list should not be null", list);
+
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			slf4jLogger.debug("==SHOW==");
+			Show show = (Show) iterator.next();
+			slf4jLogger.debug(show.toString());
+		}
 	}
 }

@@ -21,5 +21,14 @@ public interface IQuestionServiceTest {
 	public void findQuestionNamedQuery();
 	public void registerAnswers();
 	public void registerQuestionLevel();
+	/**
+	 * Given Question, find it's available time to answer
+	 * */
+	public void getTimeToAnswer();
+	/**
+	 * Given Question, find it's dificulty level
+	 * */
+	public void getDificultyLevel();
+	
 	
 }
