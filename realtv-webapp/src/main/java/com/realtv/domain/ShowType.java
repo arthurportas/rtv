@@ -1,6 +1,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.GsonBuilder;
 
@@ -36,16 +39,16 @@ public class ShowType extends BaseEntity implements Serializable {
 	private Long id;
 
 	@NotNull
-	private int mode;/*'0-Jogo em modo DEMO\\n1-Jogo em modo RealTime'*/
+	private int mode = 0;/*'0-Jogo em modo DEMO\\n1-Jogo em modo RealTime'*/
 	
 	@NotNull
 	@Size(min = 1, max = 255)
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")
-	private String description;
+	private String description = StringUtils.EMPTY;
 
 	@OneToMany(mappedBy = "showType")
-	private List<Show> shows;
+	private List<Show> shows = Collections.emptyList();
 	
 	/* ==========================GETTERS/SETTERS======================= */
 

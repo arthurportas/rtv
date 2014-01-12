@@ -20,6 +20,8 @@ public class Utils {
 
 	private static final String SHA1_ALGORITHM = "SHA1";
 	
+	public static long questionId = 1L;
+	
 	public static String getSha1Digest(){
 		slf4jLogger.info("==String getSha1Digest()==");
 		try {

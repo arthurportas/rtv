@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +18,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.common.collect.ImmutableList;
 import com.google.gson.GsonBuilder;
+
 /**
- * Represents an associated question theme.
- * Possible values are ()
+ * Represents an associated question theme. Possible values are ()
  * */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "theme"))
@@ -48,6 +52,7 @@ public class Theme extends BaseEntity implements Serializable {
 	private String description;
 
 	@OneToMany(mappedBy = "theme")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Question> questions;
 
 	/* ==========================GETTERS/SETTERS======================= */
@@ -103,8 +108,8 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.theme, this.description,
-				this.questions);
+		return com.google.common.base.Objects.hashCode(this.theme,
+				this.description, this.questions);
 	}
 
 	/*
@@ -124,7 +129,8 @@ public class Theme extends BaseEntity implements Serializable {
 		final Theme other = (Theme) obj;
 
 		return com.google.common.base.Objects.equal(this.theme, other.theme)
-				&& com.google.common.base.Objects.equal(this.description, other.description)
+				&& com.google.common.base.Objects.equal(this.description,
+						other.description)
 				&& com.google.common.base.Objects.equal(
 						ImmutableList.copyOf(this.questions),
 						(ImmutableList.copyOf(other.questions)));
@@ -137,9 +143,7 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.theme).addValue(this.description)
-				.addValue(this.questions).toString();
+		return this.theme;
 	}
 
 	/*
@@ -149,7 +153,8 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 
 }

@@ -1,9 +1,11 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.GsonBuilder;
@@ -49,10 +55,11 @@ public class Question extends BaseEntity implements Serializable {
 	@Size(min = 1, max = 255)
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")
-	private String question;
+	private String question = StringUtils.EMPTY;
 
 	@OneToMany(mappedBy = "question")
-	private List<Answer> answers;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Answer> answers = Collections.emptyList();
 
 	@ManyToOne
 	@JoinColumn(name = "themeId")

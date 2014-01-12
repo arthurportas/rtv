@@ -143,8 +143,7 @@ public class Answer extends BaseEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.answer).addValue(this.correctAnswer).toString();
+		return this.answer + this.correctAnswer;
 	}
 
 	/*

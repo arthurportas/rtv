@@ -1,6 +1,8 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+
+import com.google.common.collect.Collections2;
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -45,12 +51,12 @@ public class Show extends BaseEntity implements Serializable {
 	@Size(min = 1, max = 255)
 	// @Pattern(regexp = "[A-Za-z ]*", message =
 	// "must contain only letters and spaces")
-	private String name;
+	private String name = StringUtils.EMPTY;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	/* e.g. 2010-12-31 23:59:59-Calendar.getInstance() */
-	private Date beginning;
+	private Date beginning = Calendar.getInstance().getTime();
 
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
@@ -61,12 +67,12 @@ public class Show extends BaseEntity implements Serializable {
 	@JoinColumn(name = "showTypeId")
 	private ShowType showType;
 	
-	/* relation to ClientHistory */
+	/* relation to ClientHistory REFACTOR TO CLIENT??*/
 	@OneToMany(mappedBy = "show")
-	private List<ClientHistory> clientsHistory;
+	private List<ClientHistory> clientsHistory = Collections.emptyList();
 	
 	@OneToMany(mappedBy = "show")
-	private List<ShowParticipation> showsParticipation;
+	private List<ShowParticipation> showsParticipation = Collections.emptyList();
 	
 	/* ==========================GETTERS/SETTERS======================= */
 
