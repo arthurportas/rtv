@@ -76,46 +76,78 @@ public class Client extends BaseEntity implements Serializable {
 
 	/* ==========================GETTERS/SETTERS======================= */
 
+	/**
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id - the id to set
+	 */
 	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return clientGCMRegistrationID
+	 */
 	public String getClientGCMRegistrationID() {
 		return clientGCMRegistrationID;
 	}
 
+	/**
+	 * @param clientGCMRegistrationID - the clientGCMRegistrationID to set.
+	 * Client registers within GCM cloud servers for push notifications
+	 */
 	@XmlElement
 	public void setClientGCMRegistrationID(String clientGCMRegistrationID) {
 		this.clientGCMRegistrationID = clientGCMRegistrationID;
 	}
 
+	/**
+	 * @return mobileID
+	 */
 	public String getMobileID() {
 		return mobileID;
 	}
 
+	/**
+	 * @param mobileID - the mobileID to set.
+	 * Client's first gmail account on device
+	 */
 	@XmlElement
 	public void setMobileID(String mobileID) {
 		this.mobileID = mobileID;
 	}
 
+	/**
+	 * @return userName
+	 */
 	public String getUserName() {
 		return userName;
 	}
 
+	/**
+	 * @param userName - the userName to set.
+	 */
 	@XmlElement
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
+	/**
+	 * @return password(SHA-1)
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * @param password - the password to set.(SHA1)
+	 */
 	@XmlElement
 	public void setPassword(String password) {
 		this.password = password;
@@ -149,6 +181,7 @@ public class Client extends BaseEntity implements Serializable {
 	 * @param clientHistory
 	 *            the clientHistory to set
 	 */
+	@XmlElement
 	public void setClientHistory(ClientHistory clientHistory) {
 		this.clientHistory = clientHistory;
 	}
@@ -164,6 +197,7 @@ public class Client extends BaseEntity implements Serializable {
 	 * @param showParticipation
 	 *            the showParticipation to set
 	 */
+	@XmlElement
 	public void setShowParticipation(ShowParticipation showParticipation) {
 		this.showParticipation = showParticipation;
 	}
@@ -175,8 +209,10 @@ public class Client extends BaseEntity implements Serializable {
 	}
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
-	/**
-	 * @return My hash code.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#hashCode()
 	 */
 
 	@Override
@@ -184,11 +220,10 @@ public class Client extends BaseEntity implements Serializable {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**
-	 * @param obj
-	 *            Object to be compared to me for equality.
-	 * @return {@code true} if provided object is considered equal to me or
-	 *         {@code false} if provided object is not considered equal to me.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#equals()
 	 */
 
 	@Override
@@ -196,8 +231,10 @@ public class Client extends BaseEntity implements Serializable {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
-	/**
-	 * @return My String representation.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#toString()
 	 */
 
 	@Override

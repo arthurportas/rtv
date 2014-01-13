@@ -1,6 +1,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -57,37 +58,61 @@ public class Answer extends BaseEntity implements Serializable {
 
 	/* ==========================GETTERS/SETTERS======================= */
 
+	/**
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id - the id to set
+	 */
 	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return answer
+	 */
 	public String getAnswer() {
 		return answer;
 	}
 
+	/**
+	 * @param answer - the answer to set
+	 */
 	@XmlElement
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 
+	/**
+	 * @return correctAnswer
+	 */
 	public String getCorrectAnswer() {
 		return correctAnswer;
 	}
 
+	/**
+	 * @param correctAnswer - the correct answer to set
+	 */
 	@XmlElement
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
 	}
 
+	/**
+	 * @return question
+	 */
 	public Question getQuestion() {
 		return question;
 	}
 
+	/**
+	 * @param question - the {@link Question} to set
+	 */
 	@XmlElement
 	public void setQuestion(Question question) {
 		this.question = question;
@@ -100,8 +125,10 @@ public class Answer extends BaseEntity implements Serializable {
 	}
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
-	/**
-	 * @return My hash code.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#hashCode()
 	 */
 
 	@Override
@@ -109,11 +136,10 @@ public class Answer extends BaseEntity implements Serializable {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**
-	 * @param obj
-	 *            Object to be compared to me for equality.
-	 * @return {@code true} if provided object is considered equal to me or
-	 *         {@code false} if provided object is not considered equal to me.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#equals()
 	 */
 
 	@Override
@@ -121,8 +147,10 @@ public class Answer extends BaseEntity implements Serializable {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
-	/**
-	 * @return My String representation.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#toString()
 	 */
 
 	@Override

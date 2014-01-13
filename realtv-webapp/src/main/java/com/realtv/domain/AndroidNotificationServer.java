@@ -61,42 +61,60 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	
 	/* ==========================GETTERS/SETTERS======================= */
 
+	/**
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id - the id to set
+	 */
 	@XmlElement
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return GCMAuthorizationKey - GCM Google service
+	 */
 	public String getGCMAuthorizationKey() {
 		return GCMAuthorizationKey;
 	}
 
+	/**
+	 * @param GCMAuthorizationKey - the key to set - initialized from properties file
+	 */
 	@XmlElement
 	public void setGCMAuthorizationKey(String GCMAuthorizationKey) {
 		this.GCMAuthorizationKey = GCMAuthorizationKey;
 	}
 
+	/**
+	 * @return registeredEmail
+	 */
 	public String getRegisteredEmail() {
 		return registeredEmail;
 	}
 
+	/**
+	 * @param registeredEmail - the email to set
+	 */
 	@XmlElement
 	public void setRegisteredEmail(String registeredEmail) {
 		this.registeredEmail = registeredEmail;
 	}
 	
 	/**
-	 * @return the clients
+	 * @return list of {@link Client}
 	 */
 	public List<Client> getClients() {
 		return clients;
 	}
 
 	/**
-	 * @param clients the clients to set
+	 * @param clients - the {@link Client} list to set
 	 */
 	@XmlElement
 	public void setClients(List<Client> clients) {
@@ -109,8 +127,10 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	}
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
-	/**	 
-	 * @return My hash code.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#hashCode()
 	 */
 
 	@Override
@@ -118,11 +138,10 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**	
-	 * @param obj
-	 *            Object to be compared to me for equality.
-	 * @return {@code true} if provided object is considered equal to me or
-	 *         {@code false} if provided object is not considered equal to me.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#equals()
 	 */
 
 	@Override
@@ -130,8 +149,10 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
-	/**
-	 * @return My String representation.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.realtv.domain.BaseEntity#toString()
 	 */
 
 	@Override
