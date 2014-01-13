@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.realtv.facade;
+package com.realtv.facade.interfaces;
 
 /**
  * @author Arthur Portas

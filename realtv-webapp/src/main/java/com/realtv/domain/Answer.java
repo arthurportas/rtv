@@ -1,7 +1,6 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,11 +12,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.GsonBuilder;
 
@@ -27,7 +32,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "aswer")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Answer extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Answer.FIND_ALL";
@@ -38,15 +43,13 @@ public class Answer extends BaseEntity implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String answer;
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
+	private String answer = StringUtils.EMPTY;
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String correctAnswer;
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
+	private String correctAnswer = StringUtils.EMPTY;
 
 	@ManyToOne
 	@JoinColumn(name = "questionId")
@@ -98,20 +101,15 @@ public class Answer extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.answer,
-				this.correctAnswer);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -120,30 +118,16 @@ public class Answer extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Answer other = (Answer) obj;
-
-		return com.google.common.base.Objects.equal(this.answer, other.answer)
-				&& com.google.common.base.Objects.equal(this.correctAnswer,
-						other.answer);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return this.answer + this.correctAnswer;
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*
@@ -153,6 +137,7 @@ public class Answer extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }

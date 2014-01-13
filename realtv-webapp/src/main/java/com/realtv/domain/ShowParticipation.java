@@ -1,6 +1,8 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -31,7 +39,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "showParticipation")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class ShowParticipation extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "ShowParticipation.FIND_ALL";
@@ -43,29 +51,30 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	/* e.g. 2010-12-31 23:59:59-Calendar.getInstance() */
-	private Date lastBeginPlaying;
+	private Date lastBeginPlaying = Calendar.getInstance().getTime();
 
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastEndPlaying;
 
-	private long timeSpentPlaying;
-	
-	private int numGamesCompleted;
-	
-	private int numRightAnswers;
-	
+	private long timeSpentPlaying = 0L;
+
+	private int numGamesCompleted = 0;
+
+	private int numRightAnswers = 0;
+
 	private int numWrongAnswers;
-	
-	/*relation to Show*/
+
+	/* relation to Show */
 	@ManyToOne
 	@JoinColumn(name = "showId")
 	private Show show;
-	
-	/*relation to Client*/
+
+	/* relation to Client */
 	@OneToMany(mappedBy = "showParticipation")
-	private List<Client> clients;
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Client> clients = Collections.emptyList();
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -85,7 +94,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param lastBeginPlaying the lastBeginPlaying to set
+	 * @param lastBeginPlaying
+	 *            the lastBeginPlaying to set
 	 */
 	public void setLastBeginPlaying(Date lastBeginPlaying) {
 		this.lastBeginPlaying = lastBeginPlaying;
@@ -99,7 +109,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param lastEndPlaying the lastEndPlaying to set
+	 * @param lastEndPlaying
+	 *            the lastEndPlaying to set
 	 */
 	public void setLastEndPlaying(Date lastEndPlaying) {
 		this.lastEndPlaying = lastEndPlaying;
@@ -113,7 +124,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param timeSpentPlaying the timeSpentPlaying to set
+	 * @param timeSpentPlaying
+	 *            the timeSpentPlaying to set
 	 */
 	public void setTimeSpentPlaying(long timeSpentPlaying) {
 		this.timeSpentPlaying = timeSpentPlaying;
@@ -127,7 +139,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param numGamesCompleted the numGamesCompleted to set
+	 * @param numGamesCompleted
+	 *            the numGamesCompleted to set
 	 */
 	public void setNumGamesCompleted(int numGamesCompleted) {
 		this.numGamesCompleted = numGamesCompleted;
@@ -141,7 +154,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param numRightAnswers the numRightAnswers to set
+	 * @param numRightAnswers
+	 *            the numRightAnswers to set
 	 */
 	public void setNumRightAnswers(int numRightAnswers) {
 		this.numRightAnswers = numRightAnswers;
@@ -155,7 +169,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param numWrongAnswers the numWrongAnswers to set
+	 * @param numWrongAnswers
+	 *            the numWrongAnswers to set
 	 */
 	public void setNumWrongAnswers(int numWrongAnswers) {
 		this.numWrongAnswers = numWrongAnswers;
@@ -169,7 +184,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param show the show to set
+	 * @param show
+	 *            the show to set
 	 */
 	public void setShow(Show show) {
 		this.show = show;
@@ -183,7 +199,8 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param clients the clients to set
+	 * @param clients
+	 *            the clients to set
 	 */
 	public void setClients(List<Client> clients) {
 		this.clients = clients;
@@ -197,20 +214,15 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.id,
-				this.lastBeginPlaying, this.lastEndPlaying);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -219,34 +231,16 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ShowParticipation other = (ShowParticipation) obj;
-
-		return com.google.common.base.Objects.equal(this.lastBeginPlaying, other.lastBeginPlaying)
-				&& com.google.common.base.Objects.equal(this.lastEndPlaying,
-						other.lastEndPlaying)
-				&& com.google.common.base.Objects.equal(this.numGamesCompleted,
-						other.numGamesCompleted);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.numGamesCompleted).addValue(this.numRightAnswers)
-				.addValue(this.numWrongAnswers).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*
@@ -256,6 +250,7 @@ public class ShowParticipation extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }

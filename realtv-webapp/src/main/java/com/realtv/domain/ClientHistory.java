@@ -19,6 +19,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -27,7 +33,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "clientHistory")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class ClientHistory extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "ClientHistory.FIND_ALL";
@@ -36,19 +42,20 @@ public class ClientHistory extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	private long timeSpentPlaying;
+	private long timeSpentPlaying = 0L;
 
 	@Digits(fraction = 0, integer = 6)
-	private int numRightanswers;
+	private int numRightanswers = 0;
 
 	@Digits(fraction = 0, integer = 6)
-	private int numWrongAnswers;
+	private int numWrongAnswers = 0;
 
 	@Digits(fraction = 0, integer = 6)
-	private int numGamesCompleted;
+	private int numGamesCompleted = 0;
 
 	/* relation to Client */
 	@OneToMany(mappedBy = "clientHistory")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Client> clients;
 
 	/* relation to Show */
@@ -127,13 +134,14 @@ public class ClientHistory extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param show the show to set
+	 * @param show
+	 *            the show to set
 	 */
 	@XmlElement
 	public void setShow(Show show) {
 		this.show = show;
 	}
-	
+
 	/* ==========================CONSTRUCTOR======================= */
 
 	public ClientHistory() {
@@ -142,19 +150,15 @@ public class ClientHistory extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.id);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -163,29 +167,16 @@ public class ClientHistory extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ClientHistory other = (ClientHistory) obj;
-
-		return com.google.common.base.Objects.equal(this.id, other.id);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.id).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*

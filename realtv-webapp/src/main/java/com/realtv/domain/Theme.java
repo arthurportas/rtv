@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,16 +11,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.GsonBuilder;
 
 /**
@@ -41,15 +44,13 @@ public class Theme extends BaseEntity implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String theme;
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
+	private String theme = StringUtils.EMPTY;
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
-	private String description;
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
+	private String description = StringUtils.EMPTY;
 
 	@OneToMany(mappedBy = "theme")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -108,8 +109,7 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.theme,
-				this.description, this.questions);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/*
@@ -119,21 +119,7 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Theme other = (Theme) obj;
-
-		return com.google.common.base.Objects.equal(this.theme, other.theme)
-				&& com.google.common.base.Objects.equal(this.description,
-						other.description)
-				&& com.google.common.base.Objects.equal(
-						ImmutableList.copyOf(this.questions),
-						(ImmutableList.copyOf(other.questions)));
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/*
@@ -143,7 +129,7 @@ public class Theme extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return this.theme;
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*

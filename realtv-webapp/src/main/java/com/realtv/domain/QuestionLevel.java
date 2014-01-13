@@ -12,11 +12,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.google.gson.GsonBuilder;
 
@@ -26,7 +33,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "questionLevel")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class QuestionLevel extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "QuestionLevel.FIND_ALL";
@@ -36,12 +43,15 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	private Long id;
 
 	@NotNull
-	private int dificultyLevel;
+	@Digits(fraction = 0, integer = 1)
+	private int dificultyLevel = 1;
 
 	@NotNull
-	private int timeAvailableToAnswer;
+	@Digits(fraction = 0, integer = 2)
+	private int timeAvailableToAnswer = 30;
 
 	@OneToMany(mappedBy = "questionLevel")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Question> questions;
 
 	/* ==========================GETTERS/SETTERS======================= */
@@ -76,11 +86,12 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	public List<Question> getQuestions() {
 		return this.questions;
 	}
-	
+
 	@XmlElement
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
+
 	/* ==========================CONSTRUCTOR======================= */
 
 	public QuestionLevel() {
@@ -96,8 +107,7 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.dificultyLevel,
-				this.timeAvailableToAnswer);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/*
@@ -107,19 +117,7 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final QuestionLevel other = (QuestionLevel) obj;
-
-		return com.google.common.base.Objects.equal(this.timeAvailableToAnswer,
-				other.timeAvailableToAnswer)
-				&& com.google.common.base.Objects.equal(this.dificultyLevel,
-						other.dificultyLevel);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/*
@@ -129,9 +127,7 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.dificultyLevel)
-				.addValue(this.timeAvailableToAnswer).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*
@@ -141,7 +137,8 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.realtv.domain.ClientHistory;
 import com.realtv.domain.Show;
 import com.realtv.domain.ShowType;
+import com.realtv.facade.interfaces.IShow;
 import com.realtv.services.interfaces.IShowService;
 import com.realtv.services.interfaces.IClientHistoryService;
 

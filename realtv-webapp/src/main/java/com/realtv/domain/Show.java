@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,9 +28,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
-import com.google.common.collect.Collections2;
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -38,7 +42,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "show")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Show extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Show.FIND_ALL";
@@ -49,8 +53,7 @@ public class Show extends BaseEntity implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
 	private String name = StringUtils.EMPTY;
 
 	@NotNull
@@ -69,9 +72,11 @@ public class Show extends BaseEntity implements Serializable {
 	
 	/* relation to ClientHistory REFACTOR TO CLIENT??*/
 	@OneToMany(mappedBy = "show")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ClientHistory> clientsHistory = Collections.emptyList();
 	
 	@OneToMany(mappedBy = "show")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ShowParticipation> showsParticipation = Collections.emptyList();
 	
 	/* ==========================GETTERS/SETTERS======================= */
@@ -159,20 +164,15 @@ public class Show extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.name,
-				this.beginning, this.ending);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -181,34 +181,16 @@ public class Show extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Show other = (Show) obj;
-
-		return com.google.common.base.Objects.equal(this.name, other.name)
-				&& com.google.common.base.Objects.equal(this.beginning,
-						other.beginning)
-				&& com.google.common.base.Objects.equal(this.ending,
-						other.ending);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.name).addValue(this.beginning)
-				.addValue(this.ending).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*

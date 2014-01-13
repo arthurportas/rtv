@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,10 +24,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -40,7 +42,6 @@ import com.google.gson.GsonBuilder;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Question extends BaseEntity implements Serializable {
 
-	/** Default value included to remove warning. Remove or modify at will. **/
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Question.FIND_ALL";
@@ -53,8 +54,7 @@ public class Question extends BaseEntity implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 255)
-	// @Pattern(regexp = "[A-Za-z ]*", message =
-	// "must contain only letters and spaces")
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
 	private String question = StringUtils.EMPTY;
 
 	@OneToMany(mappedBy = "question")
@@ -101,7 +101,7 @@ public class Question extends BaseEntity implements Serializable {
 	public Theme getTheme() {
 		return theme;
 	}
-	
+
 	@XmlElement
 	public void setTheme(Theme theme) {
 		this.theme = theme;
@@ -110,7 +110,7 @@ public class Question extends BaseEntity implements Serializable {
 	public QuestionLevel getQuestionLevel() {
 		return questionLevel;
 	}
-	
+
 	@XmlElement
 	public void setQuestionLevel(QuestionLevel questionLevel) {
 		this.questionLevel = questionLevel;
@@ -124,20 +124,15 @@ public class Question extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this question instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.question,
-				this.answers, this.theme);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -146,36 +141,16 @@ public class Question extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Question other = (Question) obj;
-
-		return com.google.common.base.Objects.equal(this.question,
-				other.question)
-				&& com.google.common.base.Objects.equal(
-						ImmutableList.copyOf(this.answers),
-						(ImmutableList.copyOf(other.answers)))
-				&& com.google.common.base.Objects
-						.equal(this.theme, other.theme);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this question
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.question).addValue(this.answers)
-				.addValue(this.theme).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*
@@ -185,6 +160,7 @@ public class Question extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }

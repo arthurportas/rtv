@@ -13,12 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +35,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "androidNotificationServer")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class AndroidNotificationServer extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "AndroidNotificationServer.FIND_ALL";
@@ -37,17 +44,19 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	//TODO set default value from properties file
 	@NotNull
+	@Value("${AndroidNotificationServer.GCMAuthorizationKey}")
+	@Size(min = 1, max = 500)
 	private String GCMAuthorizationKey;
-	/*registado em https://code.google.com/apis/console/#project:549909978524 para envio de notificações*/
 
 	@NotNull
 	@Email
+	@Value("${AndroidNotificationServer.registeredEmail}")
+	@Size(min = 1, max = 80)
 	private String registeredEmail;
-	/*registeredEmail-email registado no GCM para envio de notificações narthurportas@gmail.com*/
 
 	@OneToMany(mappedBy = "androidNotificationServer")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Client> clients;
 	
 	/* ==========================GETTERS/SETTERS======================= */
@@ -95,27 +104,21 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	}
 	/* ==========================CONSTRUCTOR======================= */
 
-	
-
 	public AndroidNotificationServer() {
 
 	}
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
-	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
+	/**	 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.GCMAuthorizationKey);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
+	/**	
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -124,28 +127,16 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final AndroidNotificationServer other = (AndroidNotificationServer) obj;
-
-		return com.google.common.base.Objects.equal(this.GCMAuthorizationKey, other.GCMAuthorizationKey);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this).toString();
+		 return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*

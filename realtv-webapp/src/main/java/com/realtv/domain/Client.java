@@ -13,13 +13,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +35,7 @@ import com.google.gson.GsonBuilder;
 @XmlRootElement(name = "client")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Client extends BaseEntity implements Serializable {
-	/** Default value included to remove warning. Remove or modify at will. **/
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Client.FIND_ALL";
@@ -39,25 +45,27 @@ public class Client extends BaseEntity implements Serializable {
 	private Long id;
 
 	@Size(min = 1, max = 255)
-	private String clientGCMRegistrationID;
+	private String clientGCMRegistrationID = StringUtils.EMPTY;
 
 	@NotNull
 	@Email
 	@Size(min = 1, max = 255)
-	private String mobileID;/*default first gmail registered on device*/
+	@Value("${Client.mobileID}")
+	private String mobileID;
+
+	@Size(min = 1, max = 80)
+	@Pattern(regexp = "[A-Za-z0-9 ]*", message = "must contain only letters, numbers and spaces")
+	private String userName = StringUtils.EMPTY;
 
 	@Size(min = 1, max = 255)
-	private String userName;
+	private String password;/* SHA-1 */
 
-	@Size(min = 1, max = 255)
-	private String password;/*SHA-1*/
-	
-	/*relation to AndroidNotificationServer*/
+	/* relation to AndroidNotificationServer */
 	@ManyToOne
 	@JoinColumn(name = "AndroidNotificationServerId")
 	private AndroidNotificationServer androidNotificationServer;
-	
-	/*relation to ClientHistory*/
+
+	/* relation to ClientHistory */
 	@ManyToOne
 	@JoinColumn(name = "clientHistoryId")
 	private ClientHistory clientHistory;
@@ -65,7 +73,7 @@ public class Client extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ShowParticipationId")
 	private ShowParticipation showParticipation;
-	
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	public Long getId() {
@@ -85,7 +93,7 @@ public class Client extends BaseEntity implements Serializable {
 	public void setClientGCMRegistrationID(String clientGCMRegistrationID) {
 		this.clientGCMRegistrationID = clientGCMRegistrationID;
 	}
-	
+
 	public String getMobileID() {
 		return mobileID;
 	}
@@ -94,7 +102,7 @@ public class Client extends BaseEntity implements Serializable {
 	public void setMobileID(String mobileID) {
 		this.mobileID = mobileID;
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -103,7 +111,7 @@ public class Client extends BaseEntity implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -121,14 +129,15 @@ public class Client extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param androidNotificationServer the androidNotificationServer to set
+	 * @param androidNotificationServer
+	 *            the androidNotificationServer to set
 	 */
 	@XmlElement
 	public void setAndroidNotificationServer(
 			AndroidNotificationServer androidNotificationServer) {
 		this.androidNotificationServer = androidNotificationServer;
 	}
-	
+
 	/**
 	 * @return the clientHistory
 	 */
@@ -137,12 +146,13 @@ public class Client extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param clientHistory the clientHistory to set
+	 * @param clientHistory
+	 *            the clientHistory to set
 	 */
 	public void setClientHistory(ClientHistory clientHistory) {
 		this.clientHistory = clientHistory;
 	}
-	
+
 	/**
 	 * @return the showParticipation
 	 */
@@ -151,12 +161,13 @@ public class Client extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param showParticipation the showParticipation to set
+	 * @param showParticipation
+	 *            the showParticipation to set
 	 */
 	public void setShowParticipation(ShowParticipation showParticipation) {
 		this.showParticipation = showParticipation;
 	}
-	
+
 	/* ==========================CONSTRUCTOR======================= */
 
 	public Client() {
@@ -165,19 +176,15 @@ public class Client extends BaseEntity implements Serializable {
 
 	/* ====================HASHCODE,EQUALS,TOSTRING================= */
 	/**
-	 * Uses Guava to assist in providing hash code of this answer instance.
-	 * 
 	 * @return My hash code.
 	 */
 
 	@Override
 	public int hashCode() {
-		return com.google.common.base.Objects.hashCode(this.mobileID);
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/**
-	 * Using Guava to compare provided object to me for equality.
-	 * 
 	 * @param obj
 	 *            Object to be compared to me for equality.
 	 * @return {@code true} if provided object is considered equal to me or
@@ -186,29 +193,16 @@ public class Client extends BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Client other = (Client) obj;
-
-		return com.google.common.base.Objects.equal(this.mobileID, other.mobileID);
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/**
-	 * Method using Guava to provide String representation of this answer
-	 * instance.
-	 * 
 	 * @return My String representation.
 	 */
 
 	@Override
 	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-				.addValue(this.mobileID).toString();
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	/*
@@ -218,6 +212,7 @@ public class Client extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }
