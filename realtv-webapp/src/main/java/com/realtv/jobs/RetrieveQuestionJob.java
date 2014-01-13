@@ -31,18 +31,21 @@ public class RetrieveQuestionJob implements Job {
 	@Override
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
-		slf4jLogger.info("==execute(JobExecutionContext jExeCtx)==");
+		slf4jLogger.info("==execute(JobExecutionContext context)==");
 		slf4jLogger.info("==RetrieveQuestionJob run successfully...==");
 		slf4jLogger.info("==questionService.find(QUESTION_ID)==");
 		
 		IQuestionService questionService;
+		
 		try {
 			questionService = (IQuestionService) context.getScheduler().getContext().get("questionService");
 	        
 			Question q = questionService.find(Utils.questionId);
 			Utils.questionId++;
-			
+			//TODO need access to messaging service to send questions
+			//first contact DTo to build JSON message
 			slf4jLogger.info(q.toString());
+			
 		} catch (SchedulerException se) {
 			slf4jLogger.debug(se.getMessage());
 		}

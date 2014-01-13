@@ -3,8 +3,7 @@
  */
 package com.realtv.facade;
 
-import java.util.Calendar;
-
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import com.realtv.domain.ClientHistory;
 import com.realtv.domain.Show;
 import com.realtv.domain.ShowType;
 import com.realtv.facade.interfaces.IShow;
+import com.realtv.jobs.JobSchedulerService;
 import com.realtv.services.interfaces.IShowService;
 import com.realtv.services.interfaces.IClientHistoryService;
 
@@ -28,6 +28,8 @@ public class ShowFacade implements IShow {
 			.getLogger(ShowFacade.class);
 
 	/* services */
+	@Autowired
+	private JobSchedulerService jobSchedulerService;
 	@Autowired
 	private IShowService showService;
 	@Autowired
@@ -58,8 +60,17 @@ public class ShowFacade implements IShow {
 	 */
 	@Override
 	public void sendQuestionsEvery40Seconds() {
-		
-		
+		slf4jLogger.info("==startDemoShow()==");
+		try {
+			jobSchedulerService.scheduleRetrieveQuestionJob();
+		} catch (SchedulerException se) {
+			slf4jLogger.debug(se.getMessage());
+		}
 	}
+	
+	/*consumers are managed by the container like MDB's
+	 * each consumer, persists answer and acknowledges participation,
+	 * after this it send instant stats pulled from persistence
+	 * */
 
 }
