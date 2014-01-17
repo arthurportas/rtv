@@ -3,6 +3,10 @@
  */
 package com.realtv.jobs;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -11,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.realtv.domain.Question;
+import com.realtv.dto.QuestionDTO;
 import com.realtv.services.interfaces.IQuestionService;
 import com.realtv.utils.Utils;
 
@@ -44,10 +49,19 @@ public class RetrieveQuestionJob implements Job {
 			Utils.questionId++;
 			//TODO need access to messaging service to send questions
 			//first contact DTo to build JSON message
-			slf4jLogger.info(q.toString());
+			slf4jLogger.info(QuestionDTO.composeQuestionMessage(q));
 			
 		} catch (SchedulerException se) {
 			slf4jLogger.debug(se.getMessage());
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

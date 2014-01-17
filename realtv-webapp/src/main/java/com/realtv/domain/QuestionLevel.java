@@ -225,6 +225,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -255,6 +256,7 @@ public class QuestionLevel extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "questionLevel")
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonManagedReference
 	private List<Question> questions;
 
 	/* ==========================GETTERS/SETTERS======================= */

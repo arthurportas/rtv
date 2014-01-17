@@ -1,0 +1,48 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"answers": {
+			"type":"array",
+			"id": "http://jsonschema.net/answers",
+			"required":true,
+			"items":
+				{
+					"type":"object",
+					"id": "http://jsonschema.net/answers/0",
+					"required":false,
+					"properties":{
+						"answer": {
+							"type":"string",
+							"id": "http://jsonschema.net/answers/0/answer",
+							"required":false
+						},
+						"correctAnswer": {
+							"type":"string",
+							"id": "http://jsonschema.net/answers/0/correctAnswer",
+							"required":false
+						},
+						"id": {
+							"type":"number",
+							"id": "http://jsonschema.net/answers/0/id",
+							"required":false
+						}
+					}
+				}
+			
+
+		},
+		"id": {
+			"type":"number",
+			"id": "http://jsonschema.net/id",
+			"required":true
+		},
+		"question": {
+			"type":"string",
+			"id": "http://jsonschema.net/question",
+			"required":true
+		}
+	}
+}

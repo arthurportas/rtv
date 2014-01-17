@@ -230,6 +230,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -262,14 +264,17 @@ public class Question extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "question")
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonManagedReference
 	private List<Answer> answers = Collections.emptyList();
 
 	@ManyToOne
 	@JoinColumn(name = "themeId")
+	@JsonBackReference
 	private Theme theme;
 
 	@ManyToOne
 	@JoinColumn(name = "questionLevelId")
+	@JsonBackReference
 	private QuestionLevel questionLevel;
 
 	/* ==========================GETTERS/SETTERS======================= */

@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import org.codehaus.jackson.annotate.JsonBackReference;
 import com.google.gson.GsonBuilder;
 
 @Entity
@@ -54,6 +54,7 @@ public class Answer extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "questionId")
+	@JsonBackReference
 	private Question question;
 
 	/* ==========================GETTERS/SETTERS======================= */
