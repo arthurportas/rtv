@@ -22,7 +22,7 @@ import com.realtv.domain.Question;
  */
 public class QuestionDTO {
 
-	private static StringBuilder sb = new StringBuilder();
+	private final static ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
 	 * @param question
@@ -33,8 +33,7 @@ public class QuestionDTO {
 	 * @throws JsonGenerationException 
 	 * */
 	public static String composeQuestionMessage(Question question) throws JsonGenerationException, JsonMappingException, IOException {
-		//create ObjectMapper instance
-        ObjectMapper objectMapper = new ObjectMapper();
+
         String json = objectMapper.writeValueAsString(question);
 		return json;
 	}
