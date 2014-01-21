@@ -120,6 +120,13 @@ insert into Show (id, name, beginning, ending, showTypeId) values (9, 'Quem Quer
 insert into Show (id, name, beginning, ending, showTypeId) values (10, 'Quem Quer Ser Milionário.','2013-01-04 05:22:30','2013-01-04 06:22:30', 1)
 insert into Show (id, name, beginning, ending, showTypeId) values (11, 'Quem Quer Ser Milionário.','2013-01-05 05:22:30','2013-01-05 06:22:30', 1)
 
+--timeSpentPlaying should be a long(millis) updated from Participation
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (1, 1, 15, 0, 1263585534000)
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (2, 1, 15, 0, 1388605973115)
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (3, 1, 15, 0, 1388606038821)
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (4, 1, 15, 0, 1388606047776)
+insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (5, 1, 15, 0, 1388606073121)
+
 --Client
 insert into Client (id, mobileID, clientHistoryId) values (1, 'y7yfvqxxf@05cybpaylcbc.com', 1)
 insert into Client (id, mobileID, clientHistoryId) values (2, 'rc3oi02honz9@co3n60g0gai.com', 1)
@@ -183,12 +190,7 @@ insert into Client (id, mobileID, clientHistoryId) values (59, 'u_m6jnvy@bb-whg9
 
 insert into AndroidNotificationServer (id, registeredEmail, GCMAuthorizationKey) values (1, 'arthurportas@gmail.com', 'GCMAuthorizationKey')
 
---timeSpentPlaying should be a long(millis) updated from Participation
-insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (1, 1, 15, 0, 1263585534000)
-insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (2, 1, 15, 0, 1388605973115)
-insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (3, 1, 15, 0, 1388606038821)
-insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (4, 1, 15, 0, 1388606047776)
-insert into ClientHistory (id, numGamesCompleted, numRightanswers, numWrongAnswers, timeSpentPlaying) values (5, 1, 15, 0, 1388606073121)
+
 
 
 insert into ShowParticipation (id, lastBeginPlaying, lastEndPlaying, timeSpentPlaying, numGamesCompleted, numRightAnswers, numWrongAnswers) values (1, '2012-12-26 05:22:30','2012-12-26 06:22:30', 1263585534000, 3, 32, 5 )

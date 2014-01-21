@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
@@ -12,9 +14,8 @@
 
 	<!-- Enabling Spring beans auto-discovery -->
 	<context:component-scan base-package="com.realtv.mvc" />
-	<context:component-scan base-package="com.realtv.dao" />
-	<context:component-scan base-package="com.realtv.domain" />
 	<context:component-scan base-package="com.realtv.services" />
+	<context:component-scan base-package="com.realtv.facade" />
 	
 	<!-- Enabling Spring MVC configuration through annotations -->
 	<mvc:annotation-driven />

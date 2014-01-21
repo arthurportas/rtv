@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component("producer")
+@Service("producer")
 public class SimpleMessageProducer {
 
 	@Autowired
@@ -31,8 +32,9 @@ public class SimpleMessageProducer {
 	}
 
 	public void convertAndSendTopic(String notification) {
-        jmsTopicTemplate.convertAndSend("test.topic", notification);
-    }
+		jmsTopicTemplate.convertAndSend("test.topic", notification);
+	}
+
 	public void sendMessages() throws JMSException {
 
 		for (int i = 0; i < numberOfMessages; ++i) {
@@ -43,20 +45,14 @@ public class SimpleMessageProducer {
 					.append(new Date());
 
 			jmsTemplate.send(new MessageCreator() {
-
 				public Message createMessage(Session session)
 						throws JMSException {
 
 					TextMessage message = session.createTextMessage(payload
 							.toString());
-
 					return (Message) message;
-
 				}
-
 			});
-
 		}
-
 	}
 }

@@ -4,45 +4,57 @@
 	"id": "http://jsonschema.net",
 	"required":false,
 	"properties":{
-		"answers": {
-			"type":"array",
-			"id": "http://jsonschema.net/answers",
-			"required":true,
-			"items":
-				{
-					"type":"object",
-					"id": "http://jsonschema.net/answers/0",
-					"required":false,
-					"properties":{
-						"answer": {
-							"type":"string",
-							"id": "http://jsonschema.net/answers/0/answer",
-							"required":false
-						},
-						"correctAnswer": {
-							"type":"string",
-							"id": "http://jsonschema.net/answers/0/correctAnswer",
-							"required":false
-						},
-						"id": {
-							"type":"number",
-							"id": "http://jsonschema.net/answers/0/id",
-							"required":false
-						}
-					}
-				}
-			
-
-		},
-		"id": {
-			"type":"number",
-			"id": "http://jsonschema.net/id",
-			"required":true
-		},
-		"question": {
+		"0": {
 			"type":"string",
-			"id": "http://jsonschema.net/question",
+			"id": "http://jsonschema.net/0",
 			"required":true
+		},
+		"1": {
+			"type":"object",
+			"id": "http://jsonschema.net/1",
+			"required":false,
+			"properties":{
+				"answers": {
+					"type":"array",
+					"id": "http://jsonschema.net/1/answers",
+					"required":true,
+					"items":
+						{
+							"type":"object",
+							"id": "http://jsonschema.net/1/answers/0",
+							"required":true,
+							"properties":{
+								"answer": {
+									"type":"string",
+									"id": "http://jsonschema.net/1/answers/0/answer",
+									"required":true
+								},
+								"correctAnswer": {
+									"type":"string",
+									"id": "http://jsonschema.net/1/answers/0/correctAnswer",
+									"required":true
+								},
+								"id": {
+									"type":"number",
+									"id": "http://jsonschema.net/1/answers/0/id",
+									"required":true
+								}
+							}
+						}
+					
+
+				},
+				"id": {
+					"type":"number",
+					"id": "http://jsonschema.net/1/id",
+					"required":false
+				},
+				"question": {
+					"type":"string",
+					"id": "http://jsonschema.net/1/question",
+					"required":true
+				}
+			}
 		}
 	}
 }

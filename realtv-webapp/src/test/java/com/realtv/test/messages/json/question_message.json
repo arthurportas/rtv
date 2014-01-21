@@ -1,26 +1,29 @@
-{
-  "id": 1,
-  "question": "Quem foi o 1 Rei de Portugal?",
-  "answers": [
-    {
-      "id": 1,
-      "answer": "Herman Jose",
-      "correctAnswer": "D. Afonso Henriques"
-    },
-    {
-      "id": 2,
-      "answer": "Cristiano Ronaldo",
-      "correctAnswer": "D. Afonso Henriques"
-    },
-    {
-      "id": 3,
-      "answer": "D. Dinis",
-      "correctAnswer": "D. Afonso Henriques"
-    },
-    {
-      "id": 4,
-      "answer": "D. Afonso Henriques",
-      "correctAnswer": "D. Afonso Henriques"
-    }
-  ]
-}
+[
+  "questionMessage",
+  {
+    "id": 1,
+    "question": "Quem foi o 1 Rei de Portugal?",
+    "answers": [
+      {
+        "id": 1,
+        "answer": "Herman Jose",
+        "correctAnswer": "D. Afonso Henriques"
+      },
+      {
+        "id": 2,
+        "answer": "Cristiano Ronaldo",
+        "correctAnswer": "D. Afonso Henriques"
+      },
+      {
+        "id": 3,
+        "answer": "D. Dinis",
+        "correctAnswer": "D. Afonso Henriques"
+      },
+      {
+        "id": 4,
+        "answer": "D. Afonso Henriques",
+        "correctAnswer": "D. Afonso Henriques"
+      }
+    ]
+  }
+]

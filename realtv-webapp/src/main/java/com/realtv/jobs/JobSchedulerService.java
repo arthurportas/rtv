@@ -14,7 +14,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.realtv.messaging.SimpleMessageProducer;
 import com.realtv.services.interfaces.IQuestionService;
+import com.realtv.utils.Utils;
 /**
  * @author Arthur Portas
  * @date 12/01/2014
@@ -24,6 +26,9 @@ public class JobSchedulerService {
 
 	@Autowired
 	private IQuestionService questionService;
+	@Autowired
+	private SimpleMessageProducer producer;
+	
 	private Scheduler scheduler;
 	
 	public void scheduleRetrieveQuestionJob() throws SchedulerException{
@@ -34,12 +39,16 @@ public class JobSchedulerService {
 				this.scheduler = StdSchedulerFactory.getDefaultScheduler();	
 			}
 			this.scheduler.getContext().put("questionService", questionService);
-			this.scheduler.start();
+			this.scheduler.getContext().put("jmsService", producer);
+			
 			
 			// specify the job' s details..
 			JobDetail job = JobBuilder.newJob(RetrieveQuestionJob.class)
 					.withIdentity("retrieveQuestionJob").build();
 
+			job.getJobDataMap().put(RetrieveQuestionJob.EXECUTION_COUNT, Utils.questionId);
+			this.scheduler.start();
+			
 			// specify the running period of the job
 			Trigger trigger = TriggerBuilder
 					.newTrigger()
