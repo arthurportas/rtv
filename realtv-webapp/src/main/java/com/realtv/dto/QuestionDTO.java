@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.realtv.domain.Question;
-import com.realtv.jobs.RetrieveQuestionJob;
 
 /**
  * @author Arthur Portas

@@ -9,7 +9,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.PersistJobDataAfterExecution;
@@ -56,11 +55,7 @@ public class RetrieveQuestionJob implements Job {
 			
 			Question q = questionService.find(Utils.questionId);
 			Utils.questionId++;
-			//data.put(EXECUTION_COUNT, Utils.questionId);
 
-			
-			// first contact DTo to build JSON message
-			// TODO need access to messaging service to send questions
 			QuestionDTO.composeQuestionMessage(q);
 
 			SimpleMessageProducer producer = (SimpleMessageProducer) context
