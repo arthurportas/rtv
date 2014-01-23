@@ -38,7 +38,7 @@
       <property name="suffix" value=".ftl"/>
     </bean>
     
-	<mvc:resources mapping="/static/**" location="/" />
+	<mvc:resources mapping="/static/**" location="/static/" />
 
 	<mvc:default-servlet-handler />
 
