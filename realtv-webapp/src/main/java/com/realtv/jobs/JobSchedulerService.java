@@ -14,6 +14,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.realtv.messaging.NotificationRegistry;
 import com.realtv.messaging.SimpleMessageProducer;
 import com.realtv.services.interfaces.IQuestionService;
 import com.realtv.utils.Utils;
@@ -28,6 +29,8 @@ public class JobSchedulerService {
 	private IQuestionService questionService;
 	@Autowired
 	private SimpleMessageProducer producer;
+	@Autowired
+    private NotificationRegistry registry;
 	
 	private Scheduler scheduler;
 	

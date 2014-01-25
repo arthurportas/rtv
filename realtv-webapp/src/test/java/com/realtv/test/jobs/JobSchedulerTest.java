@@ -24,11 +24,13 @@ public class JobSchedulerTest {
 				"classpath:test-context.xml",
 				"classpath:/META-INF/spring/applicationContext.xml");
 
+		/*schedule a job to deliver a question every 40 sec.*/
 		JobSchedulerService service = (JobSchedulerService) context
 				.getBean("quartzStarter");
 
 		service.scheduleRetrieveQuestionJob();
 
+		
 	}
 
 }

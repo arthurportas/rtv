@@ -9,7 +9,6 @@ package com.realtv.dto;
  */
 public class AnswerDTO {
 
-	private static StringBuilder sb = new StringBuilder();
-	
+	//como consumir resposta do cliente?
 
 }
