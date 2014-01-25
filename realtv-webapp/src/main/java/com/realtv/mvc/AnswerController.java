@@ -34,7 +34,7 @@ public class AnswerController {
 	 * */
 	@RequestMapping(value = "/answer", method = RequestMethod.GET)
 	public String displaySortedAnswers(Model model) {
-		model.addAttribute("answers", answerService.getAll());
+		//model.addAttribute("answers", answerService.getAll());
 		return "base"; /* view to return */
 	}
 

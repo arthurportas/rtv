@@ -76,11 +76,11 @@
 	</bean>
 
 	<jms:listener-container connection-factory="connectionFactory"
-		destination-type="topic">
-		<jms:listener destination="test.topic" ref="asyncTopicFooReceiver"
+		destination-type="topic" concurrency="1">
+		<jms:listener destination="test.topic" ref="asyncTopicReceiver"
 			method="receive" />
-		<jms:listener destination="test.topic" ref="asyncTopicBarReceiver"
-			method="receive" />
+		<!-- <jms:listener destination="test.topic" ref="asyncTopicBarReceiver"
+			method="receive" /> -->
 	</jms:listener-container>
 
 </beans>

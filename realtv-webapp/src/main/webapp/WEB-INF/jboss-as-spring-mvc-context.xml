@@ -20,7 +20,7 @@
 	<context:component-scan base-package="com.realtv.services" />
 	<context:component-scan base-package="com.realtv.facade" />
 	
-	<!-- Enabling Spring MVC configuration through annotations -->
+	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 	
 	<!-- freemarker config -->
@@ -38,7 +38,8 @@
       <property name="suffix" value=".ftl"/>
     </bean>
     
-	<mvc:resources mapping="/static/**" location="/static/" />
+    <!-- Handles HTTP GET requests for //static// by efficiently serving up static resources in the ${webappRoot}//static/ directory-->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<mvc:default-servlet-handler />
 

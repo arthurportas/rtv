@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author Arthur Portas
  * @date 21/12/2013
  */
-@Component("asyncTopicFooReceiver")
+@Component("asyncTopicReceiver")
 public class AsynTopicConsumer2 {
 
 	@Autowired

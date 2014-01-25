@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.realtv</groupId>
-	<artifactId>realtv-webapp</artifactId>
+	<artifactId>realtv</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -149,7 +149,18 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${version.spring}</version>
 			</dependency>
-
+ <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${version.version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${version.version}</version>
+        <scope>compile</scope>
+    </dependency>
 			<!-- Third Party dependencies -->
 			<dependency>
 				<groupId>aopalliance</groupId>
@@ -352,22 +363,37 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Add JSON dependency, specified in jboss-deployment-structure.xml -->
+		<!-- Add JSON dependency, specified in jboss-deployment-structure.xml 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.3</version>
-			<!-- <scope>provided</scope> -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.3</version>
-			<!--<scope>provided</scope> -->
-		</dependency>
+			<scope>provided</scope>
+		</dependency> -->
 
-
+<!-- Jackson JSON Mapper -->
+ <dependency>
+     <groupId>org.codehaus.jackson</groupId>
+     <artifactId>jackson-core-lgpl</artifactId>
+     <version>1.6.4</version>
+ </dependency>
+ <dependency>
+     <groupId>org.codehaus.jackson</groupId>
+     <artifactId>jackson-mapper-lgpl</artifactId>
+     <version>1.6.4</version>
+ </dependency>
+ <dependency>
+     <groupId>org.codehaus.jackson</groupId>
+     <artifactId>jackson-xc</artifactId>
+     <version>1.6.4</version>
+ </dependency>
 
 
 		<!-- freemarker -->
