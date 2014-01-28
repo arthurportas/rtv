@@ -21,6 +21,7 @@
 
 	<!-- services that needs to be called inside Quartz job -->
 	<bean id="questionService" class="com.realtv.services.QuestionServiceImpl" />
+	<bean id="answerService" class="com.realtv.services.AnswerServiceImpl" />
 	<bean id="jmsService" class="com.realtv.messaging.SimpleMessageProducer" />
 	
 	<context:property-placeholder

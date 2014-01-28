@@ -28,10 +28,10 @@ import com.realtv.utils.Utils;
  */
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
-public class RetrieveQuestionJob implements Job {
+public class SendQuestionJob implements Job {
 
 	private final static Logger slf4jLogger = LoggerFactory
-			.getLogger(RetrieveQuestionJob.class);
+			.getLogger(SendQuestionJob.class);
 	public static final String EXECUTION_COUNT = "EXECUTION_COUNT";
 
 	/*
@@ -43,24 +43,18 @@ public class RetrieveQuestionJob implements Job {
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		slf4jLogger.info("==execute(JobExecutionContext context)==");
-		slf4jLogger.info("==RetrieveQuestionJob run successfully...==");
+		slf4jLogger.info("==SendQuestionJob run successfully...==");
 
 		try {
 			IQuestionService questionService = (IQuestionService) context
 					.getScheduler().getContext().get("questionService");
-			slf4jLogger.info("==questionService.find(QUESTION_ID)==");
 			
-			//JobDataMap data = context.getJobDetail().getJobDataMap();
-			//long count = data.getLong(EXECUTION_COUNT);
-			
-			Question q = questionService.find(Utils.questionId);
+			Question question = questionService.find(Utils.questionId);
 			Utils.questionId++;
-
-			QuestionDTO.composeQuestionMessage(q);
 
 			SimpleMessageProducer producer = (SimpleMessageProducer) context
 					.getScheduler().getContext().get("jmsService");
-			producer.convertAndSendTopic(QuestionDTO.composeQuestionMessage(q));
+			producer.convertAndSendTopic(QuestionDTO.composeQuestionMessage(question));
 		} catch (SchedulerException se) {
 			slf4jLogger.debug(se.getMessage());
 		} catch (JsonGenerationException jge) {

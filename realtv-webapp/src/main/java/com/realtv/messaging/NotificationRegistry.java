@@ -20,6 +20,7 @@ public class NotificationRegistry {
 	private static final Logger slf4jLogger = LoggerFactory
 			.getLogger(NotificationRegistry.class);
 
+	//service to persi
 	private List<String> receivedNotifications = new ArrayList<String>();
 
 	public List<String> getReceivedNotifications() {
