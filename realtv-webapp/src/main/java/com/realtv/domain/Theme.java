@@ -204,6 +204,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -259,7 +260,7 @@ public class Theme extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "theme")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JsonManagedReference
-	private List<Question> questions;
+	private List<Question> questions = Collections.emptyList();
 
 	/* ==========================GETTERS/SETTERS======================= */
 

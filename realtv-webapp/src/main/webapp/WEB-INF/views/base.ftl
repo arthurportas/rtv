@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <!--<link href="/spring/static/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" 
+href="/resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" 
-    href="<@spring.url '/static/css/bootstrap.min.css'/>"/>
+    href="<@spring.url '/resources/css/bootstrap.min.css'/>"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,7 +19,6 @@
   </head>
   <body>
     <h1>Hello, world!</h1>
-    [@spring.url]
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

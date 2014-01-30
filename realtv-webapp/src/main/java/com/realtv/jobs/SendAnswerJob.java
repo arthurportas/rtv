@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.json.JSONException;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -46,7 +47,7 @@ public class SendAnswerJob implements Job {
 		slf4jLogger.info("==execute(JobExecutionContext context)==");
 		slf4jLogger.info("==SendAnswerJob run successfully...==");
 
-/*		try {
+		try {
 			
 			IAnswerService answerService = (IAnswerService) context
 					.getScheduler().getContext().get("answerService");
@@ -54,11 +55,10 @@ public class SendAnswerJob implements Job {
 			Answer answer = answerService.find(Utils.questionId);
 			Utils.questionId++;
 
-
 			SimpleMessageProducer producer = (SimpleMessageProducer) context
 					.getScheduler().getContext().get("jmsService");
 			
-			//producer.convertAndSendTopic(AnswerDTO.composeAnswerMessage(answer));
+			producer.convertAndSendMessage("answers.queue", AnswerDTO.composeAnswerMessage(answer, "arthurportas@gmail.com"));
 			
 		} catch (SchedulerException se) {
 			slf4jLogger.debug(se.getMessage());
@@ -68,6 +68,8 @@ public class SendAnswerJob implements Job {
 			slf4jLogger.debug(jme.getMessage());
 		} catch (IOException ioe) {
 			slf4jLogger.debug(ioe.getMessage());
-		}*/
+		} catch (JSONException je) {
+			slf4jLogger.debug(je.getMessage());
+		}
 	}
 }

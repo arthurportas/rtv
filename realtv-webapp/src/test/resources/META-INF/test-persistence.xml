@@ -19,10 +19,10 @@
         	<prop name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
         	<!-- Development settings -->
 	        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-        	<property name="hibernate.show_sql" value="true" />
+        	<!--  <property name="hibernate.show_sql" value="true" />
         	<property name="hibernate.format_sql" value="true" />
         	<property name="hibernate.generate_statistics" value="true" />
-        	<prop name="hibernate.bytecode.use_reflection_optimizer" value="false"/>
+        	<prop name="hibernate.bytecode.use_reflection_optimizer" value="false"/>-->
         	
         </properties>
 	</persistence-unit>

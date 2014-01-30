@@ -9,15 +9,16 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.dao.interfaces.IQuestionDao;
 import com.realtv.domain.Answer;
 import com.realtv.domain.Question;
 
 @Repository
-@Transactional
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class QuestionDaoImpl extends GenericDaoImpl<Question> implements IQuestionDao {
 
 	private static final Logger slf4jLogger = LoggerFactory

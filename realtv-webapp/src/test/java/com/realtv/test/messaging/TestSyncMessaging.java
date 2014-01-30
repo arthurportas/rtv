@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import javax.jms.JMSException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,4 @@ public class TestSyncMessaging {
 	@Autowired
 	private SimpleMessageConsumer consumer;
 	
-	@Test
-	public void testSyncProducer() throws InterruptedException{
-		
-		try {
-			producer.sendMessages();
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Thread.sleep(2000);
-		String receivedNotification = consumer.receive();
-		assertNotNull(receivedNotification);
-		System.out.println("Received" + receivedNotification);
-		
-	}
 }

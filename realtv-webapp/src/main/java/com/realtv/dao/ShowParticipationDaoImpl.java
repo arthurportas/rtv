@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import com.realtv.dao.interfaces.IShowParticipationDao;
 import com.realtv.domain.ShowParticipation;
 
 @Repository
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ShowParticipationDaoImpl extends GenericDaoImpl<ShowParticipation> implements IShowParticipationDao {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowParticipationDaoImpl.class);

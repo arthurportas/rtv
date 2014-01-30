@@ -204,6 +204,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -259,7 +260,7 @@ public class ClientHistory extends BaseEntity implements Serializable {
 	/* relation to Client */
 	@OneToMany(mappedBy = "clientHistory")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Client> clients;
+	private List<Client> clients = Collections.emptyList();
 
 	/* relation to Show */
 	@ManyToOne

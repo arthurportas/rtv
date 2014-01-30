@@ -49,7 +49,7 @@ public class JobSchedulerService {
 			}
 			this.scheduler.getContext().put("questionService", questionService);
 			this.scheduler.getContext().put("jmsService", producer);
-			this.scheduler.getContext().put("answerService", answerService);
+			//this.scheduler.getContext().put("answerService", answerService);
 
 			// specify the sendQuestionJob details..
 			JobDetail sendQuestionJob = JobBuilder
@@ -60,11 +60,11 @@ public class JobSchedulerService {
 					SendQuestionJob.EXECUTION_COUNT, Utils.questionId);
 
 			// specify the sendQuestionJob details..
-			JobDetail sendAnswerJob = JobBuilder.newJob(SendAnswerJob.class)
+			/*JobDetail sendAnswerJob = JobBuilder.newJob(SendAnswerJob.class)
 					.withIdentity("sendAnswerJob").build();
 
 			sendAnswerJob.getJobDataMap().put(SendAnswerJob.EXECUTION_COUNT,
-					Utils.questionId);
+					Utils.questionId);*/
 
 			this.scheduler.start();
 
@@ -79,18 +79,18 @@ public class JobSchedulerService {
 									.withRepeatCount(15)).build();
 
 			// Trigger the sendAnswerJob to run now, and then every 45 seconds
-			Trigger sendAnswerTrigger = TriggerBuilder
+			/*Trigger sendAnswerTrigger = TriggerBuilder
 					.newTrigger()
 					.withIdentity("sendAnswerTrigger")
 					.startNow()
 					.withSchedule(
 							SimpleScheduleBuilder.simpleSchedule()
 									.withIntervalInSeconds(45)
-									.withRepeatCount(15)).build();
+									.withRepeatCount(15)).build()*/
 
 			// schedule the job
 			this.scheduler.scheduleJob(sendQuestionJob, sendQuestionTrigger);
-			this.scheduler.scheduleJob(sendAnswerJob, sendAnswerTrigger);
+			//this.scheduler.scheduleJob(sendAnswerJob, sendAnswerTrigger);
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}

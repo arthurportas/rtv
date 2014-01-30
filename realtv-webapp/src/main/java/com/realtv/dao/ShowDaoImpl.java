@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import com.realtv.dao.interfaces.IShowDao;
 import com.realtv.domain.Show;
 
 @Repository
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ShowDaoImpl extends GenericDaoImpl<Show> implements IShowDao {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ShowDaoImpl.class);

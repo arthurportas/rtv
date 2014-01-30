@@ -204,6 +204,7 @@
 package com.realtv.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -222,6 +223,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -255,17 +257,17 @@ public class AndroidNotificationServer extends BaseEntity implements Serializabl
 	@NotNull
 	@Value("${AndroidNotificationServer.GCMAuthorizationKey}")
 	@Size(min = 1, max = 500)
-	private String GCMAuthorizationKey;
+	private String GCMAuthorizationKey = StringUtils.EMPTY;
 
 	@NotNull
 	@Email
 	@Value("${AndroidNotificationServer.registeredEmail}")
 	@Size(min = 1, max = 80)
-	private String registeredEmail;
+	private String registeredEmail = StringUtils.EMPTY;
 
 	@OneToMany(mappedBy = "androidNotificationServer")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Client> clients;
+	private List<Client> clients = Collections.emptyList();
 	
 	/* ==========================GETTERS/SETTERS======================= */
 

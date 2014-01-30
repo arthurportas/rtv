@@ -21,12 +21,12 @@ public class HomeController {
 	@RequestMapping(value = { "/", "/index.html" })
 	public String index() {
 		slf4jLogger.info("==String index()==");
-		return "home/index";
+		return "index";
 	}
 
 	@RequestMapping("/protected.html")
 	public String protectedPage() {
 		slf4jLogger.info("==String protectedPage()==");
-		return "home/protected";
+		return "protected";
 	}
 }

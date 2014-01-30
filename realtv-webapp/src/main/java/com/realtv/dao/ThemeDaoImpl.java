@@ -8,14 +8,15 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.realtv.dao.interfaces.IThemeDao;
 import com.realtv.domain.Theme;
 
 @Repository
-@Transactional
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ThemeDaoImpl extends GenericDaoImpl<Theme> implements IThemeDao {
 
 	private static final Logger slf4jLogger = LoggerFactory.getLogger(ThemeDaoImpl.class);

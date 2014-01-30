@@ -1,87 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+ xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:jee="http://www.springframework.org/schema/jee" xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:tx="http://www.springframework.org/schema/tx"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	http://www.springframework.org/schema/jms 
  					 	http://www.springframework.org/schema/jms/spring-jms.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<context:component-scan base-package="com.realtv.domain" />
-	<context:component-scan base-package="com.realtv.dao" />
-	<context:component-scan base-package="com.realtv.messaging" />
-	<context:component-scan base-package="com.realtv.services" />
-	<context:component-scan base-package="com.realtv.facade" />
-	<context:component-scan base-package="com.realtv.jobs" />
+ <context:component-scan base-package="com.realtv.domain" />
+ <context:component-scan base-package="com.realtv.dao" />
+ <context:component-scan base-package="com.realtv.messaging" />
+ <context:component-scan base-package="com.realtv.services" />
+ <context:component-scan base-package="com.realtv.facade" />
+ <context:component-scan base-package="com.realtv.jobs" />
 
-	<!-- services that needs to be called inside Quartz job -->
-	<bean id="questionService" class="com.realtv.services.QuestionServiceImpl" />
-	<bean id="answerService" class="com.realtv.services.AnswerServiceImpl" />
-	<bean id="jmsService" class="com.realtv.messaging.SimpleMessageProducer" />
-	
-	<context:property-placeholder
-		location="classpath*:META-INF/queries/queries.properties" />
+ <!-- services that needs to be called inside Quartz job -->
+ <bean id="questionService" class="com.realtv.services.QuestionServiceImpl" />
+ <bean id="answerService" class="com.realtv.services.AnswerServiceImpl" />
+ <bean id="jmsService" class="com.realtv.messaging.SimpleMessageProducer" />
 
-	<context:property-placeholder
-		location="classpath*:META-INF/domain/entities.properties" />
-		
-	<!-- Defined AMQ connectionFactory -->
-	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL">
-			<value>tcp://localhost:61616</value>
-		</property>
-		<property name="sendTimeout" value="5000" />
-	</bean>
+ <context:property-placeholder
+  location="classpath*:META-INF/queries/queries.properties" />
 
-	<!-- Using the CachingConnectionFactory to improve performance -->
-	<bean id="cachingConnectionFactory"
-		class="org.springframework.jms.connection.CachingConnectionFactory">
-		<property name="targetConnectionFactory" ref="connectionFactory" />
-	</bean>
+ <context:property-placeholder
+  location="classpath*:META-INF/domain/entities.properties" />
 
-	<!-- Configure the jmsTemplate with a default queue to consume -->
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="cachingConnectionFactory" />
-		<property name="defaultDestination" ref="syncTestQueue" />
-	</bean>
+ <!-- Defined AMQ connectionFactory -->
+ <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+  <property name="brokerURL">
+   <value>tcp://localhost:61616</value>
+  </property>
+  <property name="sendTimeout" value="500" />
+ </bean>
 
-	<!-- Queue destination with a default queue -->
-	<bean id="syncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="test.sync.queue" />
-	</bean>
-	<tx:annotation-driven />
+ <!-- Using the CachingConnectionFactory to improve performance -->
+ <bean id="cachingConnectionFactory"
+  class="org.springframework.jms.connection.CachingConnectionFactory">
+  <property name="targetConnectionFactory" ref="connectionFactory" />
+ </bean>
 
-	<!--async scenario -->
-	<bean id="asyncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="test.async.queue" />
-	</bean>
+ <!-- Configure the jmsTemplate with a default queue to consume -->
+ <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+  <property name="connectionFactory" ref="cachingConnectionFactory" />
+  <property name="defaultDestination" ref="syncTestQueue" />
+ </bean>
 
-	<jms:listener-container connection-factory="connectionFactory">
-		<jms:listener destination="test.async.queue" ref="asyncReceiver"
-			method="receiveMessage" />
-	</jms:listener-container>
+ <!-- Queue destination with a default queue -->
+ <bean id="syncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
+  <constructor-arg value="test.sync.queue" />
+ </bean>
+ <tx:annotation-driven />
 
-	<!-- ################PUB_SUB################## -->
-	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="cachingConnectionFactory" />
-		<property name="pubSubDomain" value="true" />
-	</bean>
+ <!--async scenario -->
+ <bean id="asyncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
+  <constructor-arg value="test.async.queue" />
+ </bean>
 
-	<bean id="testTopic" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="test.topic" />
-	</bean>
+ <jms:listener-container connection-factory="connectionFactory">
+  <jms:listener destination="test.async.queue" ref="asyncReceiver"
+   method="receiveMessage" />
+ </jms:listener-container>
 
-	<jms:listener-container connection-factory="connectionFactory"
-		destination-type="topic" concurrency="1">
-		<jms:listener destination="test.topic" ref="asyncTopicReceiver"
-			method="receive" />
-		<!-- <jms:listener destination="test.topic" ref="asyncTopicBarReceiver"
-			method="receive" /> -->
-	</jms:listener-container>
+ <!-- ################PUB_SUB################## -->
+ <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+  <property name="connectionFactory" ref="cachingConnectionFactory" />
+  <property name="pubSubDomain" value="true" />
+ </bean>
+
+ <!-- topic for sending questions -->
+ <bean id="questionsBean" class="org.apache.activemq.command.ActiveMQTopic">
+  <constructor-arg value="questions.topic" />
+ </bean>
+
+ <!-- clients simulated scenario -->
+ <bean id="questionsClientBean" class="org.apache.activemq.command.ActiveMQTopic">
+  <constructor-arg value="questions.topic" />
+ </bean>
+
+<!-- client listens and  replies to a queue(answers.queue)-->
+ <jms:listener-container connection-factory="connectionFactory"
+  destination-type="topic" concurrency="1"><!-- recomended by spring -->
+  <jms:listener destination="questions.topic" ref="asyncTopicReceiver"
+   method="receive" />
+ </jms:listener-container>
+
+
+<!-- server side listener for incoming answer messages -->
+ <!-- queue for receiving answers from clients -->
+ <bean id="answersBean" class="org.apache.activemq.command.ActiveMQQueue">
+  <constructor-arg value="answers.queue" />
+ </bean>
+
+ <jms:listener-container connection-factory="connectionFactory"
+  destination-type="queue" concurrency="10">
+  <jms:listener destination="answers.queue" ref="asyncReceiver"
+   method="receiveMessage" />
+ </jms:listener-container>
+
+
+
+ <!-- jms:listener-container connection-factory="connectionFactory" destination-type="topic" 
+  concurrency="1"> <jms:listener destination="questions.topic" ref="asyncTopicReceiver" 
+  method="receive" /> <jms:listener destination="questions.topic" ref="asyncTopicBarReceiver" 
+  method="receive" /> </jms:listener-container> -->
 
 </beans>

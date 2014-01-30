@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * @author Arthur Portas
  * @date 21/12/2013
  */
-@Component("asyncTopicReceiver")
-public class AsynTopicConsumer2 {
+@Component("asyncTopicBarReceiver")
+public class AsynTopicConsumerTODELETE {
 
 	@Autowired
     private NotificationRegistry registry;
