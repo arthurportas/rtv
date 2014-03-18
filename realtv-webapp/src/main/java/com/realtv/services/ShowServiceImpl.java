@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Preconditions;
 import com.realtv.dao.interfaces.IShowDao;
 import com.realtv.domain.Show;
+import com.realtv.domain.ShowType;
 import com.realtv.services.interfaces.IShowService;
 
 /**
@@ -107,5 +109,16 @@ public class ShowServiceImpl implements IShowService {
 	public List<Show> findAllNamedQuery() {
 		slf4jLogger.info("==List<Show> findAllNamedQuery()==");
 		return showDao.findAllNamedQuery();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.realtv.services.interfaces.IShowService#findByShowTypeNamedQuery(com.realtv.domain.ShowType)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<Show> findByShowTypeNamedQuery(ShowType showType) {
+		slf4jLogger.info("==List<Show> findByShowTypeNamedQuery(ShowType showType)==");
+//TODO Preconditions?
+		return showDao.findByShowTypeNamedQuery(showType);
 	}
 }

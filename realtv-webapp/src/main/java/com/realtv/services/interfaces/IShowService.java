@@ -6,6 +6,7 @@ package com.realtv.services.interfaces;
 import java.util.List;
 
 import com.realtv.domain.Show;
+import com.realtv.domain.ShowType;
 
 /**
  * @author Arthur Portas
@@ -26,4 +27,6 @@ public interface IShowService {
 	public Long count();
 
 	public List<Show> findAllNamedQuery();
+	
+	public List<Show> findByShowTypeNamedQuery(ShowType showType);
 }

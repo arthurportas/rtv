@@ -241,7 +241,9 @@ import com.google.gson.GsonBuilder;
 
 @Entity
 @Table
-@NamedQueries({ @NamedQuery(name = "Show.FIND_ALL", query = "select s from Show s") })
+@NamedQueries({
+		@NamedQuery(name = "Show.FIND_ALL", query = "select s from Show s"),
+		@NamedQuery(name = "Show.FIND_BY_SHOW_TYPE", query = "select s from Show s where s.showType = :showTypeId") })
 @XmlRootElement(name = "show")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Show extends BaseEntity implements Serializable {
@@ -249,6 +251,7 @@ public class Show extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "Show.FIND_ALL";
+	public static final String FIND_BY_SHOW_TYPE = "Show.FIND_BY_SHOW_TYPE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -272,16 +275,17 @@ public class Show extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "showTypeId")
 	private ShowType showType;
-	
-	/* relation to ClientHistory REFACTOR TO CLIENT??*/
+
+	/* relation to ClientHistory REFACTOR TO CLIENT?? */
 	@OneToMany(mappedBy = "show")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ClientHistory> clientsHistory = Collections.emptyList();
-	
+
 	@OneToMany(mappedBy = "show")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<ShowParticipation> showsParticipation = Collections.emptyList();
-	
+	private List<ShowParticipation> showsParticipation = Collections
+			.emptyList();
+
 	/* ==========================GETTERS/SETTERS======================= */
 
 	/**
@@ -292,7 +296,8 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param id - the id to associate
+	 * @param id
+	 *            - the id to associate
 	 */
 	@XmlElement
 	public void setId(Long id) {
@@ -307,7 +312,8 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param name - the name to associate
+	 * @param name
+	 *            - the name to associate
 	 */
 	@XmlElement
 	public void setName(String name) {
@@ -322,7 +328,8 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param beginning - the beginning {@link Date} to associate
+	 * @param beginning
+	 *            - the beginning {@link Date} to associate
 	 */
 	@XmlElement
 	public void setBeginning(Date beginning) {
@@ -337,7 +344,8 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param ending - the ending {@link Date} to associate
+	 * @param ending
+	 *            - the ending {@link Date} to associate
 	 */
 	@XmlElement
 	public void setEnding(Date ending) {
@@ -352,13 +360,14 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param showType the {@link ShowType} to associate
+	 * @param showType
+	 *            the {@link ShowType} to associate
 	 */
 	@XmlElement
 	public void setShowType(ShowType showType) {
 		this.showType = showType;
 	}
-	
+
 	/**
 	 * @return the associated {@link ClientHistory}
 	 */
@@ -367,13 +376,14 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param clientsHistory the {@link ClientHistory} list to associate
+	 * @param clientsHistory
+	 *            the {@link ClientHistory} list to associate
 	 */
 	@XmlElement
 	public void setClientsHistory(List<ClientHistory> clientsHistory) {
 		this.clientsHistory = clientsHistory;
 	}
-	
+
 	/**
 	 * @return the associated {@link ShowParticipation}
 	 */
@@ -382,7 +392,8 @@ public class Show extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param showsParticipation the {@link ShowParticipation} list to associate
+	 * @param showsParticipation
+	 *            the {@link ShowParticipation} list to associate
 	 */
 	@XmlElement
 	public void setShowsParticipation(List<ShowParticipation> showsParticipation) {
@@ -433,6 +444,7 @@ public class Show extends BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toJson() {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(this).toString();
+		return new GsonBuilder().setPrettyPrinting().create().toJson(this)
+				.toString();
 	}
 }

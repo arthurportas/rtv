@@ -55,4 +55,8 @@ public interface IShowServiceTest {
 	 * Fetch all Show entities in real-time mode from persistence, using a nativeQuery declared in 'queries.properties'
 	 * */
 	public void showAllRealTimeShowNativeQuery();
+	/**
+	 * Fetch all Show entities filtered by ShowType from persistence, using a namedQuery
+	 * */
+	public void findByShowTypeNamedQuery();
 }
